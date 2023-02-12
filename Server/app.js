@@ -15,6 +15,7 @@ const User = require('./Models/User');
 const restaurantRoute = require('./Routes/restaurant');
 const dishRoute = require('./Routes/dish');
 const orderRoute = require('./Routes/order');
+const stationaryRoutes = require('./Routes/stationary');
 
 //Node.js MongoDB connection
 mongoose
@@ -42,6 +43,7 @@ app.post('/login', async (req, res) => {
 app.use(restaurantRoute);
 app.use(dishRoute);
 app.use(orderRoute);
+app.use(stationaryRoutes);
 
 app.listen(process.env.PORT || 8080, () => {
   console.log('Backend server is running fine!');
