@@ -59,7 +59,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                       child: Text("Logout", style: TextStyle(fontSize: 20),),
                       onPressed: (){},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green.shade100,
+                        backgroundColor: Colors.green,
                       ),
                     )  ,
                   )

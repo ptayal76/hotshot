@@ -13,7 +13,8 @@ class Filters extends StatefulWidget {
 }
 
 class _FiltersState extends State<Filters> {
-  List filtername = [Pair('Open Now',false),Pair('Rating 4+',false),Pair('Veg',false),Pair('Non-Veg',false)];
+  List filtername = ['Open Now','Rating 4+','Veg','Non-Veg'];
+  List filterselected = [false,false,false,false];
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +39,15 @@ class _FiltersState extends State<Filters> {
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 width: 100,
                 decoration: BoxDecoration(
-                    color: (filtername[index].b)?const Color(0xff307A59):Colors.white,
+                    color: (filterselected[index])?const Color(0xff307A59):Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.black)
                 ),
                 child:  Center(
                   child: Text(
-                    filtername[index].a,
+                    filtername[index],
                     style: TextStyle(
-                      color: (filtername[index].b)?Colors.white:Colors.black,
+                      color: (filterselected[index])?Colors.white:Colors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -55,7 +56,12 @@ class _FiltersState extends State<Filters> {
               ),
               onTap: (){
                 setState(() {
-                  filtername[index].b=!filtername[index].b;
+                  filterselected[index]=!filterselected[index];
+                  if(index==2 || index==3){
+                    if(filterselected[index]==true){
+                      filterselected[5-index]=false;
+                    }
+                  }
                 });
               },
             );
