@@ -31,18 +31,11 @@ router.get("/food/order", verifyToken,authenticate, async (req, res) => {
 })
 
 //CREATE QR FOR USER
-router.post("/food/order/qr/:orderId", verifyToken, authenticateUser, async (req, res, next) => {
+router.post("/food/order/qr/:orderId",  async (req, res, next) => {
     try {
-        const id = req.params.orderId;
-        const order = await Order.findById(id);
-        console.log(order);
-        console.log(req.user, order.user_id);
-        if (order.user_id == req.user) {
-            //send qr
-            console.log('here');
-            let data = { order }
-            let stringdata = JSON.stringify(data);
-            
+        
+            let url = new URL(`localhost:8080/food/order/qr/${req.params.orderId}`);//route will be here which has user data
+            let stringdata = url.toString();
             qr.toFile('qr1.png', stringdata, function (err, code) {
                 if (err) {
                     console.log(err);
@@ -50,12 +43,15 @@ router.post("/food/order/qr/:orderId", verifyToken, authenticateUser, async (req
                     console.log('QR code generated!');
                 }
             })
-            res.status(200).json(order);
+            const promise = fs.promises.readFile('./qr1.png');
+            Promise.resolve(promise).then(function (buffer) {
+                console.log(buffer);
+                const stringdata = JSON.stringify(buffer);
+                res.status(200).json(stringdata);
+            })
+        
         }
-        else {
-            res.sendStatus(403);
-        }
-    } catch (err) {
+     catch (err) {
         res.status(400).json(err);
     }
 })
