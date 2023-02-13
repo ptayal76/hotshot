@@ -29,7 +29,7 @@ class _RestCardState extends State<RestCard> {
             color: Colors.grey,
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: AssetImage(widget.data.pic),
+              image: AssetImage('assets/images/rest.jpg'),
                colorFilter: (widget.data.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
               fit: BoxFit.cover,
             ),
@@ -74,7 +74,7 @@ class _RestCardState extends State<RestCard> {
                               Container(
                               margin: EdgeInsets.only(left: 5),
                               child: Text(
-                                widget.data.locationCategory,
+                                widget.data.location,
                                 style: TextStyle(color: Colors.white, fontSize: 10),
                               ),
                             ),]
@@ -87,7 +87,7 @@ class _RestCardState extends State<RestCard> {
                               Container(
                                 margin: EdgeInsets.only(left: 5),
                                 child: Text(
-                                  widget.data.rating,
+                                  widget.data.phoneNumber,
                                   style: TextStyle(color: Colors.white, fontSize: 10),
                                 ),
                               ),

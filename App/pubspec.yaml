@@ -42,6 +42,7 @@ dependencies:
   google_sign_in: ^5.4.4
   blurrycontainer: ^1.0.2
   flutter_rating_bar: ^4.0.1
+  mongo_dart: ^0.8.2
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
   assets:
 
     - assets/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

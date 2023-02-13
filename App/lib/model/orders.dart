@@ -12,11 +12,11 @@ class Orders{
   Map items;
   int total;
   bool isfood;
-  String timeOfOrder;
-  String category;
+  //String timeOfOrder;
+  // String category;
   String Order_status;
 
-  Orders({required this.restaurant_id,required this.user_id,required this.items,required this.total,required this.isfood,required this.timeOfOrder,required this.category,required this.Order_status});
+  Orders({required this.restaurant_id,required this.user_id,required this.items,required this.total,required this.isfood,required this.Order_status});
   factory Orders.fromJson(Map<String,dynamic> json) {
     return Orders(
         restaurant_id: json['restaurant_id'].toString(),
@@ -24,8 +24,8 @@ class Orders{
         items: json['items'],
         total: json['total'],
         isfood: json['suggestedTime'],
-        timeOfOrder: json['timeOfOrder'].toString(),
-        category: json['category'].toString(),
+        // timeOfOrder: json['timeOfOrder'].toString(),
+        // category: json['category'].toString(),
         Order_status: json['Order_status'].toString()
     );
   }

@@ -2,24 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/widgets/dishCard.dart';
 import 'package:hotshot/widgets/restCard.dart';
 import 'package:hotshot/widgets/sideDrawer.dart';
-
+import 'package:mongo_dart/mongo_dart.dart' hide State;
 import '../model/dishInfo.dart';
 import '../model/restHelper.dart';
 import '../model/restInfo.dart';
 import '../widgets/filters.dart';
 import '../widgets/searchBar.dart';
+late var restaurants=[];
 
 class RestHome extends StatefulWidget {
   RestHome({Key? key}) : super(key: key);
-  final List<RestInfo> topPicks = RestHelper.topPicks;
-  final List<DishInfo> suggested = RestHelper.suggested;
+  // final List<RestInfo> topPicks = RestHelper.topPicks;
+  // final List<DishInfo> suggested = RestHelper.suggested;
   @override
   State<RestHome> createState() => _RestHomeState();
 }
 
+
+
 class _RestHomeState extends State<RestHome>
     with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
+  Future<void> Mongo() async{
+    var db=await Db.create("mongodb+srv://lohit:lohit2105@hotshot-cluster.vljarxr.mongodb.net/?retryWrites=true&w=majority");
+    await db.open();
+    var coll=db.collection('restaurants');
+    restaurants = await coll.find().toList();
+    print (restaurants);
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -113,7 +124,12 @@ class _RestHomeState extends State<RestHome>
             //floating: false,
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                    await Mongo();
+                    setState(() {
+
+                    });
+                },
                 icon: Icon(Icons.shopping_cart),
                 tooltip: 'Cart',
               )
@@ -144,7 +160,7 @@ class _RestHomeState extends State<RestHome>
                   child: ListView.separated(
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       itemBuilder: (context, index) {
-                        return RestCard(data: widget.topPicks[index]);
+                        return RestCard(data: restaurants[index]);
                       },
                       physics: BouncingScrollPhysics(),
                       shrinkWrap: true,
@@ -154,95 +170,95 @@ class _RestHomeState extends State<RestHome>
                           width: 16,
                         );
                       },
-                      itemCount: widget.topPicks.length),
+                      itemCount: restaurants.length),
                 ),
-                Container(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 12),
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            'Suggested',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 12),
-                          height: 150,
-                          child: ListView.separated(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              itemBuilder: (context, index) {
-                                return DishCard(data: widget.suggested[index]);
-                              },
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              separatorBuilder: (context, index) {
-                                return SizedBox(
-                                  width: 16,
-                                );
-                              },
-                              itemCount: widget.topPicks.length),
-                        ),
-                        // SliverList(
-                        //     delegate: SliverChildBuilderDelegate((context,index){
-                        //       return RestCard(data: widget.topPicks[index]);
-                        //     },
-                        //     childCount: widget.topPicks.length,
-                        //     )
-                        // ),
-
-                      ]
-                  ),
-                ),
-                Container(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 12),
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            'Restaurants',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        // SliverList(
-                        //     delegate: SliverChildBuilderDelegate((context,index){
-                        //       return RestCard(data: widget.topPicks[index]);
-                        //     },
-                        //     childCount: widget.topPicks.length,
-                        //     )
-                        // ),
-                        ListView.separated(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            itemBuilder: (context, index) {
-                              return RestCard(data: widget.topPicks[index]);
-                            },
-                            shrinkWrap: true,
-                            //scrollDirection: Axis.vertical,
-                            physics: NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                height: 16,
-                              );
-                            },
-                            itemCount: widget.topPicks.length),
-                      ]
-                  ),
-                )
+                // Container(
+                //   child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Container(
+                //           margin: EdgeInsets.only(top: 12),
+                //           padding: EdgeInsets.symmetric(horizontal: 16),
+                //           width: MediaQuery.of(context).size.width,
+                //           child: Text(
+                //             'Suggested',
+                //             style: TextStyle(
+                //               color: Colors.black,
+                //               fontSize: 18,
+                //               fontWeight: FontWeight.w600,
+                //             ),
+                //           ),
+                //         ),
+                //         Container(
+                //           margin: EdgeInsets.only(top: 12),
+                //           height: 150,
+                //           child: ListView.separated(
+                //               padding: EdgeInsets.symmetric(horizontal: 16),
+                //               itemBuilder: (context, index) {
+                //                 return DishCard(data: widget.suggested[index]);
+                //               },
+                //               physics: BouncingScrollPhysics(),
+                //               shrinkWrap: true,
+                //               scrollDirection: Axis.horizontal,
+                //               separatorBuilder: (context, index) {
+                //                 return SizedBox(
+                //                   width: 16,
+                //                 );
+                //               },
+                //               itemCount: widget.topPicks.length),
+                //         ),
+                //         // SliverList(
+                //         //     delegate: SliverChildBuilderDelegate((context,index){
+                //         //       return RestCard(data: widget.topPicks[index]);
+                //         //     },
+                //         //     childCount: widget.topPicks.length,
+                //         //     )
+                //         // ),
+                //
+                //       ]
+                //   ),
+                // ),
+                // Container(
+                //   child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Container(
+                //           margin: EdgeInsets.only(top: 12),
+                //           padding: EdgeInsets.symmetric(horizontal: 16),
+                //           width: MediaQuery.of(context).size.width,
+                //           child: Text(
+                //             'Restaurants',
+                //             style: TextStyle(
+                //               color: Colors.black,
+                //               fontSize: 18,
+                //               fontWeight: FontWeight.w600,
+                //             ),
+                //           ),
+                //         ),
+                //         // SliverList(
+                //         //     delegate: SliverChildBuilderDelegate((context,index){
+                //         //       return RestCard(data: widget.topPicks[index]);
+                //         //     },
+                //         //     childCount: widget.topPicks.length,
+                //         //     )
+                //         // ),
+                //         ListView.separated(
+                //             padding: EdgeInsets.symmetric(horizontal: 16),
+                //             itemBuilder: (context, index) {
+                //               return RestCard(data: widget.topPicks[index]);
+                //             },
+                //             shrinkWrap: true,
+                //             //scrollDirection: Axis.vertical,
+                //             physics: NeverScrollableScrollPhysics(),
+                //             separatorBuilder: (context, index) {
+                //               return SizedBox(
+                //                 height: 16,
+                //               );
+                //             },
+                //             itemCount: widget.topPicks.length),
+                //       ]
+                //   ),
+                // )
               ]
             ),
           // physics: BouncingScrollPhysics(),
