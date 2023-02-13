@@ -114,4 +114,5 @@ module.exports = {
     authenticateUser,
     authorizeUser,
     restOrder,
+    authenticate
 };

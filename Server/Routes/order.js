@@ -1,8 +1,10 @@
 //Order routes
 const RestOrder = require('../Models/RestOrder');
 const Dish = require("../Models/Dish");
+const Razorpay=require('razorpay');
 const mongoose = require('mongoose');
 const Order = RestOrder;
+const Restaurant=require("../Models/Restaurant");
 const {
     verifyToken,
     authenticateOwner,
@@ -30,7 +32,7 @@ router.get("/food/order", verifyToken,authenticate, async (req, res) => {
     }
 })
 
-//CREATE QR FOR USER(we only need to create a qr, scanning will be from flutter)
+//CREATE QR FOR USER
 router.post("/food/order/qr/:orderId",  async (req, res, next) => {
     try {
         
@@ -88,7 +90,7 @@ router.get('/food/order/scanqr', verifyToken, authenticate, async (req, res) => 
 router.post('/food/order/:dishId', verifyToken, authenticateUser, async (req, res) => {
     try {
         const dish = await Dish.findById(req.params.dishId);
-        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'responsePending' });
+        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'paymentPending' });
         if (order.length) {
 
             order[0].items.push(req.params.dishId);
@@ -99,7 +101,7 @@ router.post('/food/order/:dishId', verifyToken, authenticateUser, async (req, re
         else {
 
             var today = new Date();
-            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'responsePending' });
+            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'paymentPending' });
             await newOrder.save()
             //payment gateway
             return res.status(200).json(newOrder);
@@ -162,6 +164,29 @@ router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req,
     }
 
 })
-
+//payment 
+router.put("/food/order/checkout/:orderId",verifyToken,authenticateUser,async (req,res)=>{
+    const order=await Order.findById(req.params.orderId);
+    const restaurant=await Restaurant.findById(order.restaurant_id);
+    if(order.user_id!=req.user)
+    {
+        return res.status(403).json({message:"you are not authenticated"});
+    }
+    const razorpayInstance=new Razorpay({
+        key_id:restaurant.razorpayCred.Key_id,
+        key_secret:restaurant.razorpayCred.KeySecret
+    })
+    razorpayInstance.orders.create({amount:order.total*100,currency:"INR"},(err,result)=>{
+        if(err)
+        {
+            return res.status(400).send(err.message);
+        }
+        else
+        {
+            return res.status(200).json(result);
+        }
+    })
+     
+})
 module.exports = router;
 

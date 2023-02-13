@@ -11,7 +11,8 @@
     "nodemon": "^2.0.20",
     "qr": "^0.2.4",
     "qrcode": "^1.5.1",
-    "qrcode-reader": "^1.0.4"
+    "qrcode-reader": "^1.0.4",
+    "razorpay": "^2.8.4"
   },
   "name": "hotshot-backend",
   "description": "A new Flutter project.",
