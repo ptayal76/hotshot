@@ -30,7 +30,7 @@ router.get("/food/order", verifyToken,authenticate, async (req, res) => {
     }
 })
 
-//CREATE QR FOR USER
+//CREATE QR FOR USER(we only need to create a qr, scanning will be from flutter)
 router.post("/food/order/qr/:orderId",  async (req, res, next) => {
     try {
         

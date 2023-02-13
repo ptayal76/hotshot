@@ -28,6 +28,14 @@ const restaurant = new schema({
         data: Buffer,
         contentType: String
     },
+    razorpayCred:{
+               Key_id:{
+                           type:String
+               },
+            KeySecret:{
+                        type:String
+            }
+    },
     location: {
         required: true,
         type: String
