@@ -18,13 +18,27 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-//GET ALL RESTAURANTS
+//GET ALL RESTAURANTS BY QUERY
+
 router.get('/food/rest', async (req, res) => {
   try {
-    const restaurants = await Restaurant.find();
-    return res.json(restaurants);
+     var obj={};
+     if(req.query.rating) obj.rating={$gte :req.query.rating}
+     if(req.query.locationCategory) obj.locationCategory=req.query.locationCategory;
+     const restaurants = await Restaurant.find(obj);
+     return res.json(restaurants);
   } catch (err) {
     return res.status(400).send(err.message);
+  }
+});
+
+
+router.get('/food/rest/:name', async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({restaurantName:req.params.name});
+    return res.json(restaurants);
+  } catch (err) {
+    return res.status(402).send(err.message);
   }
 });
 

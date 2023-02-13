@@ -18,11 +18,13 @@ const otherShopSchema = new mongoose.Schema({
     type: String,
   },
   category: {
-    enum: ['hospital', 'bank', 'souvenir', 'mobileRepair', 'cycle', 'barber'],
+    enum: ['hospital', 'bank', 'souvenir', 'mobileRepair', 'cycle', 'barber','other'],
+    type:String,
+    default:"other"
   },
   pic: {
     data: Buffer,
-    contentType: String,
+    contentType: String
   },
   location: {
     required: true,

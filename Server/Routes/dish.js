@@ -17,7 +17,10 @@ const upload = multer({ storage: storage });
 //GET ALL DISHES
 router.get('/food/dish', async (req, res) => {
     try {
-        const dishes = await Dish.find();
+        var obj={};
+        if(req.query.category)obj.category=req.query.category;
+        if(req.query.price)obj.price={$lte:req.query.price };
+        const dishes = await Dish.find(obj);
         res.status(200).json(dishes);
     } catch (err) {
         res.status(400).json(err);
