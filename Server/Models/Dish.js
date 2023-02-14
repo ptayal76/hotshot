@@ -23,5 +23,9 @@ const dish = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
+    pic: {
+        data: Buffer,
+        contentType: String
+    }
 })
 module.exports= mongoose.model('Dish', dish);

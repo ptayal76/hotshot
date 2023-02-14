@@ -17,7 +17,9 @@ const upload = multer({ storage: storage });
 //GET ALL OTHER SHOPS
 router.get('/other', async (req, res) => {
   try {
-    const otherShops = await OtherShop.find();
+    var Obj ={}
+    if(req.query.category) Obj.category = req.query.category
+    const otherShops = await OtherShop.find(Obj);
     return res.status(200).json(otherShops);
   } catch (err) {
     return res.status(400).send(err.message);
