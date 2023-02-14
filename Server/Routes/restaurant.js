@@ -57,8 +57,11 @@ router.get('/food/rest/:restid', async (req, res) => {
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
     const restaurant = new Restaurant(req.body);
-    restaurant.pic.data = req.file.buffer;
-    restaurant.pic.contentType = req.file.mimetype;
+    if(req.file)
+    {
+      restaurant.pic.data = req.file.buffer;
+      restaurant.pic.contentType = req.file.mimetype;
+    }
     await restaurant.save();
 
     jwt.sign(
