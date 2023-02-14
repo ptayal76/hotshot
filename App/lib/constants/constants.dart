@@ -17,3 +17,8 @@ final textInputDecoration = InputDecoration(
     borderSide: const BorderSide(color: Colors.transparent)
   )
 );
+
+final drawerButtonStyle = ButtonStyle(
+  fixedSize: MaterialStateProperty.all(const Size.fromWidth(double.maxFinite)),
+  alignment: Alignment.centerLeft,
+);
