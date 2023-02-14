@@ -63,7 +63,6 @@ const restaurant = new schema({
         required:true 
     },
     order_types: {
-
         notCollected: [
             {
                 type: String
@@ -90,9 +89,7 @@ const restaurant = new schema({
                 type: String
             }
         ]
-
     }
-
 })
 
 module.exports = mongoose.model('Restaurant', restaurant);
