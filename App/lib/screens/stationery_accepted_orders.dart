@@ -3,14 +3,16 @@ import 'package:hotshot/constants/colors.dart';
 
 import '../widgets/sideDrawerShopkeeper.dart';
 
-class AcceptedOrdersScreen extends StatefulWidget {
-  const AcceptedOrdersScreen({super.key});
+class StationeryAcceptedOrdersScreen extends StatefulWidget {
+  const StationeryAcceptedOrdersScreen({super.key});
 
   @override
-  State<AcceptedOrdersScreen> createState() => _AcceptedOrdersScreenState();
+  State<StationeryAcceptedOrdersScreen> createState() =>
+      _StationeryAcceptedOrdersScreenState();
 }
 
-class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
+class _StationeryAcceptedOrdersScreenState
+    extends State<StationeryAcceptedOrdersScreen> {
   var status = "Ready?";
   bool _hasBeenPressed = false;
   var items = List<String>.generate(100, (i) => 'Item $i');
@@ -46,7 +48,7 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
           ),
           itemBuilder: (context, index) {
             return Container(
-                height: 122,
+                height: 152,
                 decoration: BoxDecoration(
                     color: Colors.green[100],
                     border: Border.all(
@@ -83,9 +85,9 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
                         child: Align(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              'Order Items: ${itemsList[index]}',
+                              'Print Type: ${itemsList[index]}\nQuantity: ${index + 1}',
                               style: const TextStyle(fontSize: 20),
-                              maxLines: 1,
+                              maxLines: 2,
                               softWrap: false,
                               overflow: TextOverflow.ellipsis,
                             )),
@@ -111,6 +113,10 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
                                   })
                                 },
                             child: Text(status)),
+                        TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.download),
+                            label: const Text('Download Files')),
                         Builder(
                           builder: ((context) {
                             return TextButton(
@@ -151,9 +157,10 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
                                             isThreeLine: true,
                                             leading:
                                                 const Icon(Icons.list_sharp),
-                                            title: const Text('Order Items: '),
+                                            title: Text(
+                                                'Print Type: ${itemsList[index]}'),
                                             subtitle:
-                                                Text('${itemsList[index]}'),
+                                                Text('Quantity: ${index + 1}'),
                                           ),
                                         ],
                                       );

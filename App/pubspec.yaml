@@ -46,6 +46,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   mongo_dart: ^0.8.2
   anim_search_bar: ^2.0.3
+  
 
 dev_dependencies:
   flutter_test:
