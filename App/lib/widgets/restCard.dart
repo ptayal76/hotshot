@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class RestCard extends StatefulWidget {
 class _RestCardState extends State<RestCard> {
   @override
   Widget build(BuildContext context) {
+    List<int> bufferInt= widget.data.pic.map((e) => e as int).toList();
     var fav=false;
     return GestureDetector(
       onTap: () {},
@@ -29,7 +31,7 @@ class _RestCardState extends State<RestCard> {
             color: Colors.grey,
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: AssetImage('assets/images/rest.jpg'),
+              image: Image.memory(Uint8List.fromList(bufferInt)).image,
                colorFilter: (widget.data.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
               fit: BoxFit.cover,
             ),

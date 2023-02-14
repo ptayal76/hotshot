@@ -10,7 +10,6 @@ class CustomerSignIn extends StatefulWidget {
 }
 
 class _CustomerSignInState extends State<CustomerSignIn> {
-
   bool loading = false;
 
   @override
@@ -27,21 +26,50 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                 height: 550,
                 decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(30))),
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(30))),
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 20, 20, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // const Text(
+                      //   'Sign in',
+                      //   style: TextStyle(fontSize: 28),
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      const Text(
+                        'Welcome to HotShot!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Your OneStop Solution for everything',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       const Text(
                         'Sign in',
                         style: TextStyle(fontSize: 28),
                       ),
-                      const SizedBox(
-                        height: 50,
-                      ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // const SizedBox(
+                      //   height: 50,
+                      // ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -54,14 +82,14 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const Text(
-                            'Welcome to Hotshot! Your one stop solution to everything',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          // const Text(
+                          //   'Welcome to Hotshot! Your one stop solution to everything',
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(fontSize: 15),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -79,14 +107,42 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     setState(() {
                                       loading = true;
                                     });
-                                    await GoogleAuthentication()
-                                        .googleSignIn();
+                                    await GoogleAuthentication().googleSignIn();
                                     setState(() {
                                       loading = false;
                                     });
                                   },
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(children: const <Widget>[
+                                  SizedBox(width: 30),
+                                  Expanded(
+                                      child: Divider(
+                                          // color: blackColor,
+                                          // thickness: 2,
+                                          )),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "OR",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: Divider(
+                                        // color: blackColor,
+                                        // thickness: 2,
+                                        ),
+                                  ),
+                                  SizedBox(width: 30),
+                                ]),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 ElevatedButton.icon(
                                   icon: Image.asset(
                                     'assets/outlook.png',
@@ -97,7 +153,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     'Sign in with Outlook',
                                     style: TextStyle(fontSize: 16),
                                   ),
-                                  onPressed: (){},
+                                  onPressed: () {},
                                 ),
                               ]),
                         ],

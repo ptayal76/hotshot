@@ -22,13 +22,13 @@ class NavigationDrawer extends StatelessWidget {
                 name: name,
                 email: email,
                 onClicked: () => {}
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) => UserPage(
-              //     name: 'Sarah Abs',
-              //     urlImage: urlImage,
-              //   ),
-              // )),
-            ),
+                //     Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => UserPage(
+                //     name: 'Sarah Abs',
+                //     urlImage: urlImage,
+                //   ),
+                // )),
+                ),
             Container(
               padding: padding,
               child: Column(
@@ -41,8 +41,8 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
-                    text: 'Share',
-                    icon: Icons.share,
+                    text: 'Ratings',
+                    icon: Icons.rate_review_outlined,
                     onClicked: () => selectedItem(context, 1),
                   ),
                   const SizedBox(height: 16),
@@ -56,12 +56,15 @@ class NavigationDrawer extends StatelessWidget {
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
-                      child: Text("Logout", style: TextStyle(fontSize: 20),),
-                      onPressed: (){},
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade100,
                       ),
-                    )  ,
+                    ),
                   )
                 ],
               ),
@@ -156,14 +159,14 @@ class NavigationDrawer extends StatelessWidget {
 
     switch (index) {
       case 0:
-      // Navigator.of(context).push(MaterialPageRoute(
-      //   builder: (context) => PeoplePage(),
-      // ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => PeoplePage(),
+        // ));
         break;
       case 1:
-      // Navigator.of(context).push(MaterialPageRoute(
-      //   builder: (context) => FavouritesPage(),
-      // ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => FavouritesPage(),
+        // ));
         break;
     }
   }

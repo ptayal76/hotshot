@@ -5,10 +5,10 @@
 // class RestHelper{
 //   static List<RestInfo> topPicks = topPicksdata
 //       .map((data) => RestInfo(ownerName: data['ownerName']!, restaurantName: data['restaurantName']!, phoneNumber: data['phoneNumber']!, email: data['email']!, pic: data['pic']!, locationCategory: data['locationCategory']!, location: data['location']!, rating: data['rating']!, status: data['status']!)).toList();
-//   static List<DishInfo> suggested = suggesteddata
-//       .map((data) => DishInfo(Rest_Id: data['Rest_Id'], name: data['name'], category: data['category'], price: data['price'], suggestedTime: data['suggestedTime'], InStock: data['InStock'], pic: data['pic'])).toList();
-//   static List<Orders> cartOrders = cartOrdersData
-//       .map((data) => Orders(restaurant_id: data['restaurant_id']!, user_id: data['user_id']!, items: data['items']!, total: data['total']!, isfood: data['isfood']!, Order_status: data['Order_status']!)).toList();
+//   // static List<DishInfo> suggested = suggesteddata
+//   //     .map((data) => DishInfo(Rest_Id: data['Rest_Id'], name: data['name'], category: data['category'], price: data['price'], suggestedTime: data['suggestedTime'], InStock: data['InStock'], pic: data['pic'])).toList();
+//   // static List<Orders> cartOrders = cartOrdersData
+//   //     .map((data) => Orders(restaurant_id: data['restaurant_id']!, user_id: data['user_id']!, items: data['items']!, total: data['total']!, isfood: data['isfood']!, Order_status: data['Order_status']!)).toList();
 // }
 //
 // Set<Map<String,dynamic>> cartOrdersData = {
