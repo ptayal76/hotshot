@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hotshot/screens/shopkeeper_home.dart';
 import 'package:hotshot/constants/constants.dart';
+import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 
 class OtpVerification extends StatefulWidget {
   const OtpVerification({super.key});
@@ -171,7 +171,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const ShopkeeperHome(),
+                                                const ShopkeeperVerificationForm(),
                                           ));
                                     },
                                     child: const Text(
