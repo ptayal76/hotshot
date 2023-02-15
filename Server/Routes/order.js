@@ -161,9 +161,14 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
             return res.status(400).send(err.message);
         }
         else {
-            return res.status(200).json(result);
+            return res.status(200).json({orderid:result.id,keyid:restaurant.razorpayCred.Key_id});
         }
     })
+})
+router.put("/food/order/acknowledge/:orderId",async (req,res)=>{
+    const order=await Order.findById(req.params.orderId);
+    order.Order_status='responsePending';
+    order.save();
 })
 
 module.exports = router;
