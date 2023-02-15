@@ -23,20 +23,18 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
-    
+
     if (req.isowner) {
-        const obj={restaurant_id:req.restaurant};
-        if(req.query.status)
-        {
-            obj.Order_status=req.query.status;
+        const obj = { restaurant_id: req.restaurant };
+        if (req.query.status) {
+            obj.Order_status = req.query.status;
         }
         const orders = await Order.find(obj);
         res.status(200).json(orders);
     } else {
-        const obj={restaurant_id:req.user};
-        if(req.query.status)
-        {
-            obj.Order_status=req.query.status;
+        const obj = { restaurant_id: req.user };
+        if (req.query.status) {
+            obj.Order_status = req.query.status;
         }
         const orders = await Order.find(obj);
         res.status(200).json(orders);
@@ -67,27 +65,44 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
     }
 })
 
-//CREATE ORDER
-router.post('/food/order/:dishId', verifyToken, authenticateUser, async (req, res) => {
+//ADDING ORDER
+router.post('/food/order/add/:dishId', verifyToken, authenticateUser, async (req, res) => {
     try {
         const dish = await Dish.findById(req.params.dishId);
-        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'paymentPending' });
+        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'responsePending' });
         if (order.length) {
-
             order[0].items.push(req.params.dishId);
             order[0].total = order[0].total + dish.price;
             await order[0].save();
             return res.status(200).json(order[0]);
         }
         else {
-
             var today = new Date();
-            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'paymentPending' });
+            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'responsePending' });
             await newOrder.save()
             //payment gateway
             return res.status(200).json(newOrder);
         }
 
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//REMOVING THE ITEM
+router.post('/food/order/remove/:dishId', verifyToken, authenticateUser, async (req, res) => {
+    try {
+        const dish = await Dish.findById(req.params.dishId);
+        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'paymentPending' });
+        if (order.length) {
+            const index = order[0].items.indexOf(req.params.dishId);
+            if (index > -1) {
+                order[0].items.splice(index, 1); // 2nd parameter means remove one item only
+                order[0].total = order[0].total - dish.price;
+            }
+            await order[0].save();
+            return res.status(200).json(order[0]);
+        }
     } catch (err) {
         res.status(500).json(err);
     }
@@ -134,10 +149,10 @@ router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (
 })
 
 //COMPLETING THE ORDER
-router.put('/food/rest/complete/:orderid',  async (req, res) => {
+router.put('/food/rest/complete/:orderid', async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        order.Order_status='completed';
+        order.Order_status = 'completed';
         await order.save();
         console.log('here');
         res.status(200).json(order);
@@ -176,13 +191,13 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
             return res.status(400).send(err.message);
         }
         else {
-            return res.status(200).json({orderid:result.id,keyid:restaurant.razorpayCred.Key_id});
+            return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCred.Key_id });
         }
     })
 })
-router.put("/food/order/acknowledge/:orderId",async (req,res)=>{
-    const order=await Order.findById(req.params.orderId);
-    order.Order_status='responsePending';
+router.put("/food/order/acknowledge/:orderId", async (req, res) => {
+    const order = await Order.findById(req.params.orderId);
+    order.Order_status = 'responsePending';
     order.save();
 })
 
