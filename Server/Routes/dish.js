@@ -32,8 +32,10 @@ router.get('/food/dish/:dishId', async (req, res) => {
     try {
         const id = req.params.dishId;
         const dish = await Dish.findById(id);
+        
         res.status(200).json(dish);
     } catch (err) {
+        
         res.status(400).json(err);
     }
 })

@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../model/dishInfo.dart';
+import '../model/dishInfoUser.dart';
+
 class DishCard extends StatefulWidget {
   final DishInfo data;
   const DishCard({Key? key, required this.data}) : super(key: key);
@@ -14,14 +15,14 @@ class DishCard extends StatefulWidget {
 class _DishCardState extends State<DishCard> {
   @override
   Widget build(BuildContext context) {
-    var fav=false;
+    var fav = false;
     return GestureDetector(
       onTap: () {},
       // Card Wrapper
       child:
-      // Stack(
-      //   children: [
-      Container(
+          // Stack(
+          //   children: [
+          Container(
         width: 220,
         height: 180,
         alignment: Alignment.bottomCenter,
@@ -32,8 +33,10 @@ class _DishCardState extends State<DishCard> {
           image: DecorationImage(
             image: AssetImage('assets/images/restdefault.webp'
                 // widget.data.pic!
-            ),
-            colorFilter: (widget.data.InStock==true) ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                ),
+            colorFilter: (widget.data.InStock == true)
+                ? null
+                : new ColorFilter.mode(Colors.grey, BlendMode.saturation),
             fit: BoxFit.cover,
           ),
         ),
@@ -53,10 +56,15 @@ class _DishCardState extends State<DishCard> {
                 children: [
                   // Recipe Title
                   Text(
-                    widget.data.name!,
+                    widget.data.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white, fontSize: 14, height: 150 / 100, fontWeight: FontWeight.w600, fontFamily: 'inter'),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        height: 150 / 100,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'inter'),
                   ),
                   // Recipe Calories and Time
                   Container(
@@ -77,12 +85,18 @@ class _DishCardState extends State<DishCard> {
                               Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  Icon(Icons.crop_square_sharp, color:
-                                  // (widget.data.category=='veg')?Colors.green:
-                                  Colors.red, size: 12,),
-                                  Icon(Icons.circle, color:
-                                  // (widget.data.category=='veg')?Colors.green:
-                                  Colors.red, size: 14/3),
+                                  Icon(
+                                    Icons.crop_square_sharp,
+                                    color: (widget.data.category == 'veg')
+                                        ? Colors.green
+                                        : Colors.red,
+                                    size: 12,
+                                  ),
+                                  Icon(Icons.circle,
+                                      color: (widget.data.category == 'veg')
+                                          ? Colors.green
+                                          : Colors.red,
+                                      size: 14 / 3),
                                 ],
                               ),
                               Container(
@@ -90,10 +104,11 @@ class _DishCardState extends State<DishCard> {
                                 child: Text(
                                   // widget.data.category!.toString(),
                                   'check',
-                                  style: TextStyle(color: Colors.white, fontSize: 10),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
                                 ),
-                              ),]
-                        ),
+                              ),
+                            ]),
                         //SizedBox(width: 10),
                         // Wrap(
                         //   crossAxisAlignment: WrapCrossAlignment.center,
@@ -108,7 +123,6 @@ class _DishCardState extends State<DishCard> {
                         //     ),
                         //   ],
                         // )
-
                       ],
                     ),
                   )
