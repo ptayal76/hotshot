@@ -23,11 +23,22 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
+    
     if (req.isowner) {
-        const orders = await Order.find({ restaurant_id: req.restaurant });
+        const obj={restaurant_id:req.restaurant};
+        if(req.query.status)
+        {
+            obj.Order_status=req.query.status;
+        }
+        const orders = await Order.find(obj);
         res.status(200).json(orders);
     } else {
-        const orders = await Order.find({ user_id: req.user });
+        const obj={restaurant_id:req.user};
+        if(req.query.status)
+        {
+            obj.Order_status=req.query.status;
+        }
+        const orders = await Order.find(obj);
         res.status(200).json(orders);
     }
 })
@@ -165,9 +176,14 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
             return res.status(400).send(err.message);
         }
         else {
-            return res.status(200).json(result);
+            return res.status(200).json({orderid:result.id,keyid:restaurant.razorpayCred.Key_id});
         }
     })
+})
+router.put("/food/order/acknowledge/:orderId",async (req,res)=>{
+    const order=await Order.findById(req.params.orderId);
+    order.Order_status='responsePending';
+    order.save();
 })
 
 module.exports = router;

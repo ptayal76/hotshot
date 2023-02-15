@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/screens/restaurantPage.dart';
 class RestCard extends StatefulWidget {
   final RestInfo data;
   const RestCard({Key? key, required this.data}) : super(key: key);
@@ -14,10 +15,17 @@ class RestCard extends StatefulWidget {
 class _RestCardState extends State<RestCard> {
   @override
   Widget build(BuildContext context) {
-    List<int> bufferInt= widget.data.pic.map((e) => e as int).toList();
+    bool imgavail=false;
+    widget.data.pic==null? imgavail=false:imgavail=true;
+    List<int> bufferInt= (imgavail)?widget.data.pic!.map((e) => e as int).toList():[];
+    
+
+    Image img=(imgavail)?Image.memory(Uint8List.fromList(bufferInt)):Image.asset('assets/images/restdefault.webp');
     var fav=false;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> RestaurantPage(data: widget.data,image: img,)) );
+      },
       // Card Wrapper
       child:
       // Stack(
@@ -31,7 +39,7 @@ class _RestCardState extends State<RestCard> {
             color: Colors.grey,
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: Image.memory(Uint8List.fromList(bufferInt)).image,
+              image: img.image,
                colorFilter: (widget.data.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
               fit: BoxFit.cover,
             ),

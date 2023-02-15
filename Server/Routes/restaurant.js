@@ -33,14 +33,7 @@ router.get('/food/rest', async (req, res) => {
 });
 
 
-router.get('/food/rest/:name', async (req, res) => {
-  try {
-    const restaurants = await Restaurant.find({restaurantName:req.params.name});
-    return res.json(restaurants);
-  } catch (err) {
-    return res.status(402).send(err.message);
-  }
-});
+
 
 //GET A RESTAURANT BY ID
 router.get('/food/rest/:restid', async (req, res) => {

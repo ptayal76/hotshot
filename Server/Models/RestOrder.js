@@ -28,6 +28,15 @@ const order = new schema({
     Order_status: {
         type:String,
         enum: ['ready', 'completed', 'rejected', 'paymentPending','responsePending','accepted']
+    },
+    razorpayCred:{
+        Key_id:{
+            type:String
+        },
+        KeySecret:{
+            type:String
+        }
+
     }
 })
 module.exports= mongoose.model('Order', order);

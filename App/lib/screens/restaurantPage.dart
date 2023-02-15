@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:hotshot/model/dishInfo.dart';
+import 'package:hotshot/model/restInfo.dart';
 
+import '../constants/loader.dart';
 import '../rateme.dart';
+import '../services/restaurantServ.dart';
 import '../widgets/buttons1.dart';
 
 class RestaurantPage extends StatefulWidget {
+  final RestInfo data;
+  final Image image;
+  const RestaurantPage({Key? key, required this.data, required this.image}) : super(key: key);
   @override
   State<StatefulWidget> createState() => RestaurantPageState();
 }
@@ -13,6 +20,22 @@ class RestaurantPage extends StatefulWidget {
 class RestaurantPageState extends State<RestaurantPage> with SingleTickerProviderStateMixin {
   bool isfav = false;
   bool israted = false;
+  List<DishInfo>? dishes;
+  final RestaurantServ restServ = RestaurantServ();
+  fetchalldish() async {
+    // for(int i=0;i<((widget.data.menu==[])? 0:widget.data.menu!.length);i++) {
+      dishes= await restServ.fetchDish(context, widget.data.menu);
+      // print(x);
+      // dishes?.add(x);
+      // print(i);
+    // }
+
+    print('fetchedall');
+    print(dishes);
+    setState(() {
+
+    });
+  }
   final List<bool> isel = [false, false, false, false, false, false];
   String dropdownvalue = 'Below ₹1000';
   var items = [
@@ -39,7 +62,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
   @override
   void initState() {
     super.initState();
-
+    fetchalldish();
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
 
@@ -50,16 +73,16 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      home: dishes==null ? Loader():Scaffold(
         body: Stack(children: [
           ListView(
+            physics: BouncingScrollPhysics(),
             children: [
               Stack(
                 children: [
                   Container(
                     child: Image(
-                        image: NetworkImage(
-                            "https://tse1.mm.bing.net/th?id=OIP.1TubNvwR54s7oy0sdAaKZAHaE7&pid=Api&P=0")),
+                        image: widget.image.image),
                   ),
                   IconButton(
                       onPressed: () {},
@@ -119,7 +142,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                       ),
                     ),
                   ),
-                  const Positioned(
+                   Positioned(
                       left: 10,
                       bottom: 20,
                       child: BlurryContainer(
@@ -129,12 +152,12 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "Lohit canteen",
+                            widget.data.restaurantName,
                             style: TextStyle(fontSize: 28, color: Colors.white),
                           ),
                         ),
                       )),
-                  const Positioned(
+                   Positioned(
                       right: 8,
                       bottom: 6,
                       child: BlurryContainer(
@@ -144,7 +167,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "Lohit hostel",
+                            widget.data.location,
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ),
@@ -439,7 +462,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
               Container(
                 height: (9+161.8*5+150),
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: dishes?.length,
                   itemBuilder: (context, index) => Column(
                     children: [
                       // Text(
@@ -497,7 +520,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                 padding: const EdgeInsets.only(
                                     top: 5, left: 12, bottom: 8),
                                 child: Text(
-                                  "Veg Chowmein",
+                                  dishes![index].name!,
                                   style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w700),
@@ -658,14 +681,11 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                           borderRadius: BorderRadius.circular(12.0))),
                   icon: Icon(Icons.shopping_cart_outlined),
                   label: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            right: 140, bottom: 16, top: 16),
-                        child: Text(
-                          "$itemc item(s) in cart",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                      Text(
+                        "$itemc item(s) in cart",
+                        style: TextStyle(fontSize: 20),
                       ),
                       Text(
                         "₹$sum",
