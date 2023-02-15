@@ -32,9 +32,10 @@ router.get("/food/order", verifyToken, authenticate, async (req, res) => {
         const orders = await Order.find(obj);
         res.status(200).json(orders);
     } else {
-        const obj = { restaurant_id: req.user };
-        if (req.query.status) {
-            obj.Order_status = req.query.status;
+        const obj={user_id:req.user};
+        if(req.query.status)
+        {
+            obj.Order_status=req.query.status;
         }
         const orders = await Order.find(obj);
         res.status(200).json(orders);
