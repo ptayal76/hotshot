@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/services/google_auth.dart';
+import 'package:hotshot/services/microsoft_auth.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../restHome.dart';
 
 class CustomerSignIn extends StatefulWidget {
   const CustomerSignIn({Key? key}) : super(key: key);
@@ -108,6 +111,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                       loading = true;
                                     });
                                     await GoogleAuthentication().googleSignIn();
+
                                     setState(() {
                                       loading = false;
                                     });
@@ -144,17 +148,23 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                   height: 10,
                                 ),
                                 ElevatedButton.icon(
-                                  icon: Image.asset(
-                                    'assets/outlook.png',
-                                    width: 32,
-                                    height: 32,
-                                  ),
-                                  label: const Text(
-                                    'Sign in with Outlook',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  onPressed: () {},
-                                ),
+                                    icon: Image.asset(
+                                      'assets/outlook.png',
+                                      width: 32,
+                                      height: 32,
+                                    ),
+                                    label: const Text(
+                                      'Sign in with Outlook',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    onPressed: () {}
+                                    // async {
+                                    //   await microsoftSignIn();
+                                    //   setState(() {
+                                    //     loading = false;
+                                    //   });
+                                    // },
+                                    ),
                               ]),
                         ],
                       ),

@@ -3,7 +3,7 @@ enum OrderStatus{
   String toJson() => name;
   static OrderStatus fromJson(String json) => values.byName(json);
 }
-class Orders{
+class Orders {
   // String Rest_Id;
   // String  name;
   // String category;

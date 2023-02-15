@@ -33,14 +33,7 @@ router.get('/food/rest', async (req, res) => {
 });
 
 
-router.get('/food/rest/:name', async (req, res) => {
-  try {
-    const restaurants = await Restaurant.find({restaurantName:req.params.name});
-    return res.json(restaurants);
-  } catch (err) {
-    return res.status(402).send(err.message);
-  }
-});
+
 
 //GET A RESTAURANT BY ID
 router.get('/food/rest/:restid', async (req, res) => {
@@ -57,8 +50,11 @@ router.get('/food/rest/:restid', async (req, res) => {
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
     const restaurant = new Restaurant(req.body);
-    restaurant.pic.data = req.file.buffer;
-    restaurant.pic.contentType = req.file.mimetype;
+    if(req.file)
+    {
+      restaurant.pic.data = req.file.buffer;
+      restaurant.pic.contentType = req.file.mimetype;
+    }
     await restaurant.save();
 
     jwt.sign(

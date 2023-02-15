@@ -42,8 +42,11 @@ router.get('/food/dish/:dishId', async (req, res) => {
 router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, async (req, res) => {
     try {
         const newDish = new Dish(req.body);
-        newDish.pic.data = req.file.buffer;
-        newDish.pic.contentType = req.file.mimetype;
+        if(req.file)
+        {
+            newDish.pic.data = req.file.buffer;
+            newDish.pic.contentType = req.file.mimetype;
+        }
         newDish.Rest_Id = req.restaurant;
         const savedDish = await newDish.save();
         const restaurant = await Owner.findById(req.restaurant);
