@@ -26,6 +26,8 @@ router.get('/food/rest', async (req, res) => {
      if(req.query.rating) obj.rating={$gte :req.query.rating}
      if(req.query.locationCategory) obj.locationCategory=req.query.locationCategory;
      const restaurants = await Restaurant.find(obj);
+     console.log(req.body);
+     console.log(res.body);
      return res.json(restaurants);
   } catch (err) {
     return res.status(400).send(err.message);

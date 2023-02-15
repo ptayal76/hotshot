@@ -15,12 +15,13 @@ class RestInfo {
     required this.restaurantName,
     required this.phoneNumber,
     required this.email,
-    required this.menu,
+    this.menu,
     required this.location,
     required this.status,
     // required this.orderTypes,
-    required this.timing,
-    required this.pic
+    this.pic,
+    // this.timing,
+
   });
 
   String id;
@@ -28,12 +29,12 @@ class RestInfo {
   String restaurantName;
   String phoneNumber;
   String email;
-  List<String> menu;
+  List<String>? menu;
   String location;
   String status;
-  List<dynamic> pic;
+  List<dynamic>? pic;
    // orderTypes;
-  List<dynamic> timing;
+  // List<dynamic>? timing;
 
   factory RestInfo.fromJson(Map<String, dynamic> json) => RestInfo(
         id: json["_id"],
@@ -41,12 +42,14 @@ class RestInfo {
         restaurantName: json["restaurantName"],
         phoneNumber: json["phoneNumber"],
         email: json["email"],
-        menu: List<String>.from(json["menu"].map((x) => x)),
+        menu: json['menu'] != null ? List<String>.from(json['menu']!.map((x) => x,),) : [],
+        // List<String>.from(json["menu"].map((x) => x)),
         location: json["location"],
         status: json["status"],
         // orderTypes: OrderTypes.fromJson(json["order_types"]),
-        pic: json["pic"]["data"]["data"],
-        timing: List<dynamic>.from(json["timing"].map((x) => x)),
+        pic: json['pic'] != null ?json["pic"]["data"]["data"]:null,
+        // timing: json['timing'] != null ? List<String>.from(json['timing']!.map((x) => x,),) : [],
+        // List<dynamic>.from(json["timing"].map((x) => x)),
 
       );
 
@@ -56,11 +59,14 @@ class RestInfo {
         "restaurantName": restaurantName,
         "phoneNumber": phoneNumber,
         "email": email,
-        "menu": List<dynamic>.from(menu.map((x) => x)),
+        "menu":menu == null ? [] : List<dynamic>.from(menu!.map((x) => x)),
+        // menu   != null ? List<String>.from(menu?.map((x) => x,),) : null,
+        // List<dynamic>.from(menu.map((x) => x)),
         "location": location,
         "status": status,
         // "order_types": orderTypes.toJson(),
-        "timing": List<dynamic>.from(timing.map((x) => x)),
+        // "timing":timing == null ? [] : List<dynamic>.from(timing!.map((x) => x)),
+        // List<dynamic>.from(timing.map((x) => x)),
       };
 }
 

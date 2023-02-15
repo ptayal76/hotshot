@@ -30,7 +30,9 @@ class _DishCardState extends State<DishCard> {
           color: Colors.grey,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: AssetImage(widget.data.pic),
+            image: AssetImage('assets/images/restdefault.webp'
+                // widget.data.pic!
+            ),
             colorFilter: (widget.data.InStock==true) ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
             fit: BoxFit.cover,
           ),
@@ -51,7 +53,7 @@ class _DishCardState extends State<DishCard> {
                 children: [
                   // Recipe Title
                   Text(
-                    widget.data.name,
+                    widget.data.name!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white, fontSize: 14, height: 150 / 100, fontWeight: FontWeight.w600, fontFamily: 'inter'),
@@ -75,14 +77,19 @@ class _DishCardState extends State<DishCard> {
                               Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  Icon(Icons.crop_square_sharp, color: (widget.data.category=='veg')?Colors.green:Colors.red, size: 12,),
-                                  Icon(Icons.circle, color: (widget.data.category=='veg')?Colors.green:Colors.red, size: 14/3),
+                                  Icon(Icons.crop_square_sharp, color:
+                                  // (widget.data.category=='veg')?Colors.green:
+                                  Colors.red, size: 12,),
+                                  Icon(Icons.circle, color:
+                                  // (widget.data.category=='veg')?Colors.green:
+                                  Colors.red, size: 14/3),
                                 ],
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 5),
                                 child: Text(
-                                  widget.data.category,
+                                  // widget.data.category!.toString(),
+                                  'check',
                                   style: TextStyle(color: Colors.white, fontSize: 10),
                                 ),
                               ),]

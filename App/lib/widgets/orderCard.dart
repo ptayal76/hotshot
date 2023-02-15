@@ -28,10 +28,10 @@ class _OrderCardState extends State<OrderCard> {
                   // ListView.builder(itemBuilder: (context,index){
                   //   widget.data.items.forEach((key, value) {Text('$key: $value')});
                   // )
-                for(var element in widget.data.items.entries)
-                  ListTile(
-                    title: Text(element.key +": "+"${element.value}"),
-                  )
+                // for(var element in widget.data.items.entries)
+                //   ListTile(
+                //     title: Text(element.key +": "+"${element.value}"),
+                //   )
 
 
               ],

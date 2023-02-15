@@ -7,6 +7,7 @@ import 'package:hotshot/screens/restHome.dart';
 import 'package:hotshot/screens/authentication/customer/customer_sign_in.dart';
 import 'package:hotshot/screens/home.dart';
 import 'package:hotshot/screens/restHome.dart';
+import 'package:hotshot/screens/restaurantPage.dart';
 import 'package:hotshot/screens/shopkeeper_home.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeperhome.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RestHome(),
+      home: Cart(),
       theme: ThemeData(
           useMaterial3: true,
           brightness: Brightness.light,
