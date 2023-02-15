@@ -23,7 +23,6 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
-
     if (req.isowner) {
         const obj = { restaurant_id: req.restaurant };
         if (req.query.status) {
@@ -100,6 +99,9 @@ router.post('/food/order/remove/:dishId', verifyToken, authenticateUser, async (
             if (index > -1) {
                 order[0].items.splice(index, 1); // 2nd parameter means remove one item only
                 order[0].total = order[0].total - dish.price;
+                if(order[0].items.length==0){
+                    await Order.findByIdAndDelete(order[0]._id)
+                }
             }
             await order[0].save();
             return res.status(200).json(order[0]);
