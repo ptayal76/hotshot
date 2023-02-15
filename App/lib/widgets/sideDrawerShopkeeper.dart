@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:navigation_drawer_example/page/people_page.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
 
-class NavigationDrawer extends StatelessWidget {
+class MyNavigationDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   @override
   Widget build(BuildContext context) {

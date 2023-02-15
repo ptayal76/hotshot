@@ -43,7 +43,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
         centerTitle: true,
         elevation: 5,
       ),
-      drawer: NavigationDrawer(),
+      drawer: MyNavigationDrawer(),
       backgroundColor: Colors.brown[100],
       body: ListView(
         // physics: const NeverScrollableScrollPhysics(),
