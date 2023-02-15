@@ -23,11 +23,22 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
+    
     if (req.isowner) {
-        const orders = await Order.find({ restaurant_id: req.restaurant });
+        const obj={restaurant_id:req.restaurant};
+        if(req.query.status)
+        {
+            obj.Order_status=req.query.status;
+        }
+        const orders = await Order.find(obj);
         res.status(200).json(orders);
     } else {
-        const orders = await Order.find({ user_id: req.user });
+        const obj={restaurant_id:req.user};
+        if(req.query.status)
+        {
+            obj.Order_status=req.query.status;
+        }
+        const orders = await Order.find(obj);
         res.status(200).json(orders);
     }
 })
