@@ -122,6 +122,21 @@ router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (
     }
 })
 
+//COMPLETING THE ORDER
+router.put('/food/rest/complete/:orderid',  async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.orderid);
+        order.Order_status='completed';
+        await order.save();
+        console.log('here');
+        res.status(200).json(order);
+
+    }
+    catch (error) {
+        return res.status(402).send(error.message)
+    }
+})
+
 //DELETING AN ORDER
 router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
