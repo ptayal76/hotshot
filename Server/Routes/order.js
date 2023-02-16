@@ -116,7 +116,7 @@ router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (
     try {
         const order = await Order.findById(req.params.orderid);
         if (req.restaurant == order.restaurant_id) {
-            order.status = 'accepted';
+            order.Order_status = 'accepted';
             await order.save();
             res.status(200).send("Order Accepted");
         }
@@ -135,7 +135,7 @@ router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (
     try {
         const order = await Order.findById(req.params.orderid);
         if (req.restaurant == order.restaurant_id) {
-            order.status = 'rejected';
+            order.Order_status = 'rejected';
             await order.save();
             res.status(200).send("Order Rejected");
             //refund gateway
