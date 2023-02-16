@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'package:hotshot/widgets/dishCard.dart';
 import 'package:hotshot/widgets/restCard.dart';
+import 'package:hotshot/screens/statHome.dart';
+import 'package:hotshot/screens/otherHome.dart';
 import 'package:hotshot/widgets/sideDrawer.dart';
 import 'package:mongo_dart/mongo_dart.dart' hide State;
+// import '../constants/globvar.dart';
+import '../screens/cart.dart';
 import '../constants/loader.dart';
 import '../model/dishInfo.dart';
 import '../model/restHelper.dart';
+import 'package:badges/badges.dart' as badges;
 import '../model/restInfo.dart';
 import '../widgets/filters.dart';
 import '../widgets/searchBar.dart';
@@ -56,7 +61,7 @@ class _RestHomeState extends State<RestHome>
             ? null
             : BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xff307A59),
+                // color: const Color(0xff307A59),
               ),
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -99,6 +104,18 @@ class _RestHomeState extends State<RestHome>
                 onTap: (x) {
                   setState(() {
                     _selectedIndex = x;
+                    if(x == 2)
+                    {
+                      Navigator.pushReplacement(context,
+                          new MaterialPageRoute(builder: (BuildContext context) => OtherHome())
+                      );
+                    }
+                    else if(x == 1)
+                    {
+                      Navigator.pushReplacement(context,
+                          new MaterialPageRoute(builder: (BuildContext context) => StatHome())
+                      );
+                    }
                   });
                 },
                 labelColor: Colors.white,
@@ -132,12 +149,20 @@ class _RestHomeState extends State<RestHome>
           //pinned: false,
           //floating: false,
           actions: [
-            IconButton(
-              onPressed: () {
-                print(restaur![0].status);
-              },
-              icon: const Icon(Icons.shopping_cart),
-              tooltip: 'Cart',
+            badges.Badge(
+              position: badges.BadgePosition.topEnd(top: 3, end: 3),
+              badgeContent: Text(''),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (BuildContext context) => cart())
+                  );
+                },
+
+                icon: Icon(Icons.shopping_cart),
+                //alignment: Alignment(x, y),
+                tooltip: 'Cart',
+              ),
             )
           ],
         ),
@@ -152,7 +177,7 @@ class _RestHomeState extends State<RestHome>
               child: const Text(
                 'Top Picks',
                 style: TextStyle(
-                  color: Colors.black,
+                  // color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -233,7 +258,7 @@ class _RestHomeState extends State<RestHome>
                           child: Text(
                             'Restaurants',
                             style: TextStyle(
-                              color: Colors.black,
+                              // color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),

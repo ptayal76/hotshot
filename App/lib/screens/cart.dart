@@ -1,32 +1,49 @@
-// import 'package:flutter/material.dart';
-// import 'package:hotshot/model/orders.dart';
+import 'package:flutter/material.dart';
+import 'package:hotshot/widgets/menuCard.dart';
+import 'package:hotshot/widgets/cartCard.dart';
+// import 'package:hotshot/model/checkInfo.dart';
+import 'package:lottie/lottie.dart';
+// import 'package:hotshot/model/checkHelper.dart';
 
-// import '../model/restHelper.dart';
-// import '../widgets/orderCard.dart';
+class cart extends StatefulWidget {
+  const cart({Key? key}) : super(key: key);
 
-// class Cart extends StatefulWidget {
-//   Cart({Key? key}) : super(key: key);
-//   // final List<Orders> topPicks = RestHelper.cartOrders;
-//   @override
-//   State<Cart> createState() => _CartState();
-// }
+  @override
+  State<cart> createState() => _cartState();
+}
 
-// class _CartState extends State<Cart> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.separated(
-//         padding: EdgeInsets.symmetric(horizontal: 16),
-//         itemBuilder: (context, index) {
-//           return OrderCard(data: widget.topPicks[index]);
-//         },
-//         shrinkWrap: true,
-//         //scrollDirection: Axis.vertical,
-//         physics: NeverScrollableScrollPhysics(),
-//         separatorBuilder: (context, index) {
-//           return SizedBox(
-//             height: 16,
-//           );
-//         },
-//         itemCount: widget.topPicks.length);
-//   }
-// }
+class _cartState extends State<cart> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cart'),
+        backgroundColor: const Color(0xff307A59),
+        centerTitle: true,
+      ),
+      body: ListView(
+
+          children: [
+            SizedBox(height:40,child: Center(child: Text('Your Orders',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),))),
+            Lottie.asset('assets/lottie/cart.json',height: 200,width: 50),
+            ListView.separated(
+                padding: EdgeInsets.symmetric(horizontal: 2),
+                itemBuilder: (context, index) {
+                  return CartCard(); //(data: widget.stat[index]
+                },
+                shrinkWrap: true,
+                //scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
+                separatorBuilder: (context, index) {
+                  return SizedBox(
+                    height: 1,
+                  );
+                },
+                itemCount: 5
+            ),
+          ]
+      ),
+    );
+  }
+}

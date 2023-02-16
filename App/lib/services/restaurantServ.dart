@@ -13,9 +13,9 @@ import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
 
 class RestaurantServ {
-
+  String MONGO_URL = 'http://10.0.2.2:8080';
   void postRestaurant(ShopVerificationInfo info, MyUser? user)async{
-    const MONGO_URL = 'http://10.0.2.2:8080';
+
                         
     Map<String,dynamic> body = {
       'ownerName': user!.fullName,
@@ -48,7 +48,7 @@ class RestaurantServ {
     List<RestInfo> RestList = [];
     try {
       http.Response res =
-          await http.get(Uri.parse('http://10.0.2.2:8080/food/rest'));
+          await http.get(Uri.parse('${MONGO_URL}/food/rest'));
       var obj = jsonDecode(res.body);
       print(obj[0].runtimeType);
       print(obj.length);
@@ -81,7 +81,7 @@ class RestaurantServ {
     List<RestInfo> RestList = [];
     try {
       http.Response res =
-      await http.get(Uri.parse('http://10.0.2.2:8080/food/rest/$restid'));
+      await http.get(Uri.parse('${MONGO_URL}/food/rest/$restid'));
       var obj=jsonDecode(res.body);
       print(obj.runtimeType);
       // print(obj.length);
@@ -118,7 +118,7 @@ class RestaurantServ {
     try {
       for (int i = 0; i < menu!.length; i++) {
         http.Response res = await http.get(
-            Uri.parse('http://10.0.2.2:8080/food/dish/${menu[i].toString()}'));
+            Uri.parse('${MONGO_URL}/food/dish/${menu[i].toString()}'));
         var obj = jsonDecode(res.body);
         // print(obj[0].runtimeType);
         // print(obj);
@@ -161,7 +161,7 @@ class RestaurantServ {
     try {
       // for(int i=0;i<menu!.length;i++){
         http.Response res =
-        await http.post(Uri.parse('http://10.0.2.2:8080/food/order/add/${dishid}',),headers: {
+        await http.post(Uri.parse('${MONGO_URL}/food/order/add/${dishid}',),headers: {
             'Authorization': token});
         // var obj=jsonDecode(res.body);
         // print(obj[0].runtimeType);
@@ -222,7 +222,7 @@ class RestaurantServ {
     try {
       // for(int i=0;i<menu!.length;i++){
       http.Response res =
-      await http.post(Uri.parse('http://10.0.2.2:8080/food/order/remove/${dishid}',),headers: {
+      await http.post(Uri.parse('${MONGO_URL}/food/order/remove/${dishid}',),headers: {
         'Authorization': token});
       // var obj=jsonDecode(res.body);
       // print(obj[0].runtimeType);

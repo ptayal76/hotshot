@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/dummy_checkout.dart';
+import 'package:hotshot/screens/restHome.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
               colorSchemeSeed: const Color(0xff307A59)
             ),
             themeMode: themeProvider.themeMode,
-            home: const ShopkeeperVerificationForm(),
+            home: RestHome(),
           ),
         );
       }

@@ -21,10 +21,10 @@ class NavigationDrawerWidget extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             buildHeader(
-                urlImage: urlImage,
-                name: name,
-                email: email,
-                onClicked: () => {}
+              urlImage: urlImage,
+              name: name,
+              email: email,
+              onClicked: () => {}
               //     Navigator.of(context).push(MaterialPageRoute(
               //   builder: (context) => UserPage(
               //     name: 'Sarah Abs',
@@ -41,9 +41,9 @@ class NavigationDrawerWidget extends StatelessWidget {
                     text: 'Order History',
                     icon: Icons.history_outlined,
                     onClicked: () => {
-                      Navigator.push(context,
-                          new MaterialPageRoute(builder: (BuildContext context) => OrdHistory())
-                      )
+                    Navigator.push(context,
+                    new MaterialPageRoute(builder: (BuildContext context) => OrdHistory())
+                    )
                     },
                   ),
                   const SizedBox(height: 16),
@@ -178,14 +178,14 @@ class NavigationDrawerWidget extends StatelessWidget {
 
     switch (index) {
       case 0:
-      // Navigator.of(context).push(MaterialPageRoute(
-      //   builder: (context) => PeoplePage(),
-      // ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => PeoplePage(),
+        // ));
         break;
       case 1:
-      // Navigator.of(context).push(MaterialPageRoute(
-      //   builder: (context) => FavouritesPage(),
-      // ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => FavouritesPage(),
+        // ));
         break;
     }
   }
