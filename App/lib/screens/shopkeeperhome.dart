@@ -27,8 +27,8 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
   String restName = '';
 
   void getData(BuildContext context)async{
-    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, '63ee484bafeffec841f4f440');
-    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, '63ee484bafeffec841f4f440');
+    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, '63ed146b1ba86c790b430d5d');
+    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, '63ed146b1ba86c790b430d5d');
 
     setState(() {
       menu = result ?? [];

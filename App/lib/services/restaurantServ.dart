@@ -56,7 +56,7 @@ class RestaurantServ {
       return result;
     }
     catch(e){
-      print('ERROR FETHING MENU');
+      print('ERROR FETCHING MENU');
       print(e.toString());
       return null;
     }
