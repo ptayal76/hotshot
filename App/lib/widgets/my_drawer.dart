@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/screens/PendingOrders.dart';
+import 'package:hotshot/screens/feedback.dart';
+import 'package:hotshot/screens/ordHistory.dart';
 import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -64,17 +67,38 @@ class _MyDrawerState extends State<MyDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:(context) => OrdHistory(),
+                          )
+                        );
+                      },
                       style: drawerButtonStyle,
                       label: const Text('Order History'),
                       icon: const Icon(Icons.history_rounded),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
-                      style: drawerButtonStyle,
-                      label: const Text('Insights'),
-                      icon: const Icon(Icons.auto_graph_rounded),
+                      icon: const Icon(Icons.pending_actions_rounded),
+                      label: const Text('Pending Orders'),
+                      onPressed: (){
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:(context) => PendHistory(),
+                          )
+                        );
+                      },
                     ),
+                    // TextButton.icon(
+                    //   onPressed: () {},
+                    //   style: drawerButtonStyle,
+                    //   label: const Text('Insights'),
+                    //   icon: const Icon(Icons.auto_graph_rounded),
+                    // ),
                     TextButton.icon(
                       onPressed: () {
                         Navigator.pop(context);
@@ -91,9 +115,17 @@ class _MyDrawerState extends State<MyDrawer> {
                           : const Icon(Icons.nightlight_round),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => feedback(),
+                          )
+                        );
+                      },
                       style: drawerButtonStyle,
-                      label: const Text('Rate Us'),
+                      label: const Text('Feedback'),
                       icon: const Icon(Icons.star_rate_rounded),
                     ),
                     TextButton.icon(
