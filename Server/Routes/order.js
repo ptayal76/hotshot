@@ -23,7 +23,6 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
-
     if (req.isowner) {
         const obj = { restaurant_id: req.restaurant };
         if (req.query.status) {
@@ -32,9 +31,10 @@ router.get("/food/order", verifyToken, authenticate, async (req, res) => {
         const orders = await Order.find(obj);
         res.status(200).json(orders);
     } else {
-        const obj = { restaurant_id: req.user };
-        if (req.query.status) {
-            obj.Order_status = req.query.status;
+        const obj={user_id:req.user};
+        if(req.query.status)
+        {
+            obj.Order_status=req.query.status;
         }
         const orders = await Order.find(obj);
         res.status(200).json(orders);
@@ -69,7 +69,7 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
 router.post('/food/order/add/:dishId', verifyToken, authenticateUser, async (req, res) => {
     try {
         const dish = await Dish.findById(req.params.dishId);
-        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'responsePending' });
+        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'paymentPending' });
         if (order.length) {
             order[0].items.push(req.params.dishId);
             order[0].total = order[0].total + dish.price;
@@ -78,7 +78,7 @@ router.post('/food/order/add/:dishId', verifyToken, authenticateUser, async (req
         }
         else {
             var today = new Date();
-            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'responsePending' });
+            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'paymentPending' });
             await newOrder.save()
             //payment gateway
             return res.status(200).json(newOrder);
@@ -99,6 +99,9 @@ router.post('/food/order/remove/:dishId', verifyToken, authenticateUser, async (
             if (index > -1) {
                 order[0].items.splice(index, 1); // 2nd parameter means remove one item only
                 order[0].total = order[0].total - dish.price;
+                if(order[0].items.length==0){
+                    await Order.findByIdAndDelete(order[0]._id)
+                }
             }
             await order[0].save();
             return res.status(200).json(order[0]);

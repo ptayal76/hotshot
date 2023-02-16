@@ -1,16 +1,16 @@
 // import 'package:flutter/material.dart';
 // import 'package:hotshot/model/orders.dart';
-//
+
 // import '../model/restHelper.dart';
 // import '../widgets/orderCard.dart';
-//
+
 // class Cart extends StatefulWidget {
 //   Cart({Key? key}) : super(key: key);
-//   final List<Orders> topPicks = RestHelper.cartOrders;
+//   // final List<Orders> topPicks = RestHelper.cartOrders;
 //   @override
 //   State<Cart> createState() => _CartState();
 // }
-//
+
 // class _CartState extends State<Cart> {
 //   @override
 //   Widget build(BuildContext context) {

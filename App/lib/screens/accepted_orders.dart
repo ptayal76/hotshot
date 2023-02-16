@@ -37,7 +37,7 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
           centerTitle: true,
           elevation: 5,
         ),
-        drawer: myNavigationDrawer(),
+        drawer: MyNavigationDrawer(),
         body: ListView.separated(
           padding: const EdgeInsets.all(8),
           itemCount: items.length,

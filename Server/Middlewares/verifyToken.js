@@ -93,6 +93,7 @@ const authenticate=(req,res,next)=>{
             if (authData.isowner) {
                 req.isowner=true
                 req.restaurant=authData.id
+                next();
             } else {
                 const user = await User.findById(authData.id);
                 if (!user) {

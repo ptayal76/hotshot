@@ -22,7 +22,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
   List<Order>? order;
   final OrderServ restServ = OrderServ();
   fetchallorder() async {
-    order = await restServ.fetchAllOrders(context);
+    order = await restServ.fetchResponsePendingOrders(context);
     setState(() {});
   }
 
@@ -68,7 +68,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
               centerTitle: true,
               elevation: 5,
             ),
-            drawer: myNavigationDrawer(),
+            drawer: MyNavigationDrawer(),
             body: ListView.separated(
                 padding: const EdgeInsets.all(8),
                 itemCount: order!.length,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
+import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/model/shop_verification_info.dart';
-import 'package:hotshot/screens/verification_pending.dart';
+import 'package:hotshot/services/restaurantServ.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class ShopkeeperVerificationForm extends StatefulWidget {
   const ShopkeeperVerificationForm({super.key});
@@ -49,6 +51,8 @@ class _ShopkeeperVerificationFormState extends State<ShopkeeperVerificationForm>
       );
     }
 
+    final user = Provider.of<MyUser?>(context);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
@@ -78,53 +82,19 @@ class _ShopkeeperVerificationFormState extends State<ShopkeeperVerificationForm>
                     showToast('Fields cannot be left empty');
                   }
                   else{
-                    final shop = ShopVerificationInfo(
-                      closeTime: closingTime,
-                      location: location,
-                      locationCategory: locationCategory!,
-                      phoneNumber: '',
-                      shopName: shopName,
-                      shopType: shopType!,
-                      startTime: startingTime
-                    );
 
-                    if(shop.shopType == 'Eatery'){
+                    if(shopType == 'Eatery'){
                       try {
-                        const MONGO_URL = 'http://10.0.2.2:8080';
-                        
-                        Map<String,dynamic> body = {
-                          'ownerName': 'Hardik',
-                          'restaurantName': shop.shopName,
-                          'phoneNumber': '1234',
-                          'email': 'myemail.com',
-                          'location': shop.location,
-                          // 'timing': [
-                          //   {
-                          //     'start_time': shop.startTime
-                          //   },
-                          //   {
-                          //     'end_time': shop.closeTime
-                          //   }
-                          // ],
-                          'status': 'on',
-                          // 'pic': Image(image: AssetImage('assets/images/iitg.jpg'),)
-                        };
-                        Map<String,String> customHeaders = {
-                          "content-type": "application/json"
-                        };
-                        var pobj=jsonEncode(body);
-                        print(pobj);
-                        String url = MONGO_URL + '/food/rest';
-                        var res = await http.post(Uri.parse(url),headers: customHeaders ,body: pobj);
-                        print(res.statusCode.toString());
-                        print(res.body.toString());
-                        switch(res.statusCode){
-                          case 200:
-                            print('Success');
-                            break;
-                          default:
-                            print('ERROR');
-                        }
+                        final data = ShopVerificationInfo(
+                          closeTime: closingTime,
+                          shopName: shopName,
+                          shopType: shopType!,
+                          startTime: startingTime,
+                          location: location,
+                          locationCategory: locationCategory!,
+                          phoneNumber: ''
+                        );
+                        RestaurantServ().postRestaurant(data, user);
                       } catch (e) {
                         print(e.toString());
                       }
@@ -278,7 +248,11 @@ class _ShopkeeperVerificationFormState extends State<ShopkeeperVerificationForm>
                               context: context,
                           );
                           if(pickedTime != null ){
-                            String formattedTime = '${pickedTime.hour}:${pickedTime.minute}';
+                            String dummy = '';
+                            if(pickedTime.minute <= 9){
+                              dummy = '0';
+                            }
+                            String formattedTime = '${pickedTime.hour}:$dummy${pickedTime.minute}';
                         
                             setState(() {
                               startingTime = formattedTime;
@@ -288,7 +262,7 @@ class _ShopkeeperVerificationFormState extends State<ShopkeeperVerificationForm>
                           else{}
                         },
                         decoration: textInputDecoration.copyWith(
-                          hintText: 'Starting Time',
+                          hintText: 'Opening Time',
                           prefixIcon: const Icon(Icons.watch_later_outlined)
                         ),
                       ),
@@ -304,7 +278,11 @@ class _ShopkeeperVerificationFormState extends State<ShopkeeperVerificationForm>
                               context: context,
                           );
                           if(pickedTime != null ){
-                            String formattedTime = '${pickedTime.hour}:${pickedTime.minute}';
+                            String dummy = '';
+                            if(pickedTime.minute <= 9){
+                              dummy = '0';
+                            }
+                            String formattedTime = '${pickedTime.hour}:$dummy${pickedTime.minute}';
                         
                             setState(() {
                               closingTime = formattedTime;
