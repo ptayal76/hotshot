@@ -5,6 +5,7 @@ import 'package:hotshot/screens/feedback.dart';
 // import 'package:navigation_drawer_example/page/people_page.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
 import 'package:hotshot/screens/ordHistory.dart';
+import 'package:hotshot/services/google_auth.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -79,7 +80,9 @@ class NavigationDrawerWidget extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       child: Text("Logout", style: TextStyle(fontSize: 20),),
-                      onPressed: (){},
+                      onPressed: (){
+                        GoogleAuthentication().googleLogout();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                       ),

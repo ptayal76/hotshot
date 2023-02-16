@@ -13,7 +13,7 @@ import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
 
 class RestaurantServ {
-  String MONGO_URL = 'http://10.0.2.2:8080';
+  String MONGO_URL = 'http://192.168.1.106:8080';
   void postRestaurant(ShopVerificationInfo info, MyUser? user)async{
 
                         
@@ -40,6 +40,23 @@ class RestaurantServ {
         await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
     print(res.body);
     print('SUCCESS');
+  }
+
+  Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID)async{
+    List<DishInfo> menu = [];
+
+    try {
+      //http.Response res = await http.get(Uri.parse(''));
+      RestInfo restaurant = await fetchRestaurantsbyID(context, restID);
+      
+      List<DishInfo> result = await fetchDish(context, restaurant.menu);
+      return result;
+    }
+    catch(e){
+      print('ERROR FETHING MENU');
+      print(e.toString());
+      return null;
+    }
   }
 
   Future<List<RestInfo>> fetchAllRestaurants(BuildContext context) async {

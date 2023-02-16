@@ -13,7 +13,7 @@ class UserServ {
     };
     Map<String, String> customHeaders = {"content-type": "application/json"};
     final userjson = jsonEncode(m);
-    const uri = 'http://10.0.2.2:8000/login';
+    const uri = 'http://192.168.1.115:8080/login';
 
     var res =
         await http.post(Uri.parse(uri), headers: customHeaders, body: userjson);

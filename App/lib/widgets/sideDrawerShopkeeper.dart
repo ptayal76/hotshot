@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:navigation_drawer_example/page/favourites_page.dart';
 // import 'package:navigation_drawer_example/page/people_page.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
+import 'package:hotshot/services/google_auth.dart';
 
 class MyNavigationDrawer extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
@@ -57,10 +58,10 @@ class MyNavigationDrawer extends StatelessWidget {
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          // backgroundColor: Colors.green.shade100,
-                          ),
+                      onPressed: () {
+                        GoogleAuthentication().googleLogout();
+                      },
+                      style: ElevatedButton.styleFrom(),
                       child: const Text(
                         "Logout",
                         style: TextStyle(fontSize: 20),
