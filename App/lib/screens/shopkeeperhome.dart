@@ -1,10 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/screens/add_item_page.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/restaurantServ.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/sideDrawerShopkeeper.dart';
 
@@ -27,8 +31,11 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
   String restName = '';
 
   void getData(BuildContext context)async{
-    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, '63ed146b1ba86c790b430d5d');
-    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, '63ed146b1ba86c790b430d5d');
+
+    final tkn = await AuthService().getToken();
+
+    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, tkn!);
+    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, tkn!);
 
     setState(() {
       menu = result ?? [];
@@ -165,7 +172,12 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
           Expanded(
             child: ListView.builder(
               itemCount: menu.length,
-              itemBuilder:  (context, index) => Row(
+              itemBuilder:  (context, index){
+              bool imgavail=false;
+              menu[index].pic==null? imgavail=false:imgavail=true;
+              List<int> bufferInt= (imgavail)?menu[index].pic!.map((e) => e as int).toList():[];
+              Image img=(imgavail)?Image.memory(Uint8List.fromList(bufferInt)):Image.asset('assets/images/restdefault.webp');
+              return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
@@ -179,12 +191,11 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.transparent),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20200603193204/Chow-Mein.jpg"
-                            ),
-                            fit: BoxFit.cover
-                          )
+                          image: DecorationImage(
+                            image: img.image,
+                            // colorFilter: (menu[index].status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       Card(
@@ -313,7 +324,8 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                     ),
                   ),
                 ],
-              ),
+              );
+              }
             )
           )
         ]

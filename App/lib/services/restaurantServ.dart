@@ -6,6 +6,7 @@ import 'package:hotshot/model/shop_verification_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -178,7 +179,7 @@ class RestaurantServ {
 
   Future<void> postCartOrder(BuildContext context, String dishid) async {
     final user = Provider.of<MyUser?>(context, listen: false);
-    final tkn = (await SharedPreferences.getInstance()).getString('token');
+    final tkn = await AuthService().getToken();
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
     String token = 'Bearer $tkn'; // +

@@ -51,6 +51,10 @@ class AuthService {
     print('PREFS SAVED');
   }
 
+  Future<String?> getToken()async{
+    return (await SharedPreferences.getInstance()).getString('token');
+  }
+
   Future register(String email, String password, String fullName) async {
     try {
       UserCredential result = await _authService.createUserWithEmailAndPassword(
