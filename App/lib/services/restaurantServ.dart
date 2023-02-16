@@ -23,22 +23,21 @@ class RestaurantServ {
       'phoneNumber': 'info.phoneNumber',
       'email': user.email,
       'location': info.location,
-      'timing': [
-        {
-          'start_time': info.startTime
-        },
-        {
-          'end_time': info.closeTime
-        }
-      ],
+      // 'timing': [
+      //   {
+      //     'start_time': info.startTime
+      //   },
+      //   {
+      //     'end_time': info.closeTime
+      //   }
+      // ],
       'status': 'on',
     };
-    Map<String,String> customHeaders = {
-      "content-type": "application/json"
-    };
-    var pobj=jsonEncode(body);
+    Map<String, String> customHeaders = {"content-type": "application/json"};
+    var pobj = jsonEncode(body);
     String url = MONGO_URL + '/food/rest';
-    var res = await http.post(Uri.parse(url),headers: customHeaders ,body: pobj);
+    var res =
+        await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
     print(res.body);
     print('SUCCESS');
   }

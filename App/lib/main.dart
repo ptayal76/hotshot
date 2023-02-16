@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/screens/authentication/customer/customer_sign_in.dart';
 import 'package:hotshot/screens/dummy_checkout.dart';
+import 'package:hotshot/screens/home.dart';
 import 'package:hotshot/screens/restHome.dart';
+import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
@@ -23,7 +26,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
       builder: (context, _) {
@@ -57,5 +59,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

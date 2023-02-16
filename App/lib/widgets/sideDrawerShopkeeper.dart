@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
 
 class MyNavigationDrawer extends StatelessWidget {
-  final padding = EdgeInsets.symmetric(horizontal: 20);
+  final padding = const EdgeInsets.symmetric(horizontal: 20);
   @override
   Widget build(BuildContext context) {
     final name = 'Sarah Abs';
@@ -14,7 +14,7 @@ class MyNavigationDrawer extends StatelessWidget {
 
     return Drawer(
       child: Material(
-        color: const Color(0xff307A59),
+        // color: const Color(0xff307A59),
         child: ListView(
           children: <Widget>[
             buildHeader(
@@ -52,17 +52,18 @@ class MyNavigationDrawer extends StatelessWidget {
                     onClicked: () => selectedItem(context, 2),
                   ),
                   const SizedBox(height: 24),
-                  Divider(color: Colors.white70),
+                  // Divider(color: Colors.white70),
+                  const Divider(),
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(fontSize: 20),
-                      ),
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green.shade100,
+                          // backgroundColor: Colors.green.shade100,
+                          ),
+                      child: const Text(
+                        "Logout",
+                        style: TextStyle(fontSize: 20),
                       ),
                     ),
                   )
@@ -84,22 +85,26 @@ class MyNavigationDrawer extends StatelessWidget {
       InkWell(
         onTap: onClicked,
         child: Container(
-          padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
+          padding: padding.add(const EdgeInsets.symmetric(vertical: 40)),
           child: Row(
             children: [
               CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     email,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ],
               ),
@@ -143,13 +148,13 @@ class MyNavigationDrawer extends StatelessWidget {
     required IconData icon,
     VoidCallback? onClicked,
   }) {
-    final color = Colors.white;
-    final hoverColor = Colors.white70;
+    // final color = Colors.white;
+    // final hoverColor = Colors.white70;
 
     return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(text, style: TextStyle(color: color)),
-      hoverColor: hoverColor,
+      leading: Icon(icon), //, color: color),
+      title: Text(text), //, style: TextStyle(color: color)),
+      // hoverColor: hoverColor,
       onTap: onClicked,
     );
   }

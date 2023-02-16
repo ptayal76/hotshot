@@ -31,7 +31,7 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              // color: Colors.black,
             ),
           ),
           centerTitle: true,
@@ -46,9 +46,9 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
           ),
           itemBuilder: (context, index) {
             return Container(
-                height: 122,
+                height: 114,
                 decoration: BoxDecoration(
-                    color: Colors.green[100],
+                    // color: Colors.green[100],
                     border: Border.all(
                       color: blackColor,
                     ),
@@ -92,31 +92,32 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen> {
                       ),
                     ]),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       // alignment: Alignment.bottomRight,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: _hasBeenPressed
-                                  ? Colors.green.shade100
-                                  : Colors.grey,
-                              //foregroundColor: _hasBeenPressed ? Colors.green : Colors.grey,
-                            ),
-                            onPressed: () => {
-                                  setState(() {
-                                    _hasBeenPressed = !_hasBeenPressed;
-                                    _hasBeenPressed
-                                        ? (status = 'Order is Ready!')
-                                        : status = 'Ready?';
-                                  })
-                                },
-                            child: Text(status)),
+                        //   OutlinedButton(
+                        //       style: OutlinedButton.styleFrom(
+                        //         backgroundColor: _hasBeenPressed
+                        //             ? Colors.green.shade100
+                        //             : Colors.grey,
+                        //         //foregroundColor: _hasBeenPressed ? Colors.green : Colors.grey,
+                        //       ),
+                        //       onPressed: () => {
+                        //             setState(() {
+                        //               _hasBeenPressed = !_hasBeenPressed;
+                        //               _hasBeenPressed
+                        //                   ? (status = 'Order is Ready!')
+                        //                   : status = 'Ready?';
+                        //             })
+                        //           },
+                        //       child: Text(status)),
                         Builder(
                           builder: ((context) {
                             return TextButton(
                               onPressed: () {
                                 showModalBottomSheet(
-                                    backgroundColor: Colors.green.shade100,
+                                    // backgroundColor: Colors.green.shade100,
                                     context: context,
                                     builder: (context) {
                                       return Wrap(

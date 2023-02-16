@@ -28,20 +28,8 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-app.use(express.json());
-app.post('/login', async (req, res) => {
-  const user = new User(req.body);
-  user.save();
-  jwt.sign(
-    { isowner: false, id: user._id },
-    process.env.JWT_SEC,
-    (err, token) => {
-      res.header('token', `${token}`);
-      return res.json(user);
-    }
-  );
-});
 
+app.use(express.json());
 app.use(restaurantRoute);
 app.use(dishRoute);
 app.use(orderRoute);

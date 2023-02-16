@@ -21,15 +21,15 @@ class OrderCard extends StatefulWidget {
   State<OrderCard> createState() => _OrderCardState();
 }
 
-List<String> names = [];
+List<String> abc(List<DishInfo?> dishes) {
+  List<String> names = [];
 
-void abc(List<DishInfo?> dishes) {
   for (int i = 0; i < dishes.length; i++) {
     // print(dishes![i].name!);
     print(dishes[i]!.name!);
     names.add(dishes[i]!.name!);
   }
-  // return names;
+  return names;
   print("hello123");
 }
 
@@ -62,14 +62,14 @@ class _OrderCardState extends State<OrderCard> {
     // List<int> bufferInt= widget.data.pic.map((e) => e as int).toList();
     var fav = false;
     return dishes == null
-        ? Loader()
+        ? const Loader()
         : Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
               Container(
-                  height: 122,
+                  height: 132,
                   decoration: BoxDecoration(
-                      color: Colors.green[100],
+                      // color: Colors.green[100],
                       border: Border.all(
                         color: blackColor,
                       ),
@@ -85,7 +85,7 @@ class _OrderCardState extends State<OrderCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Order ID: ${widget.data.id[0]}",
+                                "Order ID: ${widget.data.id.substring(0, 3)}...${widget.data.id.substring(widget.data.id.length - 3, widget.data.id.length)}",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 20,
@@ -93,7 +93,7 @@ class _OrderCardState extends State<OrderCard> {
                               ),
                               Text(
                                 "${widget.data.timeOfOrder.substring(11, 16)}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -113,7 +113,9 @@ class _OrderCardState extends State<OrderCard> {
                             //   overflow: TextOverflow.ellipsis,
                             // )),
                             child: Text(
-                              'Order Items: $names',
+                              'Order Items: ${abc(dishes!)}'
+                                  .replaceAll('[', '')
+                                  .replaceAll(']', ''),
                               style: const TextStyle(fontSize: 20),
                               maxLines: 1,
                               softWrap: false,
@@ -131,8 +133,8 @@ class _OrderCardState extends State<OrderCard> {
                                 return TextButton(
                                     onPressed: () {
                                       showModalBottomSheet(
-                                          backgroundColor:
-                                              Colors.green.shade100,
+                                          // backgroundColor:
+                                          //     Colors.green.shade100,
                                           context: context,
                                           builder: (context) {
                                             return Wrap(
@@ -149,21 +151,29 @@ class _OrderCardState extends State<OrderCard> {
                                                       Icons.lock_clock),
                                                   // ignore: prefer_const_constructors
                                                   title: Text(
-                                                      'Time: ${widget.data.timeOfOrder}'),
+                                                      'Time: ${widget.data.timeOfOrder.substring(11, 16)}'),
                                                 ),
                                                 ListTile(
-                                                  leading: Icon(Icons.money),
+                                                  leading:
+                                                      const Icon(Icons.money),
                                                   title: Text(
                                                       'Total Price: ${widget.data.total}'),
                                                 ),
-                                                ListTile(
-                                                  isThreeLine: true,
-                                                  leading: const Icon(
-                                                      Icons.list_sharp),
-                                                  title: const Text(
-                                                      'Order Items: '),
-                                                  subtitle: Text(
-                                                      '${widget.data.items}'),
+                                                Flexible(
+                                                  child: ListTile(
+                                                    isThreeLine: true,
+                                                    leading: const Icon(
+                                                        Icons.list_sharp),
+                                                    title: const Text(
+                                                        'Order Items: '),
+                                                    subtitle: Text(
+                                                      '${abc(dishes!)}'
+                                                          .replaceAll('[', '')
+                                                          .replaceAll(']', ''),
+                                                      style: const TextStyle(
+                                                          fontSize: 18),
+                                                    ),
+                                                  ),
                                                 ),
 
                                                 Row(
@@ -184,8 +194,8 @@ class _OrderCardState extends State<OrderCard> {
                                                           TextButton.styleFrom(
                                                         minimumSize:
                                                             const Size(120, 0),
-                                                        backgroundColor:
-                                                            Colors.lightGreen,
+                                                        // backgroundColor:
+                                                        //     Colors.lightGreen,
                                                       ),
                                                     ),
                                                     TextButton.icon(
@@ -225,14 +235,14 @@ class _OrderCardState extends State<OrderCard> {
                   ? Container(
                       // alignment: Alignment.bottomCenter,
                       decoration: BoxDecoration(
-                        color: Colors.green[100],
+                        // color: Colors.green[100],
                         border: Border.all(
-                          color: Colors.green.shade100,
-                        ),
+                            // color: Colors.green.shade100,
+                            ),
                         borderRadius: const BorderRadius.vertical(
                             bottom: Radius.circular(20)),
                       ),
-                      height: 25,
+                      height: 35,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

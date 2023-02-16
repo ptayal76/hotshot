@@ -54,7 +54,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
               actions: const [
                 CircleAvatar(
                   backgroundImage: AssetImage('assets/droppedImage.jpg'),
-                  backgroundColor: greenColor,
+                  // backgroundColor: greenColor,
                 ),
               ],
               title: const Text(
@@ -62,7 +62,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  // color: Colors.black,
                 ),
               ),
               centerTitle: true,

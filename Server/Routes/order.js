@@ -186,8 +186,8 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         return res.status(403).json({ message: "you are not authenticated" });
     }
     const razorpayInstance = new Razorpay({
-        key_id: restaurant.razorpayCred.Key_id,
-        key_secret: restaurant.razorpayCred.KeySecret
+        key_id: restaurant.razorpayCred.Key_id || process.env.RZP_KEY_ID,
+        key_secret: restaurant.razorpayCred.KeySecret || process.env.RZP_SEC_KEY
     })
     razorpayInstance.orders.create({ amount: order.total * 100, currency: "INR" }, (err, result) => {
         if (err) {

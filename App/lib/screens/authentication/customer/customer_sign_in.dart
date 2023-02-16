@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/services/microsoft_auth.dart';
+import 'package:hotshot/services/restaurantServ.dart';
+import 'package:hotshot/services/user_service.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import '../../restHome.dart';
 
@@ -112,59 +116,65 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     });
                                     await GoogleAuthentication().googleSignIn();
 
+                                    final user = Provider.of<MyUser?>(context);
+
+                                    UserServ().postUser(user);
+
+                                    print('SUS');
+
                                     setState(() {
                                       loading = false;
                                     });
                                   },
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(children: const <Widget>[
-                                  SizedBox(width: 30),
-                                  Expanded(
-                                      child: Divider(
-                                          // color: blackColor,
-                                          // thickness: 2,
-                                          )),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "OR",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(width: 5),
-                                  Expanded(
-                                    child: Divider(
-                                        // color: blackColor,
-                                        // thickness: 2,
-                                        ),
-                                  ),
-                                  SizedBox(width: 30),
-                                ]),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                ElevatedButton.icon(
-                                    icon: Image.asset(
-                                      'assets/outlook.png',
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    label: const Text(
-                                      'Sign in with Outlook',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    onPressed: () {}
-                                    // async {
-                                    //   await microsoftSignIn();
-                                    //   setState(() {
-                                    //     loading = false;
-                                    //   });
-                                    // },
-                                    ),
+                                // const SizedBox(
+                                //   height: 10,
+                                // ),
+                                // Row(children: const <Widget>[
+                                //   SizedBox(width: 30),
+                                //   Expanded(
+                                //       child: Divider(
+                                //           // color: blackColor,
+                                //           // thickness: 2,
+                                //           )),
+                                //   SizedBox(
+                                //     width: 5,
+                                //   ),
+                                //   Text(
+                                //     "OR",
+                                //     style:
+                                //         TextStyle(fontWeight: FontWeight.bold),
+                                //   ),
+                                //   SizedBox(width: 5),
+                                //   Expanded(
+                                //     child: Divider(
+                                //         // color: blackColor,
+                                //         // thickness: 2,
+                                //         ),
+                                //   ),
+                                //   SizedBox(width: 30),
+                                // ]),
+                                // const SizedBox(
+                                //   height: 10,
+                                // ),
+                                // ElevatedButton.icon(
+                                //     icon: Image.asset(
+                                //       'assets/outlook.png',
+                                //       width: 32,
+                                //       height: 32,
+                                //     ),
+                                //     label: const Text(
+                                //       'Sign in with Outlook',
+                                //       style: TextStyle(fontSize: 16),
+                                //     ),
+                                //     onPressed: () {}
+                                //     // async {
+                                //     //   await microsoftSignIn();
+                                //     //   setState(() {
+                                //     //     loading = false;
+                                //     //   });
+                                //     // },
+                                //     ),
                               ]),
                         ],
                       ),
