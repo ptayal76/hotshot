@@ -34,11 +34,7 @@ class MyApp extends StatelessWidget {
           final themeProvider = Provider.of<ThemeProvider>(context);
           return StreamProvider<MyUser?>.value(
             value: AuthService().user,
-            initialData: MyUser(
-                email: 'dummyemail@iitg.in',
-                fullName: 'dummyname',
-                mobile: '1234567890',
-                uid: 'asdfghjkl'),
+            initialData: null,
             child: MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Hotshot',

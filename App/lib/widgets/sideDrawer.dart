@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/PendingOrders.dart';
 import 'package:hotshot/screens/feedback.dart';
 // import 'package:navigation_drawer_example/page/favourites_page.dart';
@@ -6,15 +7,18 @@ import 'package:hotshot/screens/feedback.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
 import 'package:hotshot/screens/ordHistory.dart';
 import 'package:hotshot/services/google_auth.dart';
+import 'package:provider/provider.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   @override
   Widget build(BuildContext context) {
-    final name = 'Sarah Abs';
-    final email = 'sarah@abs.com';
-    final urlImage =
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80';
+
+    final user = Provider.of<MyUser?>(context);
+
+    final String name = user!.fullName ?? 'user';
+    final String email = user.email ?? 'user email';
+    final String urlImage = user.profile ?? '';
 
     return Drawer(
       child: Material(

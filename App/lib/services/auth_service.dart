@@ -7,9 +7,10 @@ class AuthService {
 
 
 
-  MyUser? _userFromFirebaseUser(User? user) {
+  MyUser? userFromFirebaseUser(User? user) {
     return user != null
         ? MyUser(
+            profile: user.photoURL,
             email: user.email,
             fullName: user.displayName,
             mobile: user.phoneNumber,
@@ -18,7 +19,7 @@ class AuthService {
   }
 
   Stream<MyUser?> get user {
-    return _authService.authStateChanges().map((_userFromFirebaseUser));
+    return _authService.authStateChanges().map((userFromFirebaseUser));
   }
 
   // Future<int> verifyPhone(String phoneNum, BuildContext context)async{
