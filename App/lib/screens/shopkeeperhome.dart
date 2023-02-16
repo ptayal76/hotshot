@@ -2,6 +2,7 @@ import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/dishInfo.dart';
+import 'package:hotshot/screens/add_item_page.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 
@@ -127,7 +128,15 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                   Align(
                     alignment: Alignment.topRight,
                     child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => add_item(),
+                                          ));
+
+
+                        },
                         icon: const Icon(Icons.add),
                         label: const Text('Add Items')),
                   ),
