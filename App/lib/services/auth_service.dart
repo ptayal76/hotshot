@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/my_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final FirebaseAuth _authService = FirebaseAuth.instance;
-
-
 
   MyUser? userFromFirebaseUser(User? user) {
     return user != null
@@ -14,6 +13,7 @@ class AuthService {
             email: user.email,
             fullName: user.displayName,
             mobile: user.phoneNumber,
+            token: 'NO TOKEN',
             uid: user.uid)
         : null;
   }
@@ -42,6 +42,14 @@ class AuthService {
   //     }
   //   );
   // }
+
+  Future<void> setIsCustomer(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool('isCustomer', value);
+
+    print('PREFS SAVED');
+  }
 
   Future register(String email, String password, String fullName) async {
     try {

@@ -6,13 +6,20 @@ import 'package:hotshot/screens/checkout.dart';
 import 'package:hotshot/screens/describe.dart';
 import 'package:expandable/expandable.dart';
 
-class CartCard extends StatefulWidget {
+import '../constants/globvar.dart';
+import '../model/dishInfo.dart';
+import '../model/orderInfo.dart';
 
+class CartCard extends StatefulWidget {
+  final Order orders;
+  final Map<DishInfo,int> mp;
+  const CartCard({Key? key, required this.orders,required this.mp}) : super(key: key);
   @override
   State<CartCard> createState() => _CartCardState();
 }
 
 class _CartCardState extends State<CartCard> {
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -39,19 +46,19 @@ class _CartCardState extends State<CartCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Image(
-                              height: 80,
-                              width: 90,
-                              image:
-                              AssetImage('assets/images/dish1.jpg'),                                                //widget.data.dish[1].pic
-                            ),
-                            SizedBox(width: 10,),
+                            // Image(
+                            //   height: 80,
+                            //   width: 90,
+                            //   image:
+                            //   AssetImage('assets/images/dish1.jpg'),                                                //widget.data.dish[1].pic
+                            // ),
+                            // SizedBox(width: 10,),
                             Column(
                               //  mainAxisAlignment: MainAxisAlignment.,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Lohit Canteen',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
-                                Text('Lohit Hostel',style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
+                                Text(allRest[widget.orders.restaurantId]!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
+                                Text(allRest[widget.orders.restaurantId]!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
                               ],
                             ),
 
@@ -63,14 +70,14 @@ class _CartCardState extends State<CartCard> {
                           {
                             print("Container clicked");
                             Navigator.push(context,
-                                new MaterialPageRoute(builder: (BuildContext context) => checkout()));
+                                new MaterialPageRoute(builder: (BuildContext context) => checkout(order: widget.orders,)));
 
                           },
                           //behavior: ,
                           child: Container(child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('Checkout',style: TextStyle(fontWeight: FontWeight.w300 )),  //(( widget.data.status== 'accepted')?'Accepted':'Rejected')
-                          ),decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.greenAccent),),//(( widget.data.status== 'accepted')?Colors.greemAccent:Colors.orange)
+                          ),decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.green),),//(( widget.data.status== 'accepted')?Colors.greemAccent:Colors.orange)
                         )
                       ],
                     ),
@@ -104,14 +111,19 @@ class _CartCardState extends State<CartCard> {
                         itemCount: 1
                     ),
                     expanded: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         itemBuilder: (context, index) {
+                          // var keys=widget.mp.keys.toList();
+                          // var values =widget.mp.values.toList();
+                          DishInfo key=widget.mp.keys.elementAt(index);
+                          int value=widget.mp.values.elementAt(index);
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Noodles',style: TextStyle(fontSize: 15),),
-                              Text('3 x ₹80',style: TextStyle(fontSize: 15),)                 //item count x item price
+                              Text(key.name!,style: TextStyle(fontSize: 15),),
+                              Text('${value} x ${key.price}',style: TextStyle(fontSize: 15),)                 //item count x item price
                             ],
                           ); //(data: widget.stat[index]
                         },
@@ -123,7 +135,7 @@ class _CartCardState extends State<CartCard> {
                             height: 1,
                           );
                         },
-                        itemCount: 15
+                        itemCount: widget.mp.length,
                     ),
 
                     //tapHeaderToExpand: true,

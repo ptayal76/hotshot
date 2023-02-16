@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+const mongoose = require('mongoose');
 
 //Restaurant routes
 const Restaurant = require('../Models/Restaurant');
@@ -13,6 +14,7 @@ const {
   restOrder,
 } = require('../Middlewares/verifyToken');
 const User = require('../Models/User');
+const Order = require('../Models/RestOrder');
 
 const router = express.Router();
 const storage = multer.memoryStorage();
@@ -22,12 +24,12 @@ const upload = multer({ storage: storage });
 
 router.get('/food/rest', async (req, res) => {
   try {
-     var obj={};
-     if(req.query.status)obj.status=req.query.status
-     if(req.query.rating) obj.rating={$gte :req.query.rating}
-     if(req.query.locationCategory) obj.locationCategory=req.query.locationCategory;
-     const restaurants = await Restaurant.find(obj);
-     return res.json(restaurants);
+    var obj = {};
+    if (req.query.status) obj.status = req.query.status
+    if (req.query.rating) obj.rating = { $gte: req.query.rating }
+    if (req.query.locationCategory) obj.locationCategory = req.query.locationCategory;
+    const restaurants = await Restaurant.find(obj);
+    return res.json(restaurants);
   } catch (err) {
     return res.status(400).send(err.message);
   }
@@ -52,8 +54,7 @@ router.get('/food/rest/:restid', async (req, res) => {
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
     const restaurant = new Restaurant(req.body);
-    if(req.file)
-    {
+    if (req.file) {
       restaurant.pic.data = req.file.buffer;
       restaurant.pic.contentType = req.file.mimetype;
     }
@@ -143,5 +144,33 @@ router.delete(
     }
   }
 );
+
+//BUSINESS INSIGHTS
+router.get('/stats', verifyToken, authenticateOwner, async (req, res) => {
+  const now = new Date();
+  const lastWeekDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6);
+  const RestId = new mongoose.Types.ObjectId(req.restaurant);
+  try {
+    const data = await Order.aggregate([
+      { $match: { timeOfOrder: { $gte: lastWeekDate, $lte: now } } },
+      {
+        $match: { restaurant_id: RestId }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$timeOfOrder" },
+            month: { $month: "$timeOfOrder" },
+            day: { $dayOfMonth: "$timeOfOrder" }
+          },
+          total : {$sum : '$total'}
+      }
+      },
+    ]);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 module.exports = router;

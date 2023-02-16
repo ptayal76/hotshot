@@ -40,7 +40,32 @@ router.get("/food/order", verifyToken, authenticate, async (req, res) => {
         res.status(200).json(orders);
     }
 })
+router.get("/food/order/:orderId",verifyToken,authenticate,async(req,res)=>{
+    const order=await Order.findById(req.params.orderId);
+    if(req.isowner)
+    {
 
+        if(req.restaurant==order.restaurant_id)
+        {
+            res.status(200).json(order);
+        }
+        else
+        {
+            res.status(403).json({message:"Not Authenticated"});
+        }
+    }
+    else
+    {
+        if(req.user==order.user_id)
+        {
+            res.status(200).json(order);
+        }
+        else
+        {
+            res.status(403).json({message:"Not Authenticated"});
+        }
+    }
+})
 //CREATE QR FOR USER
 router.get("/food/order/qr/:orderId", async (req, res, next) => {
     try {
@@ -215,4 +240,3 @@ router.put("/food/order/acknowledge/:orderId", async (req, res) => {
 })
 
 module.exports = router;
-

@@ -19,6 +19,52 @@ String Bearer = 'Bearer ' +
 String uri = 'http://192.168.1.106:8080';
 
 class OrderServ {
+  String MONGO_URL = 'http://10.0.2.2:8080';
+  Future<Order> fetchOrderbyId(BuildContext context,String orderId) async {
+    // final userProvider = Provider.of(context)
+    List<Order> OrderList = [];
+    //TOKEN IS OF RESTAURANT
+    String Bearer = 'Bearer ' +
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    // String Bearer = 'Bearer ' +
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
+    print(Bearer);
+    try {
+      print('hello');
+      String url = MONGO_URL + '/food/order/$orderId';
+      http.Response res = await http.get(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': Bearer
+          });
+      var obj = jsonDecode(res.body);
+      print(obj[0].runtimeType);
+      print(obj);
+      print(res.body);
+      // print(res.body.runtimeType);
+      print(obj.runtimeType);
+      print(res.body.length);
+      print("hi1");
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+            OrderList.add(Order.fromJson(obj));
+          print(OrderList);
+          print("hi");
+        },
+      );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    print('xxx');
+    return OrderList[0];
+  }
   Future<List<Order>> fetchResponsePendingOrders(BuildContext context) async {
     // final userProvider = Provider.of(context)
     List<Order> OrderList = [];
@@ -28,13 +74,110 @@ class OrderServ {
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
     //print(Bearer);
     try {
-      //print('hello');
-      http.Response res = await http
-          .get(Uri.parse('$uri/food/order?status=responsePending'), headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': Bearer
-      });
+      print('hello');
+      String url = MONGO_URL + '/food/order?status=responsePending';
+      http.Response res = await http.get(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': Bearer
+          });
+      var obj = jsonDecode(res.body);
+      print(obj[0].runtimeType);
+      print(obj);
+      print(res.body);
+      // print(res.body.runtimeType);
+      print(obj.runtimeType);
+      print(res.body.length);
+      print("hi1");
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < obj.length; i++) {
+            // var obj=;
+            OrderList.add(Order.fromJson(obj[i]));
+          }
+          print(OrderList);
+          print("hi");
+        },
+      );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    print('xxx');
+    return OrderList;
+  }
+  // Future<List<Order>> fetchAcceptedOrders(BuildContext context) async {
+  //   // final userProvider = Provider.of(context)
+  //   List<Order> OrderList = [];
+  //   //TOKEN IS OF USER
+  //   String Bearer = 'Bearer ' +
+  //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+  //   // String Bearer = 'Bearer ' +
+  //   //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
+  //   print(Bearer);
+  //   try {
+  //     print('hello');
+  //     String url = MONGO_URL + '/food/order?status=accepted';
+  //     http.Response res = await http.get(
+  //         Uri.parse(url),
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Accept': 'application/json',
+  //           'Authorization': Bearer
+  //         });
+  //     var obj = jsonDecode(res.body);
+  //     print(obj[0].runtimeType);
+  //     print(obj);
+  //     print(res.body);
+  //     // print(res.body.runtimeType);
+  //     print(obj.runtimeType);
+  //     print(res.body.length);
+  //     print("hi1");
+  //     httpErrorHandle(
+  //       response: res,
+  //       context: context,
+  //       onSuccess: () {
+  //         for (int i = 0; i < obj.length; i++) {
+  //           // var obj=;
+  //           OrderList.add(Order.fromJson(obj[i]));
+  //         }
+  //         print(OrderList);
+  //         print("hi");
+  //       },
+  //     );
+  //   } catch (e) {
+  //     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+  //     print(e);
+  //     print("alpha");
+  //     // showSnackBar(BuildContext, e.toString());
+  //   }
+  //   print('xxx');
+  //   return OrderList;
+  // }
+  Future<List<Order>> fetchUserCart(BuildContext context) async{
+    List<Order> OrderList = [];
+    //TOKEN IS OF USER
+    String Bearer = 'Bearer ' +
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    // String Bearer = 'Bearer ' +
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
+    print(Bearer);
+    try {
+      print('hello');
+      String url = MONGO_URL + '/food/order?status=paymentPending';
+      http.Response res = await http.get(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': Bearer
+          });
       var obj = jsonDecode(res.body);
       // print(obj[0].runtimeType);
       // print(obj);

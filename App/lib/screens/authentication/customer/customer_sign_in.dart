@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/services/microsoft_auth.dart';
 import 'package:hotshot/services/restaurantServ.dart';
@@ -114,7 +115,13 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     setState(() {
                                       loading = true;
                                     });
-                                    final user = await GoogleAuthentication().googleSignIn();
+
+                                    await AuthService().setIsCustomer(true);
+
+                                    final user = await GoogleAuthentication()
+                                        .googleSignIn();
+
+                                    print(user!.fullName);
 
                                     // final u = MyUser(
                                     //     email: 'lohit@iitg',
@@ -124,8 +131,14 @@ class _CustomerSignInState extends State<CustomerSignIn> {
 
                                     print('STEP 1');
 
-                                    await UserServ().postUser(user);
+                                    final token =
+                                        await UserServ().postUser(user);
 
+                                    user.setToken(token);
+
+                                    print(user);
+
+                                    print(token);
                                     print('STEP 2');
 
                                     setState(() {

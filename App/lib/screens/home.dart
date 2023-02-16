@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/screens/authentication/customer/customer_sign_in.dart';
+import 'package:hotshot/screens/authentication/customer/customer_wrapper.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_wrapper.dart';
 import 'package:hotshot/screens/restHome.dart';
 
@@ -28,7 +29,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CustomerSignIn()));
+                        builder: (context) => const CustomerWrapper()));
               },
               child: const Text('Customer Sign In'),
             ),

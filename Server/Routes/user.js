@@ -34,6 +34,7 @@ router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req,
 
 //LOGIN OR SIGNUP
 router.post('/login', async (req, res) => {
+    console.log(req.body);
     try {
         var existingUser = await User.findOne({ email: req.body.email });
         if (!existingUser) {

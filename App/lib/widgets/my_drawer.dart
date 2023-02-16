@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
+import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +15,13 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<MyUser?>(context);
 
-  final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    final name = user!.fullName ?? 'user';
+    final email = user.email ?? 'email';
+    final profile = user.profile ?? '';
 
     return Drawer(
       width: 250,
@@ -23,23 +30,29 @@ class _MyDrawerState extends State<MyDrawer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 30,),
-            const CircleAvatar(
-              radius: 60,
+            const SizedBox(
+              height: 30,
             ),
-            const SizedBox(height: 10,),
-            const Text(
-              'User\'s Full Name',
+            CircleAvatar(
+              radius: 60,
+              foregroundImage: NetworkImage(profile),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              name,
               style: TextStyle(
                 fontSize: 24,
               ),
             ),
-            const Text(
-              'useremail@lohit.iitg.in',
-              style: TextStyle(
-              ),
+            Text(
+              email,
+              style: TextStyle(),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               height: 0.8,
             ),
@@ -51,39 +64,45 @@ class _MyDrawerState extends State<MyDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: drawerButtonStyle,
                       label: const Text('Order History'),
                       icon: const Icon(Icons.history_rounded),
                     ),
                     TextButton.icon(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: drawerButtonStyle,
                       label: const Text('Insights'),
                       icon: const Icon(Icons.auto_graph_rounded),
                     ),
                     TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pop(context);
-                        final provider = Provider.of<ThemeProvider>(context, listen: false);
+                        final provider =
+                            Provider.of<ThemeProvider>(context, listen: false);
                         provider.toggleTheme(!themeProvider.isDarkMode);
                       },
                       style: drawerButtonStyle,
-                      label: Text(themeProvider.isDarkMode ? 'Light Mode' : 'Dark Mode'),
-                      icon: themeProvider.isDarkMode ? const Icon(Icons.sunny) : const Icon(Icons.nightlight_round),
+                      label: Text(themeProvider.isDarkMode
+                          ? 'Light Mode'
+                          : 'Dark Mode'),
+                      icon: themeProvider.isDarkMode
+                          ? const Icon(Icons.sunny)
+                          : const Icon(Icons.nightlight_round),
                     ),
                     TextButton.icon(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: drawerButtonStyle,
                       label: const Text('Rate Us'),
                       icon: const Icon(Icons.star_rate_rounded),
                     ),
                     TextButton.icon(
-                      onPressed: (){},
-                      style: drawerButtonStyle,
-                      icon: const Icon(Icons.logout),
-                      label: const Text('Logout')
-                    ),
+                        onPressed: () {
+                          GoogleAuthentication().googleLogout();
+                        },
+                        style: drawerButtonStyle,
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Logout')),
                   ],
                 ),
               ),
