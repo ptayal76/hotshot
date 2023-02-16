@@ -103,7 +103,8 @@ class _OtherHomeState extends State<OtherHome>
                     }
                   });
                 },
-
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white,
                 indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide.none,
                 ),
@@ -112,12 +113,12 @@ class _OtherHomeState extends State<OtherHome>
                     _tabItem(
                       _icons[i],
                       _labels[i],
-                      isSelected: i == _selectedIndex,
+                      isSelected: i == 2,
 
                     ),
                 ],
 
-                labelColor: Colors.orange,
+                // labelColor: Colors.orange,
                 controller: _tabController),
           ),
         ),
@@ -172,7 +173,7 @@ class _OtherHomeState extends State<OtherHome>
                               child: const Text(
                                 'Hospital',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -211,7 +212,7 @@ class _OtherHomeState extends State<OtherHome>
                       child: Text(
                         'Rentals',
                         style: TextStyle(
-                          color: Colors.black,
+                          // color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -246,7 +247,7 @@ class _OtherHomeState extends State<OtherHome>
                               child: Text(
                                 'Cycle Repair',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -286,7 +287,7 @@ class _OtherHomeState extends State<OtherHome>
                               child: Text(
                                 'Souvenir',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -321,7 +322,7 @@ class _OtherHomeState extends State<OtherHome>
                                       child: Text(
                                         'Mobile Repair',
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          // color: Colors.black,
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -361,7 +362,7 @@ class _OtherHomeState extends State<OtherHome>
                                       child: Text(
                                         'Barber',
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          // color: Colors.black,
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                         ),

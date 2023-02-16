@@ -5,8 +5,9 @@ import 'package:hotshot/widgets/restCard.dart';
 import 'package:hotshot/screens/statHome.dart';
 import 'package:hotshot/screens/otherHome.dart';
 import 'package:hotshot/widgets/sideDrawer.dart';
-import 'package:mongo_dart/mongo_dart.dart' hide State;
+// import 'package:mongo_dart/mongo_dart.dart' hide State;
 // import '../constants/globvar.dart';
+import '../constants/globvar.dart';
 import '../screens/cart.dart';
 import '../constants/loader.dart';
 import '../model/dishInfo.dart';
@@ -33,6 +34,10 @@ class _RestHomeState extends State<RestHome>
   final RestaurantServ restServ = RestaurantServ();
   fetchallrest() async {
     restaur=await restServ.fetchAllRestaurants(context);
+    for(int i=0;i<restaur!.length;i++){
+      allRest![restaur![i].id]=restaur![i];
+
+    }
     setState(() {
 
     });
@@ -61,7 +66,7 @@ class _RestHomeState extends State<RestHome>
             ? null
             : BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                // color: const Color(0xff307A59),
+                color: const Color(0xff307A59),
               ),
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -88,7 +93,7 @@ class _RestHomeState extends State<RestHome>
       Icon(Icons.print),
       Icon(Icons.list_outlined)
     ];
-    return restaur==null ? Loader():Scaffold(
+    return Scaffold(
       // appBar: AppBar(
       //
       // ),
@@ -119,7 +124,7 @@ class _RestHomeState extends State<RestHome>
                   });
                 },
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.blueGrey,
+                unselectedLabelColor: Colors.white,
                 indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide.none,
                 ),
@@ -166,7 +171,7 @@ class _RestHomeState extends State<RestHome>
             )
           ],
         ),
-        SliverList(
+        restaur==null ? SliverToBoxAdapter(child: Loader()):SliverList(
           delegate: SliverChildListDelegate([
             const SearchBar(),
             Filters(),

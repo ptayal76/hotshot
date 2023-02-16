@@ -96,7 +96,9 @@ class _StatHomeState extends State<StatHome>
                     }
                   });
                 },
-                labelColor: Colors.orange,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white,
+                // labelColor: Colors.orange,
                 indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide.none,
                 ),

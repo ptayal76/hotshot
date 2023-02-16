@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
+import '../model/orderInfo.dart';
 
 class RestaurantServ {
   String MONGO_URL = 'http://10.0.2.2:8080';

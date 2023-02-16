@@ -65,7 +65,7 @@ class _PendCardState extends State<PendCard> {
 
                       },
                        child: Container(
-                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.greenAccent),
+                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.green),
                          child: Padding(
                            padding: const EdgeInsets.all(8.0),
                            child: Text('Generated QR',style: TextStyle(fontWeight: FontWeight.w300 )),

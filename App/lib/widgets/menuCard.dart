@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/otherInfo.dart';
 import 'package:hotshot/screens/describe.dart';
 class MenuCard extends StatefulWidget {
@@ -8,7 +9,9 @@ class MenuCard extends StatefulWidget {
   // var itemc ;
   // final List<int> price ;
   //  var  sum=0;
-  //const ({Key? key, required this.count , required this.itemc , required this.price , required this.sum}) : super(key: key);
+  final DishInfo dish;
+  final int freq;
+  const MenuCard({Key? key, required this.dish,required this.freq}) : super(key: key);
 
   @override
   State<MenuCard> createState() => _MenuCardState();
@@ -51,9 +54,9 @@ class _MenuCardState extends State<MenuCard> {
                         maxLines: 1,
                         text:
                         TextSpan(
-                            text: 'Hakka Noodles\n',
+                            text: widget.dish.name,
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold,color: Colors.black,fontSize: 20)),
+                                fontWeight: FontWeight.bold,fontSize: 20)),
 
                       ),
                       RichText(
@@ -61,10 +64,10 @@ class _MenuCardState extends State<MenuCard> {
                         text:
                         TextSpan(
                             text:
-                            'Rate: ₹80\n',
+                            'Rate: ₹${widget.dish.price}\n',
                             style: const TextStyle(
                                 fontWeight:
-                                FontWeight.w200,color: Colors.black,fontSize: 10)),
+                                FontWeight.w200,fontSize: 10)),
 
                       ),
                       Row(
@@ -93,7 +96,7 @@ class _MenuCardState extends State<MenuCard> {
                                 Icons.remove,
                                 size: 20,
                               )),
-                          Text("3",
+                          Text(widget.freq.toString(),
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight:
@@ -130,7 +133,7 @@ class _MenuCardState extends State<MenuCard> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text('₹1240' , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
+                  Text((widget.freq*(widget.dish.price!)).toString() , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
                 ],
               ),
             )

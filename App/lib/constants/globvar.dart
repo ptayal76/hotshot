@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../model/orders.dart';
+import '../model/restInfo.dart';
 
 String uri = 'http://127.0.0.1:8080';
-Map<String,Orders>? cart;
+// Map<String,Orders>? cart;
+Map<String,RestInfo> allRest={};
 
 class GlobalVariables {
   // COLORS
