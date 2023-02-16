@@ -15,6 +15,7 @@ class ShopkeeperHomePage extends StatefulWidget {
 }
 
 class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
+  bool instock = true;
   var textEditingController = TextEditingController();
   int index = 0;
   var items = List<String>.generate(100, (i) => 'Item $i');
@@ -37,14 +38,14 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            // color: Colors.black,
           ),
         ),
         centerTitle: true,
         elevation: 5,
       ),
       drawer: MyNavigationDrawer(),
-      backgroundColor: Colors.brown[100],
+      // backgroundColor: Colors.brown[100],
       body: ListView(
         // physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(0),
@@ -109,12 +110,12 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
             SizedBox(width: 5),
             Expanded(
                 child: Divider(
-              color: blackColor,
+              // color: blackColor,
               thickness: 2,
             )),
             Expanded(
               child: Divider(
-                color: blackColor,
+                // color: blackColor,
                 thickness: 2,
               ),
             ),
@@ -173,130 +174,303 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                     height: 10,
                   ),
               itemBuilder: (context, index) {
-                return Card(
-                  color: const Color.fromARGB(255, 225, 241, 243),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Column(
-                              children: const [
-                                Image(
-                                  image: NetworkImage(
-                                      "https://tse2.mm.bing.net/th?id=OIP.Jd-H-LHiVSkNBlLR65nuVwHaEK&pid=Api&P=0"),
-                                  height: 120,
-                                  width: 140,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 50, left: 60),
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 201, 199, 199),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                        ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 4.0, horizontal: 16.0),
-                                          child: Text(
-                                            "Dinner",
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
+                return Column(
+                  children: [
+                    const Divider(
+                      thickness: 2,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: Image.asset(
+                                      "assets/Veg.png",
+                                      height: 20,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 244, 100, 56),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(6)),
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 2.0, horizontal: 6.0),
+                                        child: Text(
+                                          "Dinner",
+                                          style: TextStyle(
+                                              // color: Colors.white,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Container(
-                                          child: Image.asset(
-                                        "assets/Veg.png",
-                                        height: 20,
-                                      )),
-                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding:
+                                  EdgeInsets.only(top: 5, left: 12, bottom: 8),
+                              child: Text(
+                                "Veg Chowmein",
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 12, right: 12),
+                              child: Text(
+                                "₹400",
+                                style: TextStyle(
+                                    fontSize: 19, fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, top: 8, bottom: 8, right: 8),
+                              child: Container(
+                                width: 200,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // ElevatedButton(
+                                    //   onPressed: () {},
+                                    //   child: Text(
+                                    //     "Edit",
+                                    //     style: TextStyle(
+                                    //         fontWeight: FontWeight.w500),
+                                    //   ),
+                                    //   style: ElevatedButton.styleFrom(
+                                    //       // backgroundColor:
+                                    //       //     Color.fromARGB(255, 25, 164, 29),
+                                    //       shape: RoundedRectangleBorder(
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(10))),
+                                    // ),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 201, 47, 36),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10))),
+                                      child: const Text(
+                                        "Remove",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(top: 5, left: 12),
-                                child: Text(
-                                  "Mexican pizza",
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, right: 16),
+                          child: Stack(children: [
+                            Container(
+                              height: 140,
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                height: 120,
+                                width: 120,
+                                child: const Image(
+                                  image: NetworkImage(
+                                      "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20200603193204/Chow-Mein.jpg"),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 12, right: 38),
-                                    child: Text(
-                                      "₹ 400",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    child: const Text("Out of stock"),
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.red),
-                                  ),
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton.icon(
-                            onPressed: () {},
-                            label: const Text(
-                              "    Edit    ",
-                              style: TextStyle(fontSize: 20),
                             ),
-                            icon: const Icon(
-                              size: 20,
-                              Icons.edit,
-                              color: Color.fromARGB(255, 18, 229, 25),
-                            ),
-                          ),
-                          ElevatedButton.icon(
-                            onPressed: () {},
-                            label: const Text(
-                              "Remove",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            icon: const Icon(
-                              size: 20,
-                              Icons.close,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                            Positioned(
+                                bottom: 5,
+                                left: instock ? 26 : 12,
+                                child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: const BorderSide(
+                                            color: Colors.white)),
+                                    color:
+                                        (instock ? Colors.green : Colors.red),
+                                    child: InkWell(
+                                        onTap: () {
+                                          instock = !instock;
+                                          // itemc++;
+                                          // if (itemc == 1) {
+                                          //   controller!.forward();
+                                          // }
+                                          setState(() {});
+                                        },
+                                        child: (instock
+                                            ? const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  "In stock",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      // color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              )
+                                            : const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  "Out of stock",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      // color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              )))))
+                          ]),
+                        ),
+                      ],
+                    ),
+                  ],
                 );
+                // return Card(
+                //   // color: const Color.fromARGB(255, 225, 241, 243),
+                //   child: Column(
+                //     children: [
+                //       Row(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Container(
+                //             child: Column(
+                //               children: const [
+                //                 Image(
+                //                   image: NetworkImage(
+                //                       "https://tse2.mm.bing.net/th?id=OIP.Jd-H-LHiVSkNBlLR65nuVwHaEK&pid=Api&P=0"),
+                //                   height: 120,
+                //                   width: 140,
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //           Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
+                //               Padding(
+                //                 padding: const EdgeInsets.only(top: 4),
+                //                 child: Row(
+                //                   children: [
+                //                     Padding(
+                //                       padding: const EdgeInsets.only(
+                //                           right: 50, left: 60),
+                //                       child: Container(
+                //                         decoration: const BoxDecoration(
+                //                           // color: Color.fromARGB(
+                //                           //     255, 201, 199, 199),
+                //                           borderRadius: BorderRadius.all(
+                //                               Radius.circular(4)),
+                //                         ),
+                //                         child: const Padding(
+                //                           padding: EdgeInsets.symmetric(
+                //                               vertical: 4.0, horizontal: 16.0),
+                //                           child: Text(
+                //                             "Dinner",
+                //                             style:
+                //                                 TextStyle(color: Colors.white),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     ),
+                //                     Padding(
+                //                       padding:
+                //                           const EdgeInsets.only(right: 8.0),
+                //                       child: Container(
+                //                           child: Image.asset(
+                //                         "assets/Veg.png",
+                //                         height: 20,
+                //                       )),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               ),
+                //               const Padding(
+                //                 padding: EdgeInsets.only(top: 5, left: 12),
+                //                 child: Text(
+                //                   "Mexican pizza",
+                //                   style: TextStyle(
+                //                       fontSize: 25,
+                //                       fontWeight: FontWeight.w500),
+                //                 ),
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   const Padding(
+                //                     padding:
+                //                         EdgeInsets.only(left: 12, right: 38),
+                //                     child: Text(
+                //                       "₹ 400",
+                //                       style: TextStyle(
+                //                           fontSize: 25,
+                //                           fontWeight: FontWeight.w500),
+                //                     ),
+                //                   ),
+                //                   ElevatedButton(
+                //                     onPressed: () {},
+                //                     child: const Text("Out of stock"),
+                //                     style: ElevatedButton.styleFrom(
+                //                         backgroundColor: Colors.red),
+                //                   ),
+                //                 ],
+                //               )
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: [
+                //           ElevatedButton.icon(
+                //             onPressed: () {},
+                //             label: const Text(
+                //               "    Edit    ",
+                //               style: TextStyle(fontSize: 20),
+                //             ),
+                //             icon: const Icon(
+                //               size: 20,
+                //               Icons.edit,
+                //               // color: Color.fromARGB(255, 18, 229, 25),
+                //             ),
+                //           ),
+                //           ElevatedButton.icon(
+                //             onPressed: () {},
+                //             label: const Text(
+                //               "Remove",
+                //               style: TextStyle(fontSize: 20),
+                //             ),
+                //             icon: const Icon(
+                //               size: 20,
+                //               Icons.close,
+                //               color: Colors.red,
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     ],
+                //   ),
+                // );
+
                 // return Card(
                 //   color: const Color.fromARGB(255, 225, 241, 243),
                 //   child: Row(

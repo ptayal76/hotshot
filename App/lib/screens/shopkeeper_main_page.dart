@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         // type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        backgroundColor: Colors.grey.shade100,
+        // backgroundColor: Colors.grey.shade100,
         //selectedItemColor: Colors.black,
         //unselectedItemColor: Colors.white70,
         iconSize: 20,

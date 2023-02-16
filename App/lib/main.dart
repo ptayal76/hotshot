@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/dummy_checkout.dart';
+import 'package:hotshot/screens/home.dart';
+import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
@@ -22,39 +24,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      builder: (context, _) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
-        return StreamProvider<MyUser?>.value(
-          value: AuthService().user,
-          initialData: MyUser(
-            email: 'dummyemail@iitg.in',
-            fullName: 'dummyname',
-            mobile: '1234567890',
-            uid: 'asdfghjkl'
-          ),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Hotshot',
-            theme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.light,
-              colorSchemeSeed: const Color(0xff307A59)
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.dark,
-              colorSchemeSeed: const Color(0xff307A59)
-            ),
-            themeMode: themeProvider.themeMode,
-            home: const ShopkeeperVerificationForm(),
-          ),
-        );
-      }
-    );
+        create: (context) => ThemeProvider(),
+        builder: (context, _) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
+          return StreamProvider<MyUser?>.value(
+              value: AuthService().user,
+              initialData: MyUser(
+                  email: 'dummyemail@iitg.in',
+                  fullName: 'dummyname',
+                  mobile: '1234567890',
+                  uid: 'asdfghjkl'),
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Hotshot',
+                theme: ThemeData(
+                    useMaterial3: true,
+                    brightness: Brightness.light,
+                    colorSchemeSeed: const Color(0xff307A59)),
+                darkTheme: ThemeData(
+                    useMaterial3: true,
+                    brightness: Brightness.dark,
+                    colorSchemeSeed: const Color(0xff307A59)),
+                themeMode: themeProvider.themeMode,
+                //         // home: Home(title: 'HotShot'),
+                home: MainPage(),
+              ));
+        });
   }
 }
-
-
