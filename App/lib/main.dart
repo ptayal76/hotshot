@@ -27,35 +27,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      builder: (context, _) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
-        return StreamProvider<MyUser?>.value(
-          value: AuthService().user,
-          initialData: MyUser(
-            email: 'dummyemail@iitg.in',
-            fullName: 'dummyname',
-            mobile: '1234567890',
-            uid: 'asdfghjkl'
-          ),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Hotshot',
-            theme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.light,
-              colorSchemeSeed: const Color(0xff307A59)
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.dark,
-              colorSchemeSeed: const Color(0xff307A59)
-            ),
-            themeMode: themeProvider.themeMode,
-            home: RestHome(),
-          ),
-        );
-      }
-    );
+        create: (context) => ThemeProvider(),
+        builder: (context, _) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
+          return StreamProvider<MyUser?>.value(
+            value: AuthService().user,
+            initialData: MyUser(
+                email: 'dummyemail@iitg.in',
+                fullName: 'dummyname',
+                mobile: '1234567890',
+                uid: 'asdfghjkl'),
+            child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Hotshot',
+                theme: ThemeData(
+                    useMaterial3: true,
+                    brightness: Brightness.light,
+                    colorSchemeSeed: const Color(0xff307A59)),
+                darkTheme: ThemeData(
+                    useMaterial3: true,
+                    brightness: Brightness.dark,
+                    colorSchemeSeed: const Color(0xff307A59)),
+                themeMode: themeProvider.themeMode,
+                // home: CustomerSignIn(),
+                home: MainPage()),
+          );
+        });
   }
 }

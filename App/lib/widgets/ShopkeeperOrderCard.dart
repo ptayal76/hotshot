@@ -9,6 +9,7 @@ import '../constants/colors.dart';
 import '../constants/loader.dart';
 import '../model/orderInfo.dart';
 import '../services/DishfromDish_id.dart';
+import '../services/orderServ.dart';
 import '../services/restaurantServ.dart';
 
 class OrderCard extends StatefulWidget {
@@ -37,7 +38,9 @@ class _OrderCardState extends State<OrderCard> {
   List<DishInfo>? dishes;
   fetchallorder() async {
     dishes = await RestaurantServ().fetchDish(context, widget.data.items);
-    abc(dishes!);
+    if (dishes != null) {
+      abc(dishes!);
+    }
     setState(() {});
   }
 
@@ -92,7 +95,7 @@ class _OrderCardState extends State<OrderCard> {
                                 ),
                               ),
                               Text(
-                                "${widget.data.timeOfOrder.substring(11, 16)}",
+                                "Time: ${widget.data.timeOfOrder.substring(11, 16)}",
                                 style: const TextStyle(
                                   fontSize: 20,
                                 ),
@@ -112,15 +115,20 @@ class _OrderCardState extends State<OrderCard> {
                             //   softWrap: false,
                             //   overflow: TextOverflow.ellipsis,
                             // )),
-                            child: Text(
-                              'Order Items: ${abc(dishes!)}'
-                                  .replaceAll('[', '')
-                                  .replaceAll(']', ''),
-                              style: const TextStyle(fontSize: 20),
-                              maxLines: 1,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            child: dishes != null
+                                ? Text(
+                                    'Order Items: ${abc(dishes!)}'
+                                        .replaceAll('[', '')
+                                        .replaceAll(']', ''),
+                                    style: const TextStyle(fontSize: 20),
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                : Container(
+                                    width: 0,
+                                    height: 0,
+                                  ),
                           ),
                         ),
                       ]),
@@ -247,7 +255,12 @@ class _OrderCardState extends State<OrderCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () async {
+                                setState(() async {
+                                  await OrderServ()
+                                      .AcceptOrders(context, widget.data.id);
+                                });
+                              },
                               style: ElevatedButton.styleFrom(
                                   // backgroundColor: Colors.green,
                                   ),
