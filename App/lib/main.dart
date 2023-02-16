@@ -15,6 +15,7 @@ import 'package:hotshot/wrapper.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:hotshot/screens/verification_pending.dart';
+import 'package:hotshot/screens/shopkeeperhome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
