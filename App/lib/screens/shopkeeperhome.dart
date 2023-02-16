@@ -1,9 +1,10 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:hotshot/constants/colors.dart';
-import 'package:hotshot/constants/text.dart';
-import 'package:hotshot/screens/shopkeeperOrdersScreen.dart';
-import 'package:hotshot/widgets/sideDrawer.dart';
+import 'package:hotshot/constants/loading.dart';
+import 'package:hotshot/model/dishInfo.dart';
+import 'package:hotshot/screens/add_item_page.dart';
+import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/services/restaurantServ.dart';
 
 import '../widgets/sideDrawerShopkeeper.dart';
 
@@ -15,58 +16,61 @@ class ShopkeeperHomePage extends StatefulWidget {
 }
 
 class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
-  bool instock = true;
   var textEditingController = TextEditingController();
   int index = 0;
-  var items = List<String>.generate(100, (i) => 'Item $i');
-  // print(items.length);
-  // var items = <String>['One', 'Two'];
+
+  bool isLoading = true;
+
   List<bool> isSelected = [true, false];
+
+  List<DishInfo> menu = [];
+  String restName = '';
+
+  void getData(BuildContext context)async{
+    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, '63ee484bafeffec841f4f440');
+    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, '63ee484bafeffec841f4f440');
+
+    setState(() {
+      menu = result ?? [];
+      restName = restaurant.restaurantName;
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    print('BUILD METHOD RAN');
+    getData(context);
+
+
+    return isLoading ? const Loading() : Scaffold(
       appBar: AppBar(
-        // backgroundColor: greenColor,
         actions: const [
           CircleAvatar(
             backgroundImage: AssetImage('assets/droppedImage.jpg'),
-            backgroundColor: greenColor,
           ),
         ],
-        title: const Text(
-          'Restaurant Name',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            // color: Colors.black,
-          ),
-        ),
+        title: Text(restName,),
         centerTitle: true,
-        elevation: 5,
-      ),
-      drawer: MyNavigationDrawer(),
-      // backgroundColor: Colors.brown[100],
-      body: ListView(
-        // physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(0),
-        // shrinkWrap: true,
-        children: <Widget>[
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const SizedBox(width: 10),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  // backgroundColor: greenColor,
-                  minimumSize: const Size(80, 50),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(70),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FilledButton.icon(
+                  onPressed: () {},
+                  label: const Text('Scan QR', style: TextStyle(fontSize: 18)),
+                  icon: const Icon(Icons.qr_code_scanner),
                 ),
-                onPressed: () {},
-                label: const Text('Scan QR', style: TextStyle(fontSize: 20)),
-                icon: const Icon(Icons.qr_code_scanner),
-              ),
-              const SizedBox(width: 40),
-              Expanded(
-                child: ToggleButtons(
+                ToggleButtons(
                   isSelected: isSelected,
                   onPressed: (int index) {
                     setState(() {
@@ -81,66 +85,63 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                       }
                     });
                   },
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  selectedBorderColor: blackColor,
-                  disabledBorderColor: blackColor,
-                  color: Colors.green[400],
-                  constraints: const BoxConstraints(
-                    minHeight: 50.0,
-                    minWidth: 100.0,
-                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
                   children: const <Widget>[
-                    // modified_text(text: 'Open',color: blackColor,size: 20),
-                    Text('Open',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    Text('Closed',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    // modified_text(text: 'Closed',color: blackColor,size: 20),
-
-                    // Icon(Icons.ac_unit),
-                    // Icon(Icons.call),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Text('Open',
+                          style: TextStyle(
+                              fontSize: 18, 
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Text('Closed',
+                          style: TextStyle(
+                              fontSize: 18, 
+                              fontWeight: FontWeight.bold)),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          Row(children: const <Widget>[
-            SizedBox(width: 5),
-            Expanded(
-                child: Divider(
-              // color: blackColor,
-              thickness: 2,
-            )),
-            Expanded(
-              child: Divider(
-                // color: blackColor,
-                thickness: 2,
-              ),
-            ),
-            SizedBox(width: 5),
-          ]),
-          Container(
-            height: 40,
-            child: Row(
-              children: [
-                AnimSearchBar(
-                  width: 250,
-                  // autoFocus: true,
-                  textController: textEditingController,
-                  onSuffixTap: () {},
-                  onSubmitted: (p0) => "",
-                ),
-                // width: 20,
-                Align(
-                  alignment: Alignment.topRight,
-                  child: TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                      label: const Text('Add Items')),
-                ),
               ],
+            ),
+          )
+        ),
+      ),
+      drawer: MyNavigationDrawer(),
+      body: Column(
+        children: <Widget>[
+          const SizedBox(height: 10),
+          Container(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AnimSearchBar(
+                    width: 250,
+                    textController: textEditingController,
+                    onSuffixTap: () {},
+                    onSubmitted: (p0) => "",
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => add_item(),
+                                          ));
+
+
+                        },
+                        icon: const Icon(Icons.add),
+                        label: const Text('Add Items')),
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -161,535 +162,161 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
 
           //   icon: const Icon(Icons.food_bank),
           // ),
-          const SizedBox(
-            height: 1,
-          ),
-          ListView.separated(
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              // scrollDirection: Axis.vertical,
-              padding: const EdgeInsets.all(8),
-              itemCount: items.length,
-              separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    const Divider(
-                      thickness: 2,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Expanded(
+            child: ListView.builder(
+              itemCount: menu.length,
+              itemBuilder:  (context, index) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 12),
-                                    child: Image.asset(
-                                      "assets/Veg.png",
-                                      height: 20,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 244, 100, 56),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(6)),
-                                      ),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 2.0, horizontal: 6.0),
-                                        child: Text(
-                                          "Dinner",
-                                          style: TextStyle(
-                                              // color: Colors.white,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                      Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.transparent),
+                          image: const DecorationImage(
+                            image: NetworkImage(
+                              "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20200603193204/Chow-Mein.jpg"
                             ),
-                            const Padding(
-                              padding:
-                                  EdgeInsets.only(top: 5, left: 12, bottom: 8),
-                              child: Text(
-                                "Veg Chowmein",
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 12, right: 12),
-                              child: Text(
-                                "₹400",
-                                style: TextStyle(
-                                    fontSize: 19, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, top: 8, bottom: 8, right: 8),
-                              child: Container(
-                                width: 200,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // ElevatedButton(
-                                    //   onPressed: () {},
-                                    //   child: Text(
-                                    //     "Edit",
-                                    //     style: TextStyle(
-                                    //         fontWeight: FontWeight.w500),
-                                    //   ),
-                                    //   style: ElevatedButton.styleFrom(
-                                    //       // backgroundColor:
-                                    //       //     Color.fromARGB(255, 25, 164, 29),
-                                    //       shape: RoundedRectangleBorder(
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(10))),
-                                    // ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 201, 47, 36),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10))),
-                                      child: const Text(
-                                        "Remove",
+                            fit: BoxFit.cover
+                          )
+                        ),
+                      ),
+                      Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(
+                                  color: Colors.white)),
+                          color:
+                              (menu[index].InStock! ? Colors.green : Colors.red),
+                          child: InkWell(
+                              onTap: () {
+                                // instock = !instock;
+                                // itemc++;
+                                // if (itemc == 1) {
+                                //   controller!.forward();
+                                // }
+                                setState(() {});
+                              },
+                              child: (menu[index].InStock!
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: Text(
+                                        "In stock",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500),
+                                            //fontSize: 15,
+                                            // color: Colors.white,
+                                            fontWeight:
+                                                FontWeight.w500),
                                       ),
                                     )
+                                  : const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Out of stock",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            // color: Colors.white,
+                                            fontWeight:
+                                                FontWeight.w500),
+                                      ),
+                                    ))))
+                    ]),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Stack(
+                                alignment: Alignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.crop_square_sharp,
+                                      color: (menu[index].category == 'veg')
+                                          ? Colors.green
+                                          : Colors.red,
+                                      size: 18,
+                                    ),
+                                    Icon(Icons.circle,
+                                        color: (menu[index].category == 'veg')
+                                            ? Colors.green
+                                            : Colors.red,
+                                        size: 9),
                                   ],
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, right: 16),
-                          child: Stack(children: [
-                            Container(
-                              height: 140,
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                height: 120,
-                                width: 120,
-                                child: const Image(
-                                  image: NetworkImage(
-                                      "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20200603193204/Chow-Mein.jpg"),
-                                  fit: BoxFit.cover,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color:
+                                        Color.fromARGB(255, 244, 100, 56),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(6)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0, horizontal: 6.0),
+                                    child: Text(
+                                      menu[index].suggestedTime ?? 'null',
+                                      style: const TextStyle(
+                                          // color: Colors.white,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                                bottom: 5,
-                                left: instock ? 26 : 12,
-                                child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        side: const BorderSide(
-                                            color: Colors.white)),
-                                    color:
-                                        (instock ? Colors.green : Colors.red),
-                                    child: InkWell(
-                                        onTap: () {
-                                          instock = !instock;
-                                          // itemc++;
-                                          // if (itemc == 1) {
-                                          //   controller!.forward();
-                                          // }
-                                          setState(() {});
-                                        },
-                                        child: (instock
-                                            ? const Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "In stock",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      // color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              )
-                                            : const Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Out of stock",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      // color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              )))))
-                          ]),
+                            ],
+                          ),
                         ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 12),
+                          child: Text(
+                            menu[index].name!,
+                            style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12),
+                              child: Text(
+                                '₹${menu[index].price}',
+                                style: const TextStyle(
+                                    fontSize: 19, fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.delete),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                  ],
-                );
-                // return Card(
-                //   // color: const Color.fromARGB(255, 225, 241, 243),
-                //   child: Column(
-                //     children: [
-                //       Row(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Container(
-                //             child: Column(
-                //               children: const [
-                //                 Image(
-                //                   image: NetworkImage(
-                //                       "https://tse2.mm.bing.net/th?id=OIP.Jd-H-LHiVSkNBlLR65nuVwHaEK&pid=Api&P=0"),
-                //                   height: 120,
-                //                   width: 140,
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //           Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //               Padding(
-                //                 padding: const EdgeInsets.only(top: 4),
-                //                 child: Row(
-                //                   children: [
-                //                     Padding(
-                //                       padding: const EdgeInsets.only(
-                //                           right: 50, left: 60),
-                //                       child: Container(
-                //                         decoration: const BoxDecoration(
-                //                           // color: Color.fromARGB(
-                //                           //     255, 201, 199, 199),
-                //                           borderRadius: BorderRadius.all(
-                //                               Radius.circular(4)),
-                //                         ),
-                //                         child: const Padding(
-                //                           padding: EdgeInsets.symmetric(
-                //                               vertical: 4.0, horizontal: 16.0),
-                //                           child: Text(
-                //                             "Dinner",
-                //                             style:
-                //                                 TextStyle(color: Colors.white),
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     Padding(
-                //                       padding:
-                //                           const EdgeInsets.only(right: 8.0),
-                //                       child: Container(
-                //                           child: Image.asset(
-                //                         "assets/Veg.png",
-                //                         height: 20,
-                //                       )),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //               const Padding(
-                //                 padding: EdgeInsets.only(top: 5, left: 12),
-                //                 child: Text(
-                //                   "Mexican pizza",
-                //                   style: TextStyle(
-                //                       fontSize: 25,
-                //                       fontWeight: FontWeight.w500),
-                //                 ),
-                //               ),
-                //               Row(
-                //                 children: [
-                //                   const Padding(
-                //                     padding:
-                //                         EdgeInsets.only(left: 12, right: 38),
-                //                     child: Text(
-                //                       "₹ 400",
-                //                       style: TextStyle(
-                //                           fontSize: 25,
-                //                           fontWeight: FontWeight.w500),
-                //                     ),
-                //                   ),
-                //                   ElevatedButton(
-                //                     onPressed: () {},
-                //                     child: const Text("Out of stock"),
-                //                     style: ElevatedButton.styleFrom(
-                //                         backgroundColor: Colors.red),
-                //                   ),
-                //                 ],
-                //               )
-                //             ],
-                //           )
-                //         ],
-                //       ),
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //         children: [
-                //           ElevatedButton.icon(
-                //             onPressed: () {},
-                //             label: const Text(
-                //               "    Edit    ",
-                //               style: TextStyle(fontSize: 20),
-                //             ),
-                //             icon: const Icon(
-                //               size: 20,
-                //               Icons.edit,
-                //               // color: Color.fromARGB(255, 18, 229, 25),
-                //             ),
-                //           ),
-                //           ElevatedButton.icon(
-                //             onPressed: () {},
-                //             label: const Text(
-                //               "Remove",
-                //               style: TextStyle(fontSize: 20),
-                //             ),
-                //             icon: const Icon(
-                //               size: 20,
-                //               Icons.close,
-                //               color: Colors.red,
-                //             ),
-                //           ),
-                //         ],
-                //       )
-                //     ],
-                //   ),
-                // );
-
-                // return Card(
-                //   color: const Color.fromARGB(255, 225, 241, 243),
-                //   child: Row(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Container(
-                //         child: Column(
-                //           children: const [
-                //             Image(
-                //               image: NetworkImage(
-                //                   "https://tse2.mm.bing.net/th?id=OIP.Jd-H-LHiVSkNBlLR65nuVwHaEK&pid=Api&P=0"),
-                //               height: 120,
-                //               width: 130,
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.only(top: 4),
-                //             child: Row(
-                //               children: [
-                //                 Padding(
-                //                   padding:
-                //                       const EdgeInsets.only(right: 8, left: 8),
-                //                   child: Container(
-                //                     decoration: const BoxDecoration(
-                //                       color: Color.fromARGB(255, 201, 199, 199),
-                //                       borderRadius:
-                //                           BorderRadius.all(Radius.circular(4)),
-                //                     ),
-                //                     child: const Padding(
-                //                       padding: EdgeInsets.symmetric(
-                //                           vertical: 4.0, horizontal: 16.0),
-                //                       child: Text(
-                //                         "Dinner",
-                //                         style: TextStyle(color: Colors.white),
-                //                       ),
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 8.0),
-                //                   child: Container(
-                //                       child: Image.asset(
-                //                     "assets/Veg.png",
-                //                     height: 20,
-                //                     width: 20,
-                //                   )),
-                //                 ),
-                //                 SizedBox(
-                //                   height: 20,
-                //                   child: ElevatedButton.icon(
-                //                     onPressed: () {},
-                //                     label: const Text(
-                //                       "Remove",
-                //                       style: TextStyle(fontSize: 12),
-                //                     ),
-                //                     icon: const Icon(
-                //                       size: 15,
-                //                       Icons.close,
-                //                       color: Colors.red,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //           const Padding(
-                //             padding: EdgeInsets.only(top: 5, left: 12),
-                //             child: Text(
-                //               "Mexican pizza",
-                //               style: TextStyle(
-                //                   fontSize: 25, fontWeight: FontWeight.w500),
-                //             ),
-                //           ),
-                //           Row(
-                //             children: [
-                //               const Padding(
-                //                 padding: EdgeInsets.only(left: 12, right: 38),
-                //                 child: Text(
-                //                   "₹ 400",
-                //                   style: TextStyle(
-                //                       fontSize: 25,
-                //                       fontWeight: FontWeight.w500),
-                //                 ),
-                //               ),
-                //               ElevatedButton(
-                //                 onPressed: () {},
-                //                 child: const Text("Out of stock"),
-                //                 style: ElevatedButton.styleFrom(
-                //                     backgroundColor: Colors.red),
-                //               ),
-                //               // ElevatedButton(onPressed: () {
-
-                //               // }, child: Text("Remove item"))
-                //             ],
-                //           )
-                //         ],
-                //       )
-                //     ],
-                //   ),
-                // );
-              }),
-          // ListView.separated(
-          //     padding: const EdgeInsets.all(8),
-          //     itemCount: items.length,
-          //     separatorBuilder: (context, index) => const SizedBox(
-          //           height: 10,
-          //         ),
-          //     itemBuilder: (context, index) {
-          //       return Card(
-          //         color: Color.fromARGB(255, 225, 241, 243),
-          //         child: Row(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             Container(
-          //               child: Column(
-          //                 children: [
-          //                   Image(
-          //                     image: NetworkImage(
-          //                         "https://tse2.mm.bing.net/th?id=OIP.Jd-H-LHiVSkNBlLR65nuVwHaEK&pid=Api&P=0"),
-          //                     height: 10,
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //             Column(
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: [
-          //                 Padding(
-          //                   padding: const EdgeInsets.only(top: 4),
-          //                   child: Row(
-          //                     children: [
-          //                       Padding(
-          //                         padding:
-          //                             const EdgeInsets.only(right: 8, left: 8),
-          //                         child: Container(
-          //                           decoration: BoxDecoration(
-          //                             color: Color.fromARGB(255, 201, 199, 199),
-          //                             borderRadius:
-          //                                 BorderRadius.all(Radius.circular(4)),
-          //                           ),
-          //                           child: Padding(
-          //                             padding: const EdgeInsets.symmetric(
-          //                                 vertical: 4.0, horizontal: 16.0),
-          //                             child: Text(
-          //                               "Dinner",
-          //                               style: TextStyle(color: Colors.white),
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       Padding(
-          //                         padding: const EdgeInsets.only(right: 8.0),
-          //                         child: Container(
-          //                             child: Image.asset(
-          //                           "assets/Veg.png",
-          //                           height: 10,
-          //                         )),
-          //                       ),
-          //                       SizedBox(
-          //                         height: 10,
-          //                         child: ElevatedButton.icon(
-          //                           onPressed: () {},
-          //                           label: Text(
-          //                             "Remove",
-          //                             style: TextStyle(fontSize: 12),
-          //                           ),
-          //                           icon: Icon(
-          //                             size: 5,
-          //                             Icons.close,
-          //                             color: Colors.red,
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //                 Padding(
-          //                   padding: const EdgeInsets.only(top: 5, left: 10),
-          //                   child: Text(
-          //                     "Mexican pizza",
-          //                     style: TextStyle(
-          //                         fontSize: 25, fontWeight: FontWeight.w500),
-          //                   ),
-          //                 ),
-          //                 Row(
-          //                   children: [
-          //                     Padding(
-          //                       padding:
-          //                           const EdgeInsets.only(left: 6, right: 10),
-          //                       child: Text(
-          //                         " 400",
-          //                         style: TextStyle(
-          //                             fontSize: 20,
-          //                             fontWeight: FontWeight.w500),
-          //                       ),
-          //                     ),
-          //                     ElevatedButton(
-          //                       onPressed: () {},
-          //                       child: Text("Out of stock"),
-          //                       style: ElevatedButton.styleFrom(
-          //                           backgroundColor: Colors.red),
-          //                     ),
-          //                     // ElevatedButton(onPressed: () {
-
-          //                     // }, child: Text("Remove item"))
-          //                   ],
-          //                 )
-          //               ],
-          //             )
-          //           ],
-          //         ),
-          //       );
-          //     }),
-        ],
+                  ),
+                ],
+              ),
+            )
+          )
+        ]
       ),
     );
   }

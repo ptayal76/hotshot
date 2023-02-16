@@ -20,6 +20,7 @@ const dish = new mongoose.Schema({
     suggestedTime: {
         type: String,
         enum: ['Breakfast', 'Lunch', 'Dinner'],
+        
     },
     InStock: {
         type: Boolean,

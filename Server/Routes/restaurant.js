@@ -43,6 +43,7 @@ router.get('/food/rest/:restid', async (req, res) => {
   try {
     const id = req.params.restid;
     const restaurant = await Restaurant.findById(id);
+    
     return res.json(restaurant);
   } catch (err) {
     return res.status(400).send(err.message);

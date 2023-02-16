@@ -114,17 +114,17 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     setState(() {
                                       loading = true;
                                     });
-                                    //await GoogleAuthentication().googleSignIn();
+                                    final user = await GoogleAuthentication().googleSignIn();
 
-                                    final u = MyUser(
-                                        email: 'lohit@iitg',
-                                        fullName: 'LOHIT HOSTEL',
-                                        mobile: '1234321',
-                                        uid: 'uid');
+                                    // final u = MyUser(
+                                    //     email: 'lohit@iitg',
+                                    //     fullName: 'LOHIT HOSTEL',
+                                    //     mobile: '1234321',
+                                    //     uid: 'uid');
 
                                     print('STEP 1');
 
-                                    await UserServ().postUser(u);
+                                    await UserServ().postUser(user);
 
                                     print('STEP 2');
 

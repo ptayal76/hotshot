@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/authentication/customer/customer_sign_in.dart';
+import 'package:hotshot/screens/authentication/shopkeeper/phone_verification.dart';
 import 'package:hotshot/screens/dummy_checkout.dart';
 import 'package:hotshot/screens/home.dart';
 import 'package:hotshot/screens/restHome.dart';
@@ -11,6 +12,7 @@ import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:hotshot/screens/verification_pending.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,11 +34,7 @@ class MyApp extends StatelessWidget {
           final themeProvider = Provider.of<ThemeProvider>(context);
           return StreamProvider<MyUser?>.value(
             value: AuthService().user,
-            initialData: MyUser(
-                email: 'dummyemail@iitg.in',
-                fullName: 'dummyname',
-                mobile: '1234567890',
-                uid: 'asdfghjkl'),
+            initialData: null,
             child: MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Hotshot',

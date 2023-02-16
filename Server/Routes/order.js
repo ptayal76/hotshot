@@ -176,6 +176,7 @@ router.put('/food/rest/complete/:orderid', async (req, res) => {
 
 //DELETING AN ORDER
 router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
+    
     const order = await Order.findById(req.params.orderId);
     if (order.user_id == req.user) {
         await Order.findByIdAndDelete(req.params.orderId);
