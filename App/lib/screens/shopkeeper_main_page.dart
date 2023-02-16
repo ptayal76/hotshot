@@ -4,13 +4,25 @@ import 'package:hotshot/screens/shopkeeperOrdersScreen.dart';
 import 'shopkeeperhome.dart';
 
 class MainPage extends StatefulWidget {
+  // final int currentIndex;
+  const MainPage({Key? key}) : super(key: key);
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int currentIndex = 0;
+  var currentIndex = 0;
+  // currentI = widget.currentIndex;
   final screens = [
+    // new MaterialPageRoute(
+    //                                     builder: (BuildContext context) =>
+    //                                         ShopkeeperHomePage()),
+    // new MaterialPageRoute(
+    //                                     builder: (BuildContext context) =>
+    //                                         ShopkeeperOrdersScreen()),
+    //                                         new MaterialPageRoute(
+    //                                     builder: (BuildContext context) =>
+    //                                         AcceptedOrdersScreen())
     ShopkeeperHomePage(),
     ShopkeeperOrdersScreen(),
     AcceptedOrdersScreen(),

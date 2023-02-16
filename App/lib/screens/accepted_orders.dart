@@ -18,7 +18,7 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen>
     with SingleTickerProviderStateMixin {
   List<Order>? order;
   final OrderServ restServ = OrderServ();
-  fetchallorder() async {
+  fetchacceptedorder() async {
     order = await restServ.fetchAcceptedOrders(context);
     setState(() {});
   }
@@ -34,7 +34,7 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchallorder();
+    fetchacceptedorder();
     _tabController = TabController(vsync: this, length: 3);
   }
 
@@ -45,6 +45,7 @@ class _AcceptedOrdersScreenState extends State<AcceptedOrdersScreen>
       100, (i) => ['Item $i', 'Item ${(i + 1)}', 'Item ${(i + 2)}']);
   @override
   Widget build(BuildContext context) {
+    fetchacceptedorder();
     return order == null
         ? Loader()
         : Scaffold(

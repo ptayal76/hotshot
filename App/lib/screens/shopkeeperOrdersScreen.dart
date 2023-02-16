@@ -21,7 +21,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
     with SingleTickerProviderStateMixin {
   List<Order>? order;
   final OrderServ restServ = OrderServ();
-  fetchallorder() async {
+  fetchresponsependingorder() async {
     order = await restServ.fetchResponsePendingOrders(context);
     setState(() {});
   }
@@ -37,7 +37,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchallorder();
+    fetchresponsependingorder();
     _tabController = TabController(vsync: this, length: 3);
   }
 
@@ -46,8 +46,9 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
       100, (i) => ['Item $i', 'Item ${(i + 1)}', 'Item ${(i + 2)}']);
   @override
   Widget build(BuildContext context) {
+    fetchresponsependingorder();
     return order == null
-        ? Loader()
+        ? const Loader()
         : Scaffold(
             appBar: AppBar(
               // backgroundColor: greenColor,
@@ -76,7 +77,61 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
                       height: 10,
                     ),
                 itemBuilder: (context, index) {
-                  return OrderCard(data: order![index]);
+                  return Column(
+                    children: [
+                      OrderCard(data: order![index]),
+                      Container(
+                        // alignment: Alignment.bottomCenter,
+                        decoration: const BoxDecoration(
+                            // color: Colors.green[100],
+                            // border: Border.all(
+                            //     // color: Colors.green.shade100,
+                            //     ),
+                            // borderRadius:
+                            //     const BorderRadius.all(Radius.circular(20)),
+                            ),
+                        height: 35,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton.icon(
+                                onPressed: () async {
+                                  // setState(() async {
+                                  await OrderServ()
+                                      .AcceptOrders(context, order![index].id);
+                                  setState(() {
+                                    fetchresponsependingorder();
+                                  });
+                                  // });
+                                  // Navigator.pushReplacement(
+                                  //     context,
+                                  //     new MaterialPageRoute(
+                                  //         builder: (BuildContext context) =>
+                                  //             MainPage()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    // backgroundColor: Colors.green,
+                                    ),
+                                icon: const Icon(Icons.check),
+                                label: const Text('Accept')),
+                            ElevatedButton.icon(
+                                onPressed: () async {
+                                  await OrderServ()
+                                      .RejectOrders(context, order![index].id);
+                                  setState(() {
+                                    fetchresponsependingorder();
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red.shade400,
+                                ),
+                                icon: const Icon(Icons.close),
+                                label: const Text('Reject')),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
                 }));
   }
 }
