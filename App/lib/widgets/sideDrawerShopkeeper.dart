@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/screens/insights.dart';
 // import 'package:navigation_drawer_example/page/favourites_page.dart';
 // import 'package:navigation_drawer_example/page/people_page.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
@@ -50,7 +51,10 @@ class MyNavigationDrawer extends StatelessWidget {
                   buildMenuItem(
                     text: 'Insights',
                     icon: Icons.auto_graph_sharp,
-                    onClicked: () => selectedItem(context, 2),
+                    onClicked: () => Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => ShopInsights())),
                   ),
                   const SizedBox(height: 24),
                   // Divider(color: Colors.white70),
