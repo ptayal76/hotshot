@@ -19,17 +19,41 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 //ADDING RESTAURANT TO USER'S FAVS.
-router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req, res)  => {
-    try{
+router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req, res) => {
+    try {
         const id = req.params.restId;
         const restaurant = await Restaurant.findById(id);
         const user = await User.findById(req.user);
         user.favRest.push(restaurant);
         await user.save();
         res.status(200).json('Added to favorites!');
-    } catch(err) {
+    } catch (err) {
         return res.status(400).send(err.message);
     }
 })
+
+//LOGIN OR SIGNUP
+router.post('/login', async (req, res) => {
+    try {
+        var existingUser = await User.findOne({ email: req.body.email });
+        if (!existingUser) {
+            const user = new User(req.body);
+            existingUser = user;
+            user.save();
+        }
+        jwt.sign(
+            { isowner: false, id: existingUser._id },
+            process.env.JWT_SEC,
+            (err, token) => {
+                res.header('token', `${token}`);
+                return res.json(existingUser);
+            }
+        );
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+
 
 module.exports = router;
