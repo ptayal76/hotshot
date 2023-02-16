@@ -61,7 +61,7 @@ router.get("/food/order/:orderId",verifyToken,authenticate,async(req,res)=>{
             res.status(200).json(order);
         }
         else
-        {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
+        {
             res.status(403).json({message:"Not Authenticated"});
         }
     }
