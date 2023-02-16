@@ -23,6 +23,7 @@ const upload = multer({ storage: storage });
 router.get('/food/rest', async (req, res) => {
   try {
      var obj={};
+     if(req.query.status)obj.status=req.query.status
      if(req.query.rating) obj.rating={$gte :req.query.rating}
      if(req.query.locationCategory) obj.locationCategory=req.query.locationCategory;
      const restaurants = await Restaurant.find(obj);
