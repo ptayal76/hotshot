@@ -137,6 +137,14 @@ router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (
         if (req.restaurant == order.restaurant_id) {
             order.Order_status = 'rejected';
             await order.save();
+            const razorpayInstance = new Razorpay({
+                key_id: req.restaurant.razorpayCred.Key_id || process.env.RZP_KEY_ID,
+                key_secret: req.restaurant.razorpayCred.KeySecret || process.env.RZP_SEC_KEY
+            })
+            razorpayInstance.payments.refund(paymentId,{
+                "speed": "optimum",
+                
+              })
             res.status(200).send("Order Rejected");
             //refund gateway
         }
@@ -200,6 +208,7 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
 })
 router.put("/food/order/acknowledge/:orderId", async (req, res) => {
     const order = await Order.findById(req.params.orderId);
+    order.paymentId=req.body.razorpay_payment_id;
     order.Order_status = 'responsePending';
     order.save();
 })
