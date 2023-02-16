@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'package:hotshot/widgets/dishCard.dart';
+import 'package:hotshot/widgets/my_drawer.dart';
 import 'package:hotshot/widgets/restCard.dart';
 import 'package:hotshot/screens/statHome.dart';
 import 'package:hotshot/screens/otherHome.dart';
@@ -26,22 +27,18 @@ class RestHome extends StatefulWidget {
   State<RestHome> createState() => _RestHomeState();
 }
 
-
-
 class _RestHomeState extends State<RestHome>
     with SingleTickerProviderStateMixin {
   List<RestInfo>? restaur;
   final RestaurantServ restServ = RestaurantServ();
   fetchallrest() async {
-    restaur=await restServ.fetchAllRestaurants(context);
-    for(int i=0;i<restaur!.length;i++){
-      allRest![restaur![i].id]=restaur![i];
-
+    restaur = await restServ.fetchAllRestaurants(context);
+    for (int i = 0; i < restaur!.length; i++) {
+      allRest![restaur![i].id] = restaur![i];
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   int _selectedIndex = 0;
   // Future<void> Mongo() async{
   //   var db=await Db.create("mongodb+srv://lohit:lohit2105@hotshot-cluster.vljarxr.mongodb.net/?retryWrites=true&w=majority");
@@ -97,7 +94,7 @@ class _RestHomeState extends State<RestHome>
       // appBar: AppBar(
       //
       // ),
-      drawer: NavigationDrawerWidget(),
+      drawer: MyDrawer(),
       bottomNavigationBar: Container(
         height: 100,
         padding: const EdgeInsets.all(12),
@@ -109,17 +106,16 @@ class _RestHomeState extends State<RestHome>
                 onTap: (x) {
                   setState(() {
                     _selectedIndex = x;
-                    if(x == 2)
-                    {
-                      Navigator.pushReplacement(context,
-                          new MaterialPageRoute(builder: (BuildContext context) => OtherHome())
-                      );
-                    }
-                    else if(x == 1)
-                    {
-                      Navigator.pushReplacement(context,
-                          new MaterialPageRoute(builder: (BuildContext context) => StatHome())
-                      );
+                    if (x == 2) {
+                      Navigator.pushReplacement(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) => OtherHome()));
+                    } else if (x == 1) {
+                      Navigator.pushReplacement(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) => StatHome()));
                     }
                   });
                 },
@@ -140,171 +136,174 @@ class _RestHomeState extends State<RestHome>
           ),
         ),
       ),
-      body: CustomScrollView(physics: const BouncingScrollPhysics(), slivers: <
-          Widget>[
-        SliverAppBar(
-          pinned: true,
-          floating: true,
-          // expandedHeight: 100,
-          flexibleSpace: const FlexibleSpaceBar(
-            title: Text('HotShot'),
-            centerTitle: true,
-          ),
-          backgroundColor: const Color(0xff307A59),
-          //pinned: false,
-          //floating: false,
-          actions: [
-            badges.Badge(
-              position: badges.BadgePosition.topEnd(top: 3, end: 3),
-              badgeContent: Text(''),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (BuildContext context) => cart())
-                  );
-                },
+      body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              floating: true,
+              // expandedHeight: 100,
+              flexibleSpace: const FlexibleSpaceBar(
+                title: Text('HotShot'),
+                centerTitle: true,
+              ),
+              backgroundColor: const Color(0xff307A59),
+              //pinned: false,
+              //floating: false,
+              actions: [
+                badges.Badge(
+                  position: badges.BadgePosition.topEnd(top: 3, end: 3),
+                  badgeContent: Text(''),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) => cart()));
+                    },
 
-                icon: Icon(Icons.shopping_cart),
-                //alignment: Alignment(x, y),
-                tooltip: 'Cart',
-              ),
-            )
-          ],
-        ),
-        restaur==null ? SliverToBoxAdapter(child: Loader()):SliverList(
-          delegate: SliverChildListDelegate([
-            const SearchBar(),
-            Filters(),
-            Container(
-              margin: const EdgeInsets.only(top: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              width: MediaQuery.of(context).size.width,
-              child: const Text(
-                'Top Picks',
-                style: TextStyle(
-                  // color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+                    icon: Icon(Icons.shopping_cart),
+                    //alignment: Alignment(x, y),
+                    tooltip: 'Cart',
+                  ),
+                )
+              ],
             ),
-                Container(
-                  margin: EdgeInsets.only(top: 12),
-                  height: 150,
-                  child: ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      itemBuilder: (context, index) {
-                        return RestCard(data: restaur![index]);
-                      },
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          width: 16,
-                        );
-                      },
-                      itemCount: restaur!.length),
-                ),
-                // Container(
-                //   child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Container(
-                //           margin: EdgeInsets.only(top: 12),
-                //           padding: EdgeInsets.symmetric(horizontal: 16),
-                //           width: MediaQuery.of(context).size.width,
-                //           child: Text(
-                //             'Suggested',
-                //             style: TextStyle(
-                //               color: Colors.black,
-                //               fontSize: 18,
-                //               fontWeight: FontWeight.w600,
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           margin: EdgeInsets.only(top: 12),
-                //           height: 150,
-                //           child: ListView.separated(
-                //               padding: EdgeInsets.symmetric(horizontal: 16),
-                //               itemBuilder: (context, index) {
-                //                 return DishCard(data: widget.suggested[index]);
-                //               },
-                //               physics: BouncingScrollPhysics(),
-                //               shrinkWrap: true,
-                //               scrollDirection: Axis.horizontal,
-                //               separatorBuilder: (context, index) {
-                //                 return SizedBox(
-                //                   width: 16,
-                //                 );
-                //               },
-                //               itemCount: widget.topPicks.length),
-                //         ),
-                //         // SliverList(
-                //         //     delegate: SliverChildBuilderDelegate((context,index){
-                //         //       return RestCard(data: widget.topPicks[index]);
-                //         //     },
-                //         //     childCount: widget.topPicks.length,
-                //         //     )
-                //         // ),
-                //
-                //       ]
-                //   ),
-                // ),
-                Container(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 12),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            'Restaurants',
-                            style: TextStyle(
-                              // color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+            restaur == null
+                ? SliverToBoxAdapter(child: Loader())
+                : SliverList(
+                    delegate: SliverChildListDelegate([
+                      const SearchBar(),
+                      Filters(),
+                      Container(
+                        margin: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        width: MediaQuery.of(context).size.width,
+                        child: const Text(
+                          'Top Picks',
+                          style: TextStyle(
+                            // color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        // SliverList(
-                        //     delegate: SliverChildBuilderDelegate((context,index){
-                        //       return RestCard(data: widget.topPicks[index]);
-                        //     },
-                        //     childCount: widget.topPicks.length,
-                        //     )
-                        // ),
-                        ListView.separated(
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 12),
+                        height: 150,
+                        child: ListView.separated(
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             itemBuilder: (context, index) {
                               return RestCard(data: restaur![index]);
                             },
+                            physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            //scrollDirection: Axis.vertical,
-                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
                             separatorBuilder: (context, index) {
                               return SizedBox(
-                                height: 16,
+                                width: 16,
                               );
                             },
                             itemCount: restaur!.length),
-                      ]
+                      ),
+                      // Container(
+                      //   child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Container(
+                      //           margin: EdgeInsets.only(top: 12),
+                      //           padding: EdgeInsets.symmetric(horizontal: 16),
+                      //           width: MediaQuery.of(context).size.width,
+                      //           child: Text(
+                      //             'Suggested',
+                      //             style: TextStyle(
+                      //               color: Colors.black,
+                      //               fontSize: 18,
+                      //               fontWeight: FontWeight.w600,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           margin: EdgeInsets.only(top: 12),
+                      //           height: 150,
+                      //           child: ListView.separated(
+                      //               padding: EdgeInsets.symmetric(horizontal: 16),
+                      //               itemBuilder: (context, index) {
+                      //                 return DishCard(data: widget.suggested[index]);
+                      //               },
+                      //               physics: BouncingScrollPhysics(),
+                      //               shrinkWrap: true,
+                      //               scrollDirection: Axis.horizontal,
+                      //               separatorBuilder: (context, index) {
+                      //                 return SizedBox(
+                      //                   width: 16,
+                      //                 );
+                      //               },
+                      //               itemCount: widget.topPicks.length),
+                      //         ),
+                      //         // SliverList(
+                      //         //     delegate: SliverChildBuilderDelegate((context,index){
+                      //         //       return RestCard(data: widget.topPicks[index]);
+                      //         //     },
+                      //         //     childCount: widget.topPicks.length,
+                      //         //     )
+                      //         // ),
+                      //
+                      //       ]
+                      //   ),
+                      // ),
+                      Container(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                width: MediaQuery.of(context).size.width,
+                                child: Text(
+                                  'Restaurants',
+                                  style: TextStyle(
+                                    // color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              // SliverList(
+                              //     delegate: SliverChildBuilderDelegate((context,index){
+                              //       return RestCard(data: widget.topPicks[index]);
+                              //     },
+                              //     childCount: widget.topPicks.length,
+                              //     )
+                              // ),
+                              ListView.separated(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  itemBuilder: (context, index) {
+                                    return RestCard(data: restaur![index]);
+                                  },
+                                  shrinkWrap: true,
+                                  //scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height: 16,
+                                    );
+                                  },
+                                  itemCount: restaur!.length),
+                            ]),
+                      )
+                      //   ]
+                      //   ),
+                      // ),
+                    ]),
+                    // physics: BouncingScrollPhysics(),
+                    // children: [
+                    //
+                    //
+                    // ],
                   ),
-                )
-            //   ]
-            //   ),
-            // ),
-
           ]),
-          // physics: BouncingScrollPhysics(),
-          // children: [
-          //
-          //
-          // ],
-        ),
-      ]),
     );
   }
 }

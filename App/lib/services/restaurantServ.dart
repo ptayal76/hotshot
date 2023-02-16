@@ -8,20 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
 import '../model/orderInfo.dart';
 
+//String tokenFinal =
+//  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+
 String tokenFinal =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VlNmQwZWYzZDUwYmI3Y2E0OTcyYjUiLCJpYXQiOjE2NzY1Njk4NzB9.A8X6k6Dx4HFaPdxE5zIRq3IpFD4Z9lrv27s4ILa2jCc';
 
 class RestaurantServ {
   String MONGO_URL = 'http://192.168.1.106:8080';
-  void postRestaurant(ShopVerificationInfo info, MyUser? user)async{
-
-                        
-    Map<String,dynamic> body = {
+  void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
+    Map<String, dynamic> body = {
       'ownerName': user!.fullName,
       'restaurantName': info.shopName,
       'phoneNumber': 'info.phoneNumber',
@@ -46,17 +48,16 @@ class RestaurantServ {
     // print('SUCCESS');
   }
 
-  Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID)async{
+  Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID) async {
     List<DishInfo> menu = [];
 
     try {
       //http.Response res = await http.get(Uri.parse(''));
       RestInfo restaurant = await fetchRestaurantsbyID(context, restID);
-      
+
       List<DishInfo> result = await fetchDish(context, restaurant.menu);
       return result;
-    }
-    catch(e){
+    } catch (e) {
       print('ERROR FETHING MENU');
       print(e.toString());
       return null;
@@ -175,10 +176,13 @@ class RestaurantServ {
   }
 
   Future<void> postCartOrder(BuildContext context, String dishid) async {
-    // final userProvider = Provider.of(context)
+    final user = Provider.of<MyUser?>(context, listen: false);
+    final tkn = (await SharedPreferences.getInstance()).getString('token');
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
-    String token = 'Bearer $tokenFinal'; // +
+    String token = 'Bearer $tkn'; // +
+
+    print('TOKEN = $tkn');
     //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){

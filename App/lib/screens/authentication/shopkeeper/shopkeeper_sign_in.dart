@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:lottie/lottie.dart';
@@ -81,6 +82,9 @@ class _ShopkeeperSignInState extends State<ShopkeeperSignIn> {
                                           setState(() {
                                             loading = true;
                                           });
+
+                                          await AuthService()
+                                              .setIsCustomer(false);
                                           await GoogleAuthentication()
                                               .googleSignIn();
                                           setState(() {
