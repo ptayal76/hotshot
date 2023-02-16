@@ -21,41 +21,41 @@ class cart extends StatefulWidget {
 
 class _cartState extends State<cart> {
   List<Order>? Orders;
-  List<Map<String,int>> dishes=[];
-  List<Map<DishInfo,int>> fetchedDishes=[];
+  List<Map<String, int>> dishes = [];
+  List<Map<DishInfo, int>> fetchedDishes = [];
   final OrderServ orderServ = OrderServ();
   fetchusercart() async {
     // print(dishes.length);
-    Orders=await orderServ.fetchUserCart(context);
+    Orders = await orderServ.fetchUserCart(context);
     print(Orders!.length);
     print('0000');
-    for(int i=0;i<Orders!.length;i++){
+    for (int i = 0; i < Orders!.length; i++) {
       print("hereee");
 
       dishes.add(convert().listToMap(Orders![i].items));
-      print(dishes!.length);
+      print(dishes.length);
     }
 
-    for(int i=0;i<dishes!.length;i++){
-      List<String> dishIdsOrder=[];
+    for (int i = 0; i < dishes.length; i++) {
+      List<String> dishIdsOrder = [];
       print("keeyyyy11111111");
-      for(String key in dishes![i].keys.toList()){
+      for (String key in dishes[i].keys.toList()) {
         print(key);
         print("keyyyyysssss");
         dishIdsOrder.add(key);
       }
-      List<DishInfo>x=await RestaurantServ().fetchDish(context, dishIdsOrder);
-      Map<DishInfo,int>mp={};
-      for(int j=0;j<x!.length;j++){
-        mp[x[j]]=dishes![i][x[j].id]!;
+      List<DishInfo> x =
+          await RestaurantServ().fetchDish(context, dishIdsOrder);
+      Map<DishInfo, int> mp = {};
+      for (int j = 0; j < x.length; j++) {
+        mp[x[j]] = dishes[i][x[j].id]!;
       }
       fetchedDishes.add(mp);
     }
     // fetchDishesCart();
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   // Future<List<DishInfo>> fetchDishesCart(List<String> items) async {
   //   // for(int i=0;i<Orders!.length;i++){
   //     List<DishInfo>x=await RestaurantServ().fetchDish(context, items);
@@ -68,6 +68,7 @@ class _cartState extends State<cart> {
     fetchusercart();
     // _tabController = TabController(vsync: this, length: 3);
   }
+
   @override
   Widget build(BuildContext context) {
     // fetchusercart();
@@ -77,15 +78,24 @@ class _cartState extends State<cart> {
         backgroundColor: const Color(0xff307A59),
         centerTitle: true,
       ),
-      body: ListView(
-
-          children: [
-            SizedBox(height:40,child: Center(child: Text('Your Orders',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),))),
-            Lottie.asset('assets/lottie/cart.json',height: 200,width: 50),
-            Orders==null ? Loader():ListView.separated(
+      body: ListView(children: [
+        SizedBox(
+            height: 40,
+            child: Center(
+                child: Text(
+              'Your Orders',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ))),
+        Lottie.asset('assets/lottie/cart.json', height: 200, width: 50),
+        Orders == null
+            ? Loader()
+            : ListView.separated(
                 padding: EdgeInsets.symmetric(horizontal: 2),
                 itemBuilder: (context, index) {
-                  return CartCard(orders: Orders![index],mp: fetchedDishes![index],); //(data: widget.stat[index]
+                  return CartCard(
+                    orders: Orders![index],
+                    mp: fetchedDishes[index],
+                  ); //(data: widget.stat[index]
                 },
                 shrinkWrap: true,
                 //scrollDirection: Axis.vertical,
@@ -96,9 +106,8 @@ class _cartState extends State<cart> {
                   );
                 },
                 itemCount: Orders!.length,
-            ),
-          ]
-      ),
+              ),
+      ]),
     );
   }
 }

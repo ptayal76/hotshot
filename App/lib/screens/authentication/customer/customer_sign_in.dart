@@ -134,7 +134,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     final token =
                                         await UserServ().postUser(user);
 
-                                    user!.setToken(token);
+                                    user.setToken(token);
 
                                     print(user);
 

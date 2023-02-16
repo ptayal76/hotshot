@@ -34,7 +34,7 @@ class _RestHomeState extends State<RestHome>
   fetchallrest() async {
     restaur = await restServ.fetchAllRestaurants(context);
     for (int i = 0; i < restaur!.length; i++) {
-      allRest![restaur![i].id] = restaur![i];
+      allRest[restaur![i].id] = restaur![i];
     }
     setState(() {});
   }

@@ -13,7 +13,7 @@ import '../services/restaurantServ.dart';
 class checkout extends StatefulWidget {
   // final String orderID;
   final Order order;
-  const checkout({Key? key,required this.order}) : super(key: key);
+  const checkout({Key? key, required this.order}) : super(key: key);
 
   @override
   State<checkout> createState() => _checkoutState();
@@ -21,34 +21,32 @@ class checkout extends StatefulWidget {
 
 class _checkoutState extends State<checkout> {
   Order? refOrder;
-  Map<String,int> dishes={};
-  Map<DishInfo,int> fetchedDishes={};
-  fetchorder() async{
-    refOrder=await OrderServ().fetchOrderbyId(context,widget.order.id);
+  Map<String, int> dishes = {};
+  Map<DishInfo, int> fetchedDishes = {};
+  fetchorder() async {
+    refOrder = await OrderServ().fetchOrderbyId(context, widget.order.id);
     fetchmenu();
-    setState(() {
-
-    });
+    setState(() {});
   }
-  fetchmenu() async{
-    dishes=convert().listToMap(refOrder!.items);
-    List<String> dishIdsOrder=[];
+
+  fetchmenu() async {
+    dishes = convert().listToMap(refOrder!.items);
+    List<String> dishIdsOrder = [];
     print("keeyyyy11111111");
-    for(String key in dishes!.keys.toList()){
+    for (String key in dishes.keys.toList()) {
       print(key);
       print("keyyyyysssss");
       dishIdsOrder.add(key);
     }
-    List<DishInfo>x=await RestaurantServ().fetchDish(context, dishIdsOrder);
-    Map<DishInfo,int>mp={};
-    for(int j=0;j<x!.length;j++){
-      mp[x[j]]=dishes![x[j].id]!;
+    List<DishInfo> x = await RestaurantServ().fetchDish(context, dishIdsOrder);
+    Map<DishInfo, int> mp = {};
+    for (int j = 0; j < x.length; j++) {
+      mp[x[j]] = dishes[x[j].id]!;
     }
-    fetchedDishes=(mp);
-    setState(() {
-
-    });
+    fetchedDishes = (mp);
+    setState(() {});
   }
+
   // fetchListMenu() async{
   //   List<DishInfo>x=await RestaurantServ().fetchDish(context, );
   // }
@@ -58,6 +56,7 @@ class _checkoutState extends State<checkout> {
     fetchorder();
     // _tabController = TabController(vsync: this, length: 3);
   }
+
   final List<int> count = [1, 1, 1, 1, 1];
   var itemc = 0;
   final List<int> price = [100, 200, 300, 400, 500];
@@ -71,20 +70,25 @@ class _checkoutState extends State<checkout> {
         centerTitle: true,
       ),
       body: ListView(
-
         children: [
           Container(
             height: 50,
             // decoration: BoxDecoration(color: Colors.white),
-            child: Center(child: Text((allRest[widget.order.restaurantId]!.restaurantName),style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,)),
+            child: Center(
+              child: Text((allRest[widget.order.restaurantId]!.restaurantName),
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
           ),
           ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 2),
               itemBuilder: (context, index) {
-                DishInfo key=fetchedDishes.keys.elementAt(index);
-                int value=fetchedDishes.values.elementAt(index);
-                return MenuCard(dish: key,freq: value); //(data: widget.stat[index]
+                DishInfo key = fetchedDishes.keys.elementAt(index);
+                int value = fetchedDishes.values.elementAt(index);
+                return MenuCard(
+                    dish: key, freq: value); //(data: widget.stat[index]
               },
               shrinkWrap: true,
               //scrollDirection: Axis.vertical,
@@ -94,21 +98,26 @@ class _checkoutState extends State<checkout> {
                   height: 1,
                 );
               },
-              itemCount: fetchedDishes.length
-          ),
+              itemCount: fetchedDishes.length),
           SizedBox(
             height: 2,
             child: Container(color: Colors.black),
           ),
           SizedBox(
             height: 60,
-            child:Padding(
+            child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Total Amount : ',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                  Text('₹${refOrder!.total.toString()}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
+                  Text(
+                    'Total Amount : ',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '₹${refOrder!.total.toString()}',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
             ),
@@ -119,26 +128,24 @@ class _checkoutState extends State<checkout> {
           ),
         ],
       ),
-
-      bottomNavigationBar:new GestureDetector(
-        onTap: ()
-    {
-    print("Container clicked");
-    // Navigator.pushReplacement(context,
-    //     new MaterialPageRoute(builder: (BuildContext context) => MenuCard()));
-
-    },
-      child:Container(
-
-        height: 50,
-        decoration: BoxDecoration(color: const Color(0xff307A59)),
-        child: Center(child: Text('BUY NOW : ₹${refOrder!.total.toString()}',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),)),
-      )
-
-    ),
-
-
+      bottomNavigationBar: new GestureDetector(
+          onTap: () {
+            print("Container clicked");
+            // Navigator.pushReplacement(context,
+            //     new MaterialPageRoute(builder: (BuildContext context) => MenuCard()));
+          },
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(color: const Color(0xff307A59)),
+            child: Center(
+                child: Text(
+              'BUY NOW : ₹${refOrder!.total.toString()}',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+          )),
     );
   }
 }
