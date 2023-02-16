@@ -24,10 +24,10 @@ class RestServ {
         var obj = jsonDecode(res.body);
         // print(obj[0].runtimeType);
         // print(obj);
-        print(res.body);
+        // print(res.body);
         // print(res.body.runtimeType);
         // print(res.body.length);
-        print("hi1");
+        // print("hi1");
         httpErrorHandle(
           response: res,
           context: context,
@@ -40,8 +40,8 @@ class RestServ {
             //   );
             // }
 
-            print(dishes);
-            print("hi");
+            //print(dishes);
+            // print("hi");
           },
         );
       }

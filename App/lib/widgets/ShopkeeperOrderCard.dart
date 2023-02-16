@@ -29,11 +29,11 @@ List<String> abc(List<DishInfo?> dishes) {
 
   for (int i = 0; i < dishes.length; i++) {
     // print(dishes![i].name!);
-    print(dishes[i]!.name!);
+    // print(dishes[i]!.name!);
     names.add(dishes[i]!.name!);
   }
   return names;
-  print("hello123");
+  // print("hello123");
 }
 
 class _OrderCardState extends State<OrderCard> {

@@ -22,9 +22,9 @@ class OrderServ {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
     // String Bearer = 'Bearer ' +
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
-    print(Bearer);
+    //print(Bearer);
     try {
-      print('hello');
+      //print('hello');
       http.Response res = await http.get(
           Uri.parse('http://10.0.2.2:8080/food/order?status=responsePending'),
           headers: {
@@ -33,13 +33,13 @@ class OrderServ {
             'Authorization': Bearer
           });
       var obj = jsonDecode(res.body);
-      print(obj[0].runtimeType);
-      print(obj);
-      print(res.body);
-      // print(res.body.runtimeType);
-      print(obj.runtimeType);
-      print(res.body.length);
-      print("hi1");
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
+      // // print(res.body.runtimeType);
+      // print(obj.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
       httpErrorHandle(
         response: res,
         context: context,
@@ -48,8 +48,8 @@ class OrderServ {
             // var obj=;
             OrderList.add(Order.fromJson(obj[i]));
           }
-          print(OrderList);
-          print("hi");
+          //print(OrderList);
+          //print("hi");
         },
       );
     } catch (e) {
@@ -58,7 +58,7 @@ class OrderServ {
       print("alpha");
       // showSnackBar(BuildContext, e.toString());
     }
-    print('xxx');
+    // print('xxx');
     return OrderList;
   }
 
@@ -69,9 +69,9 @@ class OrderServ {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
     // String Bearer = 'Bearer ' +
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
-    print(Bearer);
+    //print(Bearer);
     try {
-      print('hello');
+      //print('hello');
       http.Response res = await http.get(
           Uri.parse('http://10.0.2.2:8080/food/order?status=accepted'),
           headers: {
@@ -80,13 +80,13 @@ class OrderServ {
             'Authorization': Bearer
           });
       var obj = jsonDecode(res.body);
-      print(obj[0].runtimeType);
-      print(obj);
-      print(res.body);
-      // print(res.body.runtimeType);
-      print(obj.runtimeType);
-      print(res.body.length);
-      print("hi1");
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
+      // // print(res.body.runtimeType);
+      // print(obj.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
       httpErrorHandle(
         response: res,
         context: context,
@@ -95,17 +95,17 @@ class OrderServ {
             // var obj=;
             OrderList.add(Order.fromJson(obj[i]));
           }
-          print(OrderList);
-          print("hi");
+          //   print(OrderList);
+          // print("hi");
         },
       );
     } catch (e) {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-      print(e);
-      print("alpha");
+      // print(e);
+      // print("alpha");
       // showSnackBar(BuildContext, e.toString());
     }
-    print('xxx');
+    // print('xxx');
     return OrderList;
   }
 
@@ -116,9 +116,9 @@ class OrderServ {
     //  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
     // String Bearer = 'Bearer ' +
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
-    print(Bearer);
+    //print(Bearer);
     try {
-      print('hello');
+      // print('hello');
       http.Response res = await http.put(
           Uri.parse('http://10.0.2.2:8080/food/rest/accept/${id}'),
           headers: {
@@ -127,13 +127,13 @@ class OrderServ {
             'Authorization': Bearer
           });
       var obj = jsonDecode(res.body);
-      print(obj[0].runtimeType);
-      print(obj);
-      print(res.body);
-      // print(res.body.runtimeType);
-      print(obj.runtimeType);
-      print(res.body.length);
-      print("hi1");
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
+      // // print(res.body.runtimeType);
+      // print(obj.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
       httpErrorHandle(
         response: res,
         context: context,
@@ -142,8 +142,8 @@ class OrderServ {
             // var obj=;
             OrderList.add(Order.fromJson(obj[i]));
           }
-          print(OrderList);
-          print("hi");
+          // print(OrderList);
+          // print("hi");
         },
       );
     } catch (e) {
@@ -152,7 +152,7 @@ class OrderServ {
       print("alpha");
       // showSnackBar(BuildContext, e.toString());
     }
-    print('xxx');
+    //print('xxx');
   }
 
   Future<void> RejectOrders(BuildContext context, String id) async {
@@ -162,9 +162,9 @@ class OrderServ {
     //  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
     // String Bearer = 'Bearer ' +
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
-    print(Bearer);
+    //print(Bearer);
     try {
-      print('hello');
+      // print('hello');
       http.Response res = await http.put(
           Uri.parse('http://10.0.2.2:8080/food/rest/reject/${id}'),
           headers: {
@@ -173,13 +173,13 @@ class OrderServ {
             'Authorization': Bearer
           });
       var obj = jsonDecode(res.body);
-      print(obj[0].runtimeType);
-      print(obj);
-      print(res.body);
+      //print(obj[0].runtimeType);
+      //print(obj);
+      //print(res.body);
       // print(res.body.runtimeType);
-      print(obj.runtimeType);
-      print(res.body.length);
-      print("hi1");
+      //print(obj.runtimeType);
+      //print(res.body.length);
+      //print("hi1");
       httpErrorHandle(
         response: res,
         context: context,
@@ -188,8 +188,8 @@ class OrderServ {
             // var obj=;
             OrderList.add(Order.fromJson(obj[i]));
           }
-          print(OrderList);
-          print("hi");
+          //print(OrderList);
+          //print("hi");
         },
       );
     } catch (e) {
@@ -198,6 +198,6 @@ class OrderServ {
       print("alpha");
       // showSnackBar(BuildContext, e.toString());
     }
-    print('xxx');
+    //print('xxx');
   }
 }
