@@ -12,6 +12,9 @@ import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
 
+String tokenFinal =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+
 class RestaurantServ {
   String MONGO_URL = 'http://10.0.2.2:8080';
   void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
@@ -155,8 +158,8 @@ class RestaurantServ {
     // final userProvider = Provider.of(context)
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
-    String token = 'Bearer ' +
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    String token = 'Bearer $tokenFinal'; // +
+    //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){
       http.Response res = await http.post(
@@ -220,8 +223,8 @@ class RestaurantServ {
     // final userProvider = Provider.of(context)
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
-    String token = 'Bearer ' +
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    String token = 'Bearer $tokenFinal'; // +
+    //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){
       http.Response res = await http.post(
