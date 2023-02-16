@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'package:hotshot/widgets/dishCard.dart';
 import 'package:hotshot/widgets/my_drawer.dart';
@@ -151,6 +152,11 @@ class _RestHomeState extends State<RestHome>
               //pinned: false,
               //floating: false,
               actions: [
+                IconButton(
+                    onPressed: () async {
+                      await GoogleAuthentication().googleLogout();
+                    },
+                    icon: Icon(Icons.logout)),
                 badges.Badge(
                   position: badges.BadgePosition.topEnd(top: 3, end: 3),
                   badgeContent: Text(''),

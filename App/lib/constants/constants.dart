@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/model/my_user.dart';
 
 final textInputDecoration = InputDecoration(
     //fillColor: Colors.white10,
@@ -21,3 +22,11 @@ final drawerButtonStyle = ButtonStyle(
   fixedSize: MaterialStateProperty.all(const Size.fromWidth(double.maxFinite)),
   alignment: Alignment.centerLeft,
 );
+
+MyUser dummyUser = MyUser(
+    email: 'abc@email.com',
+    token: 'token',
+    fullName: 'fullname',
+    mobile: '1234567890',
+    profile: '',
+    uid: '');

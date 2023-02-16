@@ -22,9 +22,9 @@ class _MyDrawerState extends State<MyDrawer> {
 
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    final name = user!.fullName ?? 'user';
-    final email = user.email ?? 'email';
-    final profile = user.profile ?? '';
+    final name = (user ?? dummyUser).fullName ?? 'user';
+    final email = (user ?? dummyUser).email ?? 'email';
+    final profile = (user ?? dummyUser).profile ?? '';
 
     return Drawer(
       width: 250,
@@ -70,11 +70,10 @@ class _MyDrawerState extends State<MyDrawer> {
                       onPressed: () {
                         Navigator.pop(context);
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:(context) => OrdHistory(),
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrdHistory(),
+                            ));
                       },
                       style: drawerButtonStyle,
                       label: const Text('Order History'),
@@ -83,14 +82,13 @@ class _MyDrawerState extends State<MyDrawer> {
                     TextButton.icon(
                       icon: const Icon(Icons.pending_actions_rounded),
                       label: const Text('Pending Orders'),
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pop(context);
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:(context) => PendHistory(),
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PendHistory(),
+                            ));
                       },
                     ),
                     // TextButton.icon(
@@ -118,11 +116,10 @@ class _MyDrawerState extends State<MyDrawer> {
                       onPressed: () {
                         Navigator.pop(context);
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => feedback(),
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => feedback(),
+                            ));
                       },
                       style: drawerButtonStyle,
                       label: const Text('Feedback'),
