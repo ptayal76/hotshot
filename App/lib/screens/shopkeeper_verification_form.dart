@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/model/shop_verification_info.dart';
+import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'dart:convert';
@@ -116,6 +117,8 @@ class _ShopkeeperVerificationFormState
                       }
                     }
                   }
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => MainPage()));
                 },
                 child: const Text(
                   'Submit',

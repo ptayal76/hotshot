@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/insights.dart';
+import 'package:hotshot/screens/shopkeeperOrderHistory.dart';
 // import 'package:navigation_drawer_example/page/favourites_page.dart';
 // import 'package:navigation_drawer_example/page/people_page.dart';
 // import 'package:navigation_drawer_example/page/user_page.dart';
@@ -43,7 +44,10 @@ class MyNavigationDrawer extends StatelessWidget {
                   buildMenuItem(
                     text: 'Order History',
                     icon: Icons.history_outlined,
-                    onClicked: () => selectedItem(context, 0),
+                    onClicked: () => Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => CompletedOrdersScreen())),
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
