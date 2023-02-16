@@ -24,7 +24,8 @@ class _RestCardState extends State<RestCard> {
     var fav=false;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> RestaurantPage(data: widget.data,image: img,)) );
+        (widget.data.status=='on')?
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> RestaurantPage(data: widget.data.id,image: img,)) ): null;
       },
       // Card Wrapper
       child:

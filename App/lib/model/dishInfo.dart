@@ -14,6 +14,7 @@ enum SuggestedTime{
   static SuggestedTime fromJson(String json) => values.byName(json);
 }
 class DishInfo{
+  String id;
   String? Rest_Id;
   String?  name;
   // Category? category;
@@ -21,9 +22,10 @@ class DishInfo{
   // SuggestedTime? suggestedTime;
   bool? InStock;
   // String? pic;
-  DishInfo({this.Rest_Id,this.name,this.price,this.InStock});
+  DishInfo({required this.id,this.Rest_Id,this.name,this.price,this.InStock});
   factory DishInfo.fromJson(Map<String,dynamic> json) {
     return DishInfo(
+      id: json['_id'],
       Rest_Id: json['Rest_Id'].toString(),
       name: json['name'].toString(),
       // category: Category.fromJson(json['category']),

@@ -68,7 +68,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
               centerTitle: true,
               elevation: 5,
             ),
-            drawer: NavigationDrawer(),
+            drawer: myNavigationDrawer(),
             body: ListView.separated(
                 padding: const EdgeInsets.all(8),
                 itemCount: order!.length,

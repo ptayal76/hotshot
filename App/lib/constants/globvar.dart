@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../model/orders.dart';
+
 String uri = 'http://127.0.0.1:8080';
+Map<String,Orders>? cart;
 
 class GlobalVariables {
   // COLORS

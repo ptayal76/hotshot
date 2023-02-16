@@ -40,12 +40,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: RestHome(),
+        home: RestHome(),
         theme: ThemeData(
             useMaterial3: true,
             brightness: Brightness.light,
             colorSchemeSeed: const Color(0xff307A59)),
-        home: ShopkeeperOrdersScreen()
+        // home: ShopkeeperOrdersScreen()
         // home: Home(
         //   title: 'HotShot',
         // ),

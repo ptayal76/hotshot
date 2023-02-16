@@ -123,7 +123,7 @@ class _RestHomeState extends State<RestHome>
         SliverAppBar(
           pinned: true,
           floating: true,
-          expandedHeight: 100,
+          // expandedHeight: 100,
           flexibleSpace: const FlexibleSpaceBar(
             title: Text('HotShot'),
             centerTitle: true,
