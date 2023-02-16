@@ -13,7 +13,7 @@ class Loading extends StatelessWidget {
           statusBarIconBrightness: Brightness.light
         ),
         elevation: 1,
-        title: const Text('Managr'),
+        title: const Text('HotShot'),
       ),
       body: const Center(
         child: CircularProgressIndicator()

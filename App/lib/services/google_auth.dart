@@ -2,15 +2,17 @@
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/services/auth_service.dart';
 
 class GoogleAuthentication{
 
-  Future<void> googleSignIn()async{
+  Future<MyUser?> googleSignIn()async{
     final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();
 
     if(googleAccount == null){
       print("NO GOOGLE ACCOUNT DETECTED!!");
-      return;
+      return null;
     }
     else{
       final GoogleSignInAuthentication googleAuth = await googleAccount.authentication;
@@ -21,28 +23,30 @@ class GoogleAuthentication{
 
           print('STEP 2');
 
-          await FirebaseAuth.instance.signInWithCredential(
+          final result = await FirebaseAuth.instance.signInWithCredential(
             GoogleAuthProvider.credential(
               accessToken: googleAuth.accessToken,
               idToken: googleAuth.idToken
             )
           );
 
+          return AuthService().userFromFirebaseUser(result.user);
+
           print('STEP 3');
         }
         on FirebaseException catch (error){
           print(error.toString());
-          return;
+          return null;
         }
         catch(error){
           print(error.toString());
-          return;
+          return null;
         }
       }
       else{
         print(googleAuth.accessToken);
         print(googleAuth.idToken);
-        return;
+        return null;
       }
     }
   }

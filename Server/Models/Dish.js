@@ -11,13 +11,16 @@ const dish = new mongoose.Schema({
         required: true
     },
     category: {
+        type: String,
         enum: ['veg', 'nonveg'],
     }, price: {
         type: Number,
         required: true,
     },
     suggestedTime: {
+        type: String,
         enum: ['Breakfast', 'Lunch', 'Dinner'],
+        
     },
     InStock: {
         type: Boolean,

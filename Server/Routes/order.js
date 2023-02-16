@@ -56,13 +56,12 @@ router.get("/food/order/:orderId",verifyToken,authenticate,async(req,res)=>{
     }
     else
     {
-		console.log(req.user,order.user_id)
         if(req.user==order.user_id)
         {
             res.status(200).json(order);
         }
         else
-        {
+        {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
             res.status(403).json({message:"Not Authenticated"});
         }
     }

@@ -14,20 +14,21 @@ import '../constants/globvar.dart';
 class RestServ {
   Future<List<DishInfo>> fetchDishStatusPending(
       BuildContext context, List<String>? menu) async {
+    String uri = 'http://10.0.2.2:8080';
     // final userProvider = Provider.of(context)
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
     try {
       for (int i = 0; i < menu!.length; i++) {
-        http.Response res = await http.get(
-            Uri.parse('http://10.0.2.2:8080/food/dish/${menu[i].toString()}'));
+        http.Response res =
+            await http.get(Uri.parse('$uri/food/dish/${menu[i].toString()}'));
         var obj = jsonDecode(res.body);
         // print(obj[0].runtimeType);
         // print(obj);
-        print(res.body);
+        // print(res.body);
         // print(res.body.runtimeType);
         // print(res.body.length);
-        print("hi1");
+        // print("hi1");
         httpErrorHandle(
           response: res,
           context: context,
@@ -40,8 +41,8 @@ class RestServ {
             //   );
             // }
 
-            print(dishes);
-            print("hi");
+            //print(dishes);
+            // print("hi");
           },
         );
       }

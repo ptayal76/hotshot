@@ -4,12 +4,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/screens/shopkeeper_main_page.dart';
 
 import '../constants/colors.dart';
 import '../constants/loader.dart';
 import '../model/orderInfo.dart';
 import '../services/DishfromDish_id.dart';
+import '../services/orderServ.dart';
 import '../services/restaurantServ.dart';
+import '../screens/shopkeeperOrdersScreen.dart';
 
 class OrderCard extends StatefulWidget {
   // final RestaurantServ restServ = RestaurantServ();
@@ -26,18 +29,20 @@ List<String> abc(List<DishInfo?> dishes) {
 
   for (int i = 0; i < dishes.length; i++) {
     // print(dishes![i].name!);
-    print(dishes[i]!.name!);
+    // print(dishes[i]!.name!);
     names.add(dishes[i]!.name!);
   }
   return names;
-  print("hello123");
+  // print("hello123");
 }
 
 class _OrderCardState extends State<OrderCard> {
   List<DishInfo>? dishes;
-  fetchallorder() async {
+  void fetchallorder() async {
     dishes = await RestaurantServ().fetchDish(context, widget.data.items);
-    abc(dishes!);
+    if (dishes != null) {
+      abc(dishes!);
+    }
     setState(() {});
   }
 
@@ -47,6 +52,12 @@ class _OrderCardState extends State<OrderCard> {
   //     names.add(dishes![i].name!);
   //   }
   //   print("Hello");
+  // }
+  @override
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  //   fetchallorder();
   // }
 
   void initState() {
@@ -59,6 +70,7 @@ class _OrderCardState extends State<OrderCard> {
 
   @override
   Widget build(BuildContext context) {
+    fetchallorder();
     // List<int> bufferInt= widget.data.pic.map((e) => e as int).toList();
     var fav = false;
     return dishes == null
@@ -67,7 +79,7 @@ class _OrderCardState extends State<OrderCard> {
             alignment: AlignmentDirectional.bottomCenter,
             children: [
               Container(
-                  height: 132,
+                  height: 115,
                   decoration: BoxDecoration(
                       // color: Colors.green[100],
                       border: Border.all(
@@ -92,7 +104,7 @@ class _OrderCardState extends State<OrderCard> {
                                 ),
                               ),
                               Text(
-                                "${widget.data.timeOfOrder.substring(11, 16)}",
+                                "Time: ${widget.data.timeOfOrder.substring(11, 16)}",
                                 style: const TextStyle(
                                   fontSize: 20,
                                 ),
@@ -112,15 +124,20 @@ class _OrderCardState extends State<OrderCard> {
                             //   softWrap: false,
                             //   overflow: TextOverflow.ellipsis,
                             // )),
-                            child: Text(
-                              'Order Items: ${abc(dishes!)}'
-                                  .replaceAll('[', '')
-                                  .replaceAll(']', ''),
-                              style: const TextStyle(fontSize: 20),
-                              maxLines: 1,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            child: dishes != null
+                                ? Text(
+                                    'Order Items: ${abc(dishes!)}'
+                                        .replaceAll('[', '')
+                                        .replaceAll(']', ''),
+                                    style: const TextStyle(fontSize: 20),
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                : Container(
+                                    width: 0,
+                                    height: 0,
+                                  ),
                           ),
                         ),
                       ]),
@@ -176,47 +193,47 @@ class _OrderCardState extends State<OrderCard> {
                                                   ),
                                                 ),
 
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    TextButton.icon(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.check),
-                                                      label:
-                                                          const Text('Accept'),
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                        minimumSize:
-                                                            const Size(120, 0),
-                                                        // backgroundColor:
-                                                        //     Colors.lightGreen,
-                                                      ),
-                                                    ),
-                                                    TextButton.icon(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.close),
-                                                      label:
-                                                          const Text('Reject'),
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                        minimumSize:
-                                                            const Size(120, 0),
-                                                        backgroundColor:
-                                                            Colors.red.shade400,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
+                                                // Row(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment
+                                                //           .spaceAround,
+                                                //   children: [
+                                                //     TextButton.icon(
+                                                //       onPressed: () {
+                                                //         Navigator.of(context)
+                                                //             .pop();
+                                                //       },
+                                                //       icon: const Icon(
+                                                //           Icons.check),
+                                                //       label:
+                                                //           const Text('Accept'),
+                                                //       style:
+                                                //           TextButton.styleFrom(
+                                                //         minimumSize:
+                                                //             const Size(120, 0),
+                                                //         // backgroundColor:
+                                                //         //     Colors.lightGreen,
+                                                //       ),
+                                                //     ),
+                                                //     TextButton.icon(
+                                                //       onPressed: () {
+                                                //         Navigator.of(context)
+                                                //             .pop();
+                                                //       },
+                                                //       icon: const Icon(
+                                                //           Icons.close),
+                                                //       label:
+                                                //           const Text('Reject'),
+                                                //       style:
+                                                //           TextButton.styleFrom(
+                                                //         minimumSize:
+                                                //             const Size(120, 0),
+                                                //         backgroundColor:
+                                                //             Colors.red.shade400,
+                                                //       ),
+                                                //     ),
+                                                //   ],
+                                                // )
                                               ],
                                             );
                                           });
@@ -231,42 +248,53 @@ class _OrderCardState extends State<OrderCard> {
                   )
                   //Text("\tOrder ID: ${items[index]}"),
                   ),
-              widget.data.items.length > 2
-                  ? Container(
-                      // alignment: Alignment.bottomCenter,
-                      decoration: BoxDecoration(
-                        // color: Colors.green[100],
-                        border: Border.all(
-                            // color: Colors.green.shade100,
-                            ),
-                        borderRadius: const BorderRadius.vertical(
-                            bottom: Radius.circular(20)),
-                      ),
-                      height: 35,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton.icon(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  // backgroundColor: Colors.green,
-                                  ),
-                              icon: const Icon(Icons.check),
-                              label: const Text('Accept')),
-                          ElevatedButton.icon(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red.shade400,
-                              ),
-                              icon: const Icon(Icons.close),
-                              label: const Text('Reject')),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      height: 0,
-                      width: 0,
-                    ),
+              // widget.data.items.length > 2
+              // ? Container(
+              //     // alignment: Alignment.bottomCenter,
+              //     decoration: BoxDecoration(
+              //       // color: Colors.green[100],
+              //       border: Border.all(
+              //           // color: Colors.green.shade100,
+              //           ),
+              //       borderRadius: const BorderRadius.vertical(
+              //           bottom: Radius.circular(20)),
+              //     ),
+              //     height: 35,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         ElevatedButton.icon(
+              //             onPressed: () async {
+              //               // setState(() async {
+              //               await OrderServ()
+              //                   .AcceptOrders(context, widget.data.id);
+              //               setState(() {});
+              //               // });
+              //               // Navigator.pushReplacement(
+              //               //     context,
+              //               //     new MaterialPageRoute(
+              //               //         builder: (BuildContext context) =>
+              //               //             MainPage()));
+              //             },
+              //             style: ElevatedButton.styleFrom(
+              //                 // backgroundColor: Colors.green,
+              //                 ),
+              //             icon: const Icon(Icons.check),
+              //             label: const Text('Accept')),
+              //         ElevatedButton.icon(
+              //             onPressed: () {},
+              //             style: ElevatedButton.styleFrom(
+              //               backgroundColor: Colors.red.shade400,
+              //             ),
+              //             icon: const Icon(Icons.close),
+              //             label: const Text('Reject')),
+              //       ],
+              //     ),
+              //   )
+              // : Container(
+              //     height: 0,
+              //     width: 0,
+              //   ),
             ],
           );
   }

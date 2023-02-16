@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/otp_verification.dart';
+import 'package:hotshot/services/auth_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:hotshot/constants/constants.dart';
 
@@ -12,6 +13,11 @@ class PhoneVerification extends StatefulWidget {
 }
 
 class _PhoneVerificationState extends State<PhoneVerification> {
+
+  final _formKey = GlobalKey<FormState>();
+
+  String phoneNum = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,27 +68,43 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  TextFormField(
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(10)
-                                    ],
-                                    keyboardType: TextInputType.phone,
-                                    decoration: textInputDecoration.copyWith(
-                                      hintText: 'Phone number',
+                                  Form(
+                                    key: _formKey,
+                                    child: TextFormField(
+                                      validator: (value) => (value == null || value.length < 10) 
+                                        ? 'Invalid Phone Number' 
+                                        : null,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(10)
+                                      ],
+                                      keyboardType: TextInputType.phone,
+                                      decoration: textInputDecoration.copyWith(
+                                        hintText: 'Phone number',
+                                      ),
+                                      onChanged: (value){
+                                        setState(() {
+                                          phoneNum = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const OtpVerification(),
-                                          ));
+                                    onPressed: ()async{
+                                      if(_formKey.currentState!.validate()){
+                                        //int status = await AuthService().verifyPhone(phoneNum, context);
+                                      }
                                     },
+                                    // onPressed: () {
+                                    //   Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const OtpVerification(),
+                                    //       ));
+                                    // },
                                     child: const Text(
                                       'Verify Phone Number',
                                     ),

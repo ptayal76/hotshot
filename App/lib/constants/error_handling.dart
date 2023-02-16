@@ -12,21 +12,24 @@ void httpErrorHandle({
   switch (response.statusCode) {
     case 200:
       onSuccess();
-      print("alpha0");
+      // print("alpha0");
       break;
     case 400:
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body)['msg'])));
-      print("alpha1");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(jsonDecode(response.body)['msg'])));
+      // print("alpha1");
       // showSnackBar(context, );
       break;
     case 500:
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body)['error'])));
-      print("alpha2");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(jsonDecode(response.body)['error'])));
+      // print("alpha2");
       // showSnackBar(context, jsonDecode(response.body)['error']);
       break;
     default:
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body))));
-      print("alpha3");
-      // showSnackBar(context, response.body);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(jsonDecode(response.body))));
+    // print("alpha3");
+    // showSnackBar(context, response.body);
   }
 }
