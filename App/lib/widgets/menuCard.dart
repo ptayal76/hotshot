@@ -43,7 +43,7 @@ class _MenuCardState extends State<MenuCard> {
                 SizedBox(width: 20,),
 
                 SizedBox(
-                  width: 170,
+                  width: 130,
                   child: Column(
                     crossAxisAlignment:
                     CrossAxisAlignment.start,
@@ -72,50 +72,50 @@ class _MenuCardState extends State<MenuCard> {
                       ),
                       Row(
                         children: [
-                          IconButton(
-                              constraints:
-                              BoxConstraints(),
-                              onPressed: () {},
-                              // if(count[index]>0){
-                              //   count[index]--;
-                              //   itemc--;
-                              //   sum-=price[index];
-                              //   if(itemc==0){
-                              //     controller!.reverse();
-                              //   }
-                              //   if(count[index]==0){
-                              //     count[index]=1;
-                              //     isadd[index]= true;
-                              //   }
-                              //   setState(
-                              //         () {},
-                              //   );
-                              //   }
-                              // },
-                              icon: Icon(
-                                Icons.remove,
-                                size: 20,
-                              )),
+                          // IconButton(
+                          //     constraints:
+                          //     BoxConstraints(),
+                          //     onPressed: () {},
+                          //     // if(count[index]>0){
+                          //     //   count[index]--;
+                          //     //   itemc--;
+                          //     //   sum-=price[index];
+                          //     //   if(itemc==0){
+                          //     //     controller!.reverse();
+                          //     //   }
+                          //     //   if(count[index]==0){
+                          //     //     count[index]=1;
+                          //     //     isadd[index]= true;
+                          //     //   }
+                          //     //   setState(
+                          //     //         () {},
+                          //     //   );
+                          //     //   }
+                          //     // },
+                          //     icon: Icon(
+                          //       Icons.remove,
+                          //       size: 20,
+                          //     )),
                           Text(widget.freq.toString(),
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight:
                                   FontWeight.w700)),
-                          IconButton(
-                              onPressed: () {},
-                              //   count[index]++;
-                              //   itemc++;
-                              //   sum+=price[index];
-                              //   setState(() {
-                              //
-                              //   });
-                              // },
-                              icon: Icon(
-                                Icons.add,
-                                size: 15,
-                              ),
-                              constraints:
-                              BoxConstraints()),
+                          // IconButton(
+                          //     onPressed: () {},
+                          //     //   count[index]++;
+                          //     //   itemc++;
+                          //     //   sum+=price[index];
+                          //     //   setState(() {
+                          //     //
+                          //     //   });
+                          //     // },
+                          //     icon: Icon(
+                          //       Icons.add,
+                          //       size: 15,
+                          //     ),
+                          //     constraints:
+                          //     BoxConstraints()),
                         ],
                       ),
 

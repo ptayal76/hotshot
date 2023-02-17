@@ -158,6 +158,7 @@ router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (
 //REJECTING THE ORDER
 router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (req, res) => {
     try {
+        
         const order = await Order.findById(req.params.orderid);
         if (req.restaurant == order.restaurant_id) {
             order.Order_status = 'rejected';
@@ -215,6 +216,7 @@ router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req,
 //payment 
 router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
+    console.log(order);
     const restaurant = await Restaurant.findById(order.restaurant_id);
     if (order.user_id != req.user) {
         return res.status(403).json({ message: "you are not authenticated" });
@@ -227,16 +229,34 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         if (err) {
             return res.status(400).send(err.message);
         }
+
         else {
+            console.log(result);
             return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCred.Key_id });
         }
     })
 })
 router.put("/food/order/acknowledge/:orderId", async (req, res) => {
+    try{
+    console.log("heree1")
     const order = await Order.findById(req.params.orderId);
+    console.log("here2")
     order.paymentId=req.body.razorpay_payment_id;
+    console.log("here3")
     order.Order_status = 'responsePending';
+    console.log('here3')
     order.save();
+    console.log('here4')
+    console.log(req.body)
+    console.log('here5')
+    res.status(200).send({message: "Success"});
+    }
+    catch(e)
+    {
+        console.log("here6")
+        console.log(e.message)
+        res.status(400).json({message:"erooorrr"});
+    }
 })
 
 module.exports = router;

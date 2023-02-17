@@ -17,7 +17,7 @@ String tokenFinal =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
 
 class RestaurantServ {
-  String MONGO_URL = 'http://192.168.1.106:8080';
+  String MONGO_URL = 'http://10.0.2.2:8080';
   void postRestaurant(ShopVerificationInfo info, MyUser? user)async{
 
                         

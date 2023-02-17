@@ -12,7 +12,7 @@ import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 
 String tokenFinal =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
 String Bearer = 'Bearer ' +
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
 String uri = 'http://10.0.2.2:8080';
@@ -27,9 +27,9 @@ class OrderServ {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     // String Bearer = 'Bearer ' +
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
-    print(Bearer);
+    // print(Bearer);
     try {
-      print('hello');
+      // print('hello');
       String url = MONGO_URL + '/food/order/$orderId';
       http.Response res = await http.get(
           Uri.parse(url),
@@ -39,30 +39,92 @@ class OrderServ {
             'Authorization': Bearer
           });
       var obj = jsonDecode(res.body);
-      print(obj[0].runtimeType);
-      print(obj);
-      print(res.body);
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
       // print(res.body.runtimeType);
-      print(obj.runtimeType);
-      print(res.body.length);
-      print("hi1");
+      // print(obj.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
       httpErrorHandle(
         response: res,
         context: context,
         onSuccess: () {
             OrderList.add(Order.fromJson(obj));
           print(OrderList);
-          print("hi");
+          // print("hi");
         },
       );
     } catch (e) {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
       print(e);
-      print("alpha");
+      // print("alpha");
       // showSnackBar(BuildContext, e.toString());
     }
-    print('xxx');
+    // print('xxx');
     return OrderList[0];
+  }
+  Future<Map<String,dynamic>?> checkout(BuildContext context,String orderId) async {
+    String Bearer = 'Bearer $tokenFinal';
+    try{
+      String url = MONGO_URL + '/food/order/checkout/$orderId';
+      print('hi1');
+      http.Response res = await http.put(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': Bearer
+          });
+      print('hi');
+      print(res.body);
+      Map<String,dynamic> obj = jsonDecode(res.body);
+      print(res.body);
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          // for (int i = 0; i < obj.length; i++) {
+          //   // var obj=;
+          //   OrderList.add(Order.fromJson(obj[i]));
+          // }
+          // print(OrderList);
+          // print("hi");
+        },
+      );
+      return (obj==null)?{}:obj;
+    }catch(e){
+      print(e);
+    }
+  }
+  Future<void> acknowledge(BuildContext context,String orderId,Map<String,dynamic> json) async {
+    String Bearer = 'Bearer $tokenFinal';
+    try{
+      String url = MONGO_URL + '/food/order/acknowledge/$orderId';
+      print('hi1');
+      http.Response res = await http.put(
+          Uri.parse(url),
+          body: json);
+      print('hi');
+      print(res.body);
+      // Map<String,dynamic> obj = jsonDecode(res.body);
+      print(res.body);
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          // for (int i = 0; i < obj.length; i++) {
+          //   // var obj=;
+          //   OrderList.add(Order.fromJson(obj[i]));
+          // }
+          // print(OrderList);
+          // print("hi");
+        },
+      );
+      // return (obj==null)?{}:obj;
+    }catch(e){
+      print(e);
+    }
   }
   Future<List<Order>> fetchResponsePendingOrders(BuildContext context) async {
     // final userProvider = Provider.of(context)
