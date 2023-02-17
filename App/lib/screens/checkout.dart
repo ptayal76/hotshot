@@ -33,11 +33,12 @@ class _checkoutState extends State<checkout> {
     //
     // });
   }
-  fetchmenu() async{
-    dishes=convert().listToMap(refOrder!.items);
-    List<String> dishIdsOrder=[];
+
+  fetchmenu() async {
+    dishes = convert().listToMap(refOrder!.items);
+    List<String> dishIdsOrder = [];
     // print("keeyyyy11111111");
-    for(String key in dishes!.keys.toList()){
+    for (String key in dishes.keys.toList()) {
       // print(key);
       // print("keyyyyysssss");
       dishIdsOrder.add(key);
@@ -50,18 +51,17 @@ class _checkoutState extends State<checkout> {
     fetchedDishes = (mp);
     setState(() {});
   }
+
   postcartdish(String dishid) async {
     await RestaurantServ().postCartOrder(context, dishid);
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   removecartdish(String dishid) async {
     await RestaurantServ().removeCartOrder(context, dishid);
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   // fetchListMenu() async{
   //   List<DishInfo>x=await RestaurantServ().fetchDish(context, );
   // }
@@ -83,7 +83,7 @@ class _checkoutState extends State<checkout> {
   }
 
   void openCheckout() async {
-    var options=await OrderServ().checkout(context, refOrder!.id);
+    var options = await OrderServ().checkout(context, refOrder!.id);
     // Map<String,String> mp= (options==null)? {}: mp;
     print(options);
     // var options = {
@@ -99,35 +99,30 @@ class _checkoutState extends State<checkout> {
     // };
 
     try {
-      _razorpay.open({
-        'order_id':'${options!['orderid']}',
-        'key': '${options!['keyid']}'
-      });
+      _razorpay.open(
+          {'order_id': '${options!['orderid']}', 'key': '${options['keyid']}'});
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-
-  try {
-    Map<String,dynamic> json = {'razorpay_payment_id': '${response.paymentId}'};
-    print(response.toString());
-    print(response.runtimeType);
-    print(response.signature.toString());
-    print(response.orderId.toString());
-    await OrderServ().acknowledge(context, refOrder!.id, json);
-    Fluttertoast.showToast(
-      msg: "SUCCESS: ${response.paymentId}",
-      timeInSecForIosWeb: 4,
-    );
-  }
-  catch(e)
-    {
+    try {
+      Map<String, dynamic> json = {
+        'razorpay_payment_id': '${response.paymentId}'
+      };
+      print(response.toString());
+      print(response.runtimeType);
+      print(response.signature.toString());
+      print(response.orderId.toString());
+      await OrderServ().acknowledge(context, refOrder!.id, json);
+      Fluttertoast.showToast(
+        msg: "SUCCESS: ${response.paymentId}",
+        timeInSecForIosWeb: 4,
+      );
+    } catch (e) {
       print(e);
     }
-
-
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -151,117 +146,126 @@ class _checkoutState extends State<checkout> {
   @override
   Widget build(BuildContext context) {
     fetchorder();
-    return (refOrder==null)?Loading():Scaffold(
-      appBar: AppBar(
-        title: Text('CheckOut'),
-        backgroundColor: const Color(0xff307A59),
-        centerTitle: true,
-      ),
-      body: ListView(
-        children: [
-          Container(
-            height: 50,
-            // decoration: BoxDecoration(color: Colors.white),
-            child: Center(
-              child: Text((allRest[widget.order.restaurantId]!.restaurantName),
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  )),
+    return (refOrder == null)
+        ? Loading()
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('CheckOut'),
+              backgroundColor: const Color(0xff307A59),
+              centerTitle: true,
             ),
-          ),
-          ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 2),
-              itemBuilder: (context, index) {
-                DishInfo key=fetchedDishes.keys.elementAt(index);
-                int value=fetchedDishes.values.elementAt(index);
-                return Row(
-                  children: [
-                    MenuCard(dish: key,freq: value),
-                    Container(
-                      width: 50,
-                      child: Column(
-                        children: [
-                          IconButton(onPressed: (){
-                            postcartdish(fetchedDishes.keys.elementAt(index).id);
-                            fetchorder();
-                          },
-                            icon: Icon(
-                            Icons.add,
-                            size: 15,
-                            ),),
-                          IconButton(onPressed: (){
-                            removecartdish(fetchedDishes.keys.elementAt(index).id);
-                          },
-                            icon: Icon(
-                              Icons.remove,
-                              size: 15,
-                            ),),
-                        ],
-                      ),
-                    )
-                  ],
-                ); //(data: widget.stat[index]
-              },
-              shrinkWrap: true,
-              //scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  height: 1,
-                );
-              },
-              itemCount: fetchedDishes.length),
-          SizedBox(
-            height: 2,
-            child: Container(color: Colors.black),
-          ),
-          SizedBox(
-            height: 60,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Total Amount : ',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            body: ListView(
+              children: [
+                Container(
+                  height: 50,
+                  // decoration: BoxDecoration(color: Colors.white),
+                  child: Center(
+                    child: Text(
+                        (allRest[widget.order.restaurantId]!.restaurantName),
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        )),
                   ),
-                  Text(
-                    '₹${refOrder!.total.toString()}',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
+                ),
+                ListView.separated(
+                    padding: EdgeInsets.symmetric(horizontal: 2),
+                    itemBuilder: (context, index) {
+                      DishInfo key = fetchedDishes.keys.elementAt(index);
+                      int value = fetchedDishes.values.elementAt(index);
+                      return Row(
+                        children: [
+                          MenuCard(dish: key, freq: value),
+                          Container(
+                            // width: 50,
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    postcartdish(
+                                        fetchedDishes.keys.elementAt(index).id);
+                                    fetchorder();
+                                  },
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: 20,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    removecartdish(
+                                        fetchedDishes.keys.elementAt(index).id);
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ); //(data: widget.stat[index]
+                    },
+                    shrinkWrap: true,
+                    //scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 1,
+                      );
+                    },
+                    itemCount: fetchedDishes.length),
+                SizedBox(
+                  height: 2,
+                  child: Container(color: Colors.black),
+                ),
+                SizedBox(
+                  height: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total Amount : ',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '₹${refOrder!.total.toString()}',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 2,
+                  child: Container(color: Colors.black),
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 2,
-            child: Container(color: Colors.black),
-          ),
-        ],
-      ),
-
-      bottomNavigationBar:new GestureDetector(
-        onTap: ()
-    {
-    print("Container clicked");
-    openCheckout();
-    // Navigator.pushReplacement(context,
-    //     new MaterialPageRoute(builder: (BuildContext context) => MenuCard()));
-
-    },
-      child:Container(
-
-        height: 50,
-        decoration: BoxDecoration(color: const Color(0xff307A59)),
-        child: Center(child: Text('BUY NOW : ₹${refOrder!.total.toString()}',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),)),
-      )
-
-    ),
-
-
-    );
+            bottomNavigationBar: new GestureDetector(
+                onTap: () {
+                  print("Container clicked");
+                  openCheckout();
+                  // Navigator.pushReplacement(context,
+                  //     new MaterialPageRoute(builder: (BuildContext context) => MenuCard()));
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(color: const Color(0xff307A59)),
+                  child: Center(
+                      child: Text(
+                    'BUY NOW : ₹${refOrder!.total.toString()}',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+                )),
+          );
   }
 }
