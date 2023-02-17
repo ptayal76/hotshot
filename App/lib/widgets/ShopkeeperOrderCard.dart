@@ -176,7 +176,7 @@ class _OrderCardState extends State<OrderCard> {
                                                   leading:
                                                       const Icon(Icons.money),
                                                   title: Text(
-                                                      'Total Price: ${widget.data.total}'),
+                                                      'Total Price: Rupees: ${widget.data.total}'),
                                                 ),
                                                 Flexible(
                                                   child: ListTile(
@@ -186,9 +186,9 @@ class _OrderCardState extends State<OrderCard> {
                                                     title: const Text(
                                                         'Order Items: '),
                                                     subtitle: Text(
-                                                      '${abc(dishes!)}'
-                                                          .replaceAll('[', '')
-                                                          .replaceAll(']', ''),
+                                                      '${convert().listToMap(abc(dishes!))}'
+                                                          .replaceAll('{', '')
+                                                          .replaceAll('}', ''),
                                                       style: const TextStyle(
                                                           fontSize: 18),
                                                     ),
