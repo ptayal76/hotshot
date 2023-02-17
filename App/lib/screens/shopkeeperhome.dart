@@ -14,6 +14,7 @@ import '../widgets/sideDrawerShopkeeper.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:http/http.dart' as http;
+
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
@@ -41,7 +42,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
     final tkn = await AuthService().getToken();
 
     List<DishInfo>? result = await RestaurantServ().fetchMenu(context, tkn!);
-    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, tkn!);
+    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, tkn);
 
     setState(() {
       menu = result ?? [];
