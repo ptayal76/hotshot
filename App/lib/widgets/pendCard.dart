@@ -1,13 +1,16 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/otherInfo.dart';
 import 'package:hotshot/screens/describe.dart';
 import 'package:expandable/expandable.dart';
+import 'package:hotshot/screens/qr_screen.dart';
 
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
 import '../model/orderInfo.dart';
+import '../services/orderServ.dart';
 
 class PendCard extends StatefulWidget {
   final Order orders;
@@ -18,6 +21,10 @@ class PendCard extends StatefulWidget {
 }
 
 class _PendCardState extends State<PendCard> {
+  // List<dynamic>? pic;
+  // fetchqr()async{
+  //   pic=await OrderServ().fetchQR(context, widget.orders.id);
+  // }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -64,17 +71,20 @@ class _PendCardState extends State<PendCard> {
                         ),
                      InkWell(
                        onTap: ()
-                      {
+                      async {
                         print("Container clicked");
-                        // Navigator.pushReplacement(context,
-                        //     new MaterialPageRoute(builder: (BuildContext context) => ()));
+                        // await fetchqr();
+                        List<dynamic>?  pic=await OrderServ().fetchQR(context, widget.orders.id);
+                        print(pic);
+                        Navigator.push(context,
+                            new MaterialPageRoute(builder: (BuildContext context) => QrScreen(pic: pic,)));
 
                       },
                        child: Container(
                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.green),
                          child: Padding(
                            padding: const EdgeInsets.all(8.0),
-                           child: Text('Generated QR',style: TextStyle(fontWeight: FontWeight.w300 )),
+                           child: Text('QR',style: TextStyle(fontWeight: FontWeight.w300 )),
                          ),
                        ),
                      ),

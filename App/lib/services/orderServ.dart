@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -530,5 +531,104 @@ class OrderServ {
     }
     // print('xxx');
     return OrderList;
+  }
+  Future<List<Order>> fetchRejectedOrders(BuildContext context) async {
+    // final userProvider = Provider.of(context)
+    List<Order> OrderList = [];
+    String token = (await SharedPrefs().getToken()) ?? '';
+    String Bearer = 'Bearer $token';
+    // String Bearer = 'Bearer ' +
+    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
+    // // String Bearer = 'Bearer ' +
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
+    //print(Bearer);
+    try {
+      //print('hello');
+      http.Response res = await http
+          .get(Uri.parse('$uri/food/order?status=rejected'), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': Bearer
+      });
+      var obj = jsonDecode(res.body);
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
+      // // print(res.body.runtimeType);
+      // print(obj.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < obj.length; i++) {
+            // var obj=;
+            OrderList.add(Order.fromJson(obj[i]));
+          }
+          //   print(OrderList);
+          // print("hi");
+        },
+      );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      // print(e);
+      // print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    // print('xxx');
+    return OrderList;
+  }
+  Future<List<dynamic>?> fetchQR(BuildContext context,String orderId) async {
+    // final userProvider = Provider.of(context)
+    // List<Order> OrderList = [];
+    List<dynamic>? pic;
+    // String token = (await SharedPrefs().getToken()) ?? '';
+    // String Bearer = 'Bearer $token';
+    // String Bearer = 'Bearer ' +
+    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
+    // // String Bearer = 'Bearer ' +
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
+    //print(Bearer);
+    try {
+      print('hello');
+      http.Response res = await http
+          .get(Uri.parse('$uri/food/order/qr/$orderId'), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      });
+      var obj = jsonDecode(res.body);
+      print(obj);
+      print('x');
+      print(obj.runtimeType);
+      print(obj['data'][0].runtimeType);
+      pic=obj['data'];
+      // print(obj[0].runtimeType);
+      print(obj);
+      // print(res.body);
+      // // print(res.body.runtimeType);
+      // print(obj.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          // for (int i = 0; i < obj.length; i++) {
+          //   // var obj=;
+          //   OrderList.add(Order.fromJson(obj[i]));
+          // }
+          //   print(OrderList);
+          // print("hi");
+        },
+      );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      // print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    // print('xxx');
+    return pic;
   }
 }

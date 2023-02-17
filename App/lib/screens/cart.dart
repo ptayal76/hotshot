@@ -24,8 +24,10 @@ class _cartState extends State<cart> {
   List<Map<String, int>> dishes = [];
   List<Map<DishInfo, int>> fetchedDishes = [];
   final OrderServ orderServ = OrderServ();
+  // late Future<List<Map<DishInfo, int>>> datafuture;
   fetchusercart() async {
     // print(dishes.length);
+    // List<Map<DishInfo, int>> fetchedDishes = [];
     Orders = await orderServ.fetchUserCart(context);
     print(Orders!.length);
     print('0000');
@@ -52,6 +54,7 @@ class _cartState extends State<cart> {
       }
       fetchedDishes.add(mp);
     }
+    // return fetchedDishes;
     // fetchDishesCart();
     setState(() {});
   }
@@ -77,6 +80,14 @@ class _cartState extends State<cart> {
         title: Text('Cart'),
         backgroundColor: const Color(0xff307A59),
         centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () async =>
+        {
+          await fetchusercart(),
+          // setState(() {}),
+    }
       ),
       body: ListView(children: [
         SizedBox(
