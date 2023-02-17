@@ -52,6 +52,7 @@ router.get('/food/rest/:restid', async (req, res) => {
 //CREATE A RESTAURANT
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
+    console.log(req.body);
     var existingRest = await Restaurant.findOne({email:req.body.email});
     if(!existingRest) {
       const restaurant = new Restaurant(req.body);

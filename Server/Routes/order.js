@@ -64,6 +64,7 @@ router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) =
 //CREATE QR FOR USER
 router.get("/food/order/qr/:orderId", async (req, res, next) => {
     try {
+    
         const orderid = req.params.orderId;
         let data = { orderid };
         let stringdata = JSON.stringify(data);
@@ -71,13 +72,16 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
             if (err) {
                 console.log(err);
             } else {
+                
                 console.log('QR code generated!');
             }
         })
         const promise = fs.promises.readFile('./qr1.png');
-        Promise.resolve(promise).then(function (buffer) {
+        promise.then(function (buffer) {
             const stringdata = JSON.stringify(buffer);
-            res.status(200).json(stringdata);
+            res.status(200).json(buffer);
+            
+            // console.log(Object.values(buffer)[0]);
         })
     }
     catch (err) {

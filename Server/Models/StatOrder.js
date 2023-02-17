@@ -45,9 +45,9 @@ const StatOrder = new schema({
             type:String
         }
     },
-    img: {
-        data: Buffer,
-        contentType: String
+    data: {
+        data:Buffer,
+        contentType:String
     } 
 })
 

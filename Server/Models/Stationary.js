@@ -22,51 +22,121 @@ const stationary = new schema({
         type: String
     },
     CA4:{
-        type:Boolean,
-        default:false
+        
+            availability:{
+                type:Boolean,
+                required:true
+            },
+            price:{
+                type:Number,
+                required:true
+            }
+        
+        
+        
     },
     CA3:{
-        type:Boolean,
-        default:false
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     Poster:{
-        type:Boolean,   
-        default:false
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     Certificate:{
-        type:Boolean,
-        default:false
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     PVCPrint:{
-        type:Boolean,
-        default:false
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     BWA4:{
-        type:Boolean,
-        default:false
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     BWA3:{
-        type:Boolean,
-        default:false
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     pic: {
-        data: Buffer,
-        contentType: String
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     location: {
-        type: String
+        availability:{
+            type:Boolean,
+            required:true
+        },
+        price:{
+            type:Number,
+            required:true
+        }
     },
     rating: {
-        type: Number
-    },
-    timing: [
-        {
-            start_time: Date
+        availability:{
+            type:Boolean,
+            required:true
         },
-        {
-            end_time: Date
+        price:{
+            type:Number,
+            required:true
         }
-    ],
+    },
+    timing: {
+        
+            start_time: {
+               type: Date,
+               required:true
+            },
+            end_time: {
+                type: Date,
+                required:true
+             },
+        
+    },
     status: {
         type: String,
         enum: ['on', 'off']
