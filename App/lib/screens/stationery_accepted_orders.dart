@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/colors.dart';
+import 'package:hotshot/widgets/my_shopkeeper_drawer.dart';
 
 import '../widgets/sideDrawerShopkeeper.dart';
 
@@ -25,7 +26,7 @@ class _StationeryAcceptedOrdersScreenState
           actions: const [
             CircleAvatar(
               backgroundImage: AssetImage('assets/droppedImage.jpg'),
-              backgroundColor: greenColor,
+              // backgroundColor: greenColor,
             ),
           ],
           title: const Text(
@@ -33,13 +34,13 @@ class _StationeryAcceptedOrdersScreenState
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              // color: Colors.black,
             ),
           ),
           centerTitle: true,
           elevation: 5,
         ),
-        drawer: MyNavigationDrawer(),
+        drawer: MyShopkeeperDrawer(),
         body: ListView.separated(
           padding: const EdgeInsets.all(8),
           itemCount: items.length,
@@ -50,7 +51,7 @@ class _StationeryAcceptedOrdersScreenState
             return Container(
                 height: 152,
                 decoration: BoxDecoration(
-                    color: Colors.green[100],
+                    // color: Colors.green[100],
                     border: Border.all(
                       color: blackColor,
                     ),
@@ -97,22 +98,22 @@ class _StationeryAcceptedOrdersScreenState
                       // alignment: Alignment.bottomRight,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: _hasBeenPressed
-                                  ? Colors.green.shade100
-                                  : Colors.grey,
-                              //foregroundColor: _hasBeenPressed ? Colors.green : Colors.grey,
-                            ),
-                            onPressed: () => {
-                                  setState(() {
-                                    _hasBeenPressed = !_hasBeenPressed;
-                                    _hasBeenPressed
-                                        ? (status = 'Order is Ready!')
-                                        : status = 'Ready?';
-                                  })
-                                },
-                            child: Text(status)),
+                        // OutlinedButton(
+                        //     style: OutlinedButton.styleFrom(
+                        //       backgroundColor: _hasBeenPressed
+                        //           ? Colors.green.shade100
+                        //           : Colors.grey,
+                        //       //foregroundColor: _hasBeenPressed ? Colors.green : Colors.grey,
+                        //     ),
+                        //     onPressed: () => {
+                        //           setState(() {
+                        //             _hasBeenPressed = !_hasBeenPressed;
+                        //             _hasBeenPressed
+                        //                 ? (status = 'Order is Ready!')
+                        //                 : status = 'Ready?';
+                        //           })
+                        //         },
+                        //     child: Text(status)),
                         TextButton.icon(
                             onPressed: () {},
                             icon: const Icon(Icons.download),
@@ -122,7 +123,7 @@ class _StationeryAcceptedOrdersScreenState
                             return TextButton(
                               onPressed: () {
                                 showModalBottomSheet(
-                                    backgroundColor: Colors.green.shade100,
+                                    // backgroundColor: Colors.green.shade100,
                                     context: context,
                                     builder: (context) {
                                       return Wrap(
