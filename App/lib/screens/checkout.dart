@@ -100,7 +100,7 @@ class _checkoutState extends State<checkout> {
 
     try {
       _razorpay.open(
-          {'order_id': '${options!['orderid']}', 'key': '${options['keyid']}'});
+          {'order_id': '${options!['orderid']}'});
     } catch (e) {
       debugPrint(e.toString());
     }

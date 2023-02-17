@@ -44,12 +44,15 @@ class RestaurantServ {
       //   }
       // ],
       'status': 'on',
-      'razorpayCred': jsonEncode(
-        {
-          'Key_id': info.keyId,
-          'KeySecret': info.secretKey
-        }
-      )
+      // 'razorpayCred': jsonEncode(
+      //   {
+      //     'Key_id': info.keyId,
+      //     'KeySecret': info.secretKey
+      //   }
+      // )
+      'razorpayCredKey_id': info.keyId,
+      'razorpayCredKeySecret': info.secretKey
+      
     };
     Map<String, String> customHeaders = {"content-type": "application/json"};
     var pobj = jsonEncode(body);
