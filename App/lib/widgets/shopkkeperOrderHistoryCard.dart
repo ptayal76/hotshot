@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/services/listdishesTomap.dart';
 
 import '../constants/colors.dart';
 import '../constants/loader.dart';
@@ -156,6 +157,12 @@ class _CompletedOrderCardState extends State<CompletedOrderCard> {
                                         title:
                                             Text('Order ID: ${widget.data.id}'),
                                       ),
+                                      ListTile(
+                                        leading: const Icon(Icons.calendar_month_outlined),
+                                        // ignore: prefer_const_constructors
+                                        title: Text(
+                                            'Date: ${widget.data.timeOfOrder.substring(0, 10)}'),
+                                      ),
                                       // ignore: prefer_const_constructors
                                       ListTile(
                                         leading: const Icon(Icons.lock_clock),
@@ -174,9 +181,9 @@ class _CompletedOrderCardState extends State<CompletedOrderCard> {
                                           leading: const Icon(Icons.list_sharp),
                                           title: const Text('Order Items: '),
                                           subtitle: Text(
-                                            '${abc(dishes!)}'
-                                                .replaceAll('[', '')
-                                                .replaceAll(']', ''),
+                                            '${convert().listToMap(abc(dishes!))}'
+                                                .replaceAll('{', '')
+                                                .replaceAll('}', ''),
                                             style:
                                                 const TextStyle(fontSize: 18),
                                           ),

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/services/listdishesTomap.dart';
 
 import '../constants/colors.dart';
 import '../constants/loader.dart';
@@ -97,9 +98,9 @@ class _AcceptedOrderCardState extends State<AcceptedOrderCard> {
                         // ignore: unnecessary_null_comparison
                         child: abc(dishes!) != null
                             ? Text(
-                                'Order Items: ${abc(dishes!)}'
-                                    .replaceAll('[', '')
-                                    .replaceAll(']', ''),
+                                'Order Items: ${convert().listToMap(abc(dishes!))}'
+                                    .replaceAll('{', '')
+                                    .replaceAll('}', ''),
                                 style: const TextStyle(fontSize: 20),
                                 maxLines: 1,
                                 softWrap: false,
@@ -166,7 +167,7 @@ class _AcceptedOrderCardState extends State<AcceptedOrderCard> {
                                       ListTile(
                                         leading: const Icon(Icons.money),
                                         title: Text(
-                                            'Total Price: ${widget.data.total}'),
+                                            'Total Price: Rupees: ${widget.data.total}'),
                                       ),
                                       Flexible(
                                         child: ListTile(
@@ -174,9 +175,9 @@ class _AcceptedOrderCardState extends State<AcceptedOrderCard> {
                                           leading: const Icon(Icons.list_sharp),
                                           title: const Text('Order Items: '),
                                           subtitle: Text(
-                                            '${abc(dishes!)}'
-                                                .replaceAll('[', '')
-                                                .replaceAll(']', ''),
+                                            '${convert().listToMap(abc(dishes!))}'
+                                                .replaceAll('{', '')
+                                                .replaceAll('}', ''),
                                             style:
                                                 const TextStyle(fontSize: 18),
                                           ),

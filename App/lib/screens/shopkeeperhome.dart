@@ -8,8 +8,10 @@ import 'package:hotshot/screens/add_item_page.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/restaurantServ.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
+import '../widgets/my_shopkeeper_drawer.dart';
 import '../widgets/sideDrawerShopkeeper.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -39,14 +41,15 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
 
   void getData(BuildContext context)async{
 
-    final tkn = await AuthService().getToken();
+    final tkn = await SharedPrefs().getToken();
 
+    //final tkn = '';
     List<DishInfo>? result = await RestaurantServ().fetchMenu(context, tkn!);
     RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, tkn);
 
     setState(() {
       menu = result ?? [];
-      restName = restaurant.restaurantName;
+      //restName = restaurant.restaurantName;
       isLoading = false;
     });
   }
@@ -132,7 +135,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
           )
         ),
       ),
-      drawer: MyNavigationDrawer(),
+      drawer: MyShopkeeperDrawer(),
       body: Column(
         children: <Widget>[
           const SizedBox(height: 10),
@@ -466,7 +469,8 @@ class _MyQRState extends State<MyQR> {
   //  }
    ScaffoldMessenger.of(context).showSnackBar(snack);
       //Navigator.of(context).pop(true);
-        dispose();
+        //dispose();
+        controller.stopCamera();
         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

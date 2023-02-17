@@ -3,6 +3,7 @@ import 'package:hotshot/screens/otherHome.dart';
 import 'package:hotshot/screens/restHome.dart';
 import 'package:hotshot/screens/checkout.dart';
 import 'package:hotshot/widgets/dishCard.dart';
+import 'package:hotshot/widgets/my_drawer.dart';
 import 'package:hotshot/widgets/statCard.dart';
 import 'package:hotshot/widgets/sideDrawer.dart';
 import 'package:badges/badges.dart' as badges;
@@ -70,7 +71,7 @@ class _StatHomeState extends State<StatHome>
       // appBar: AppBar(
       //
       // ),
-      drawer: NavigationDrawerWidget(),
+      drawer: MyDrawer(),
       bottomNavigationBar: Container(
         height: 100,
         padding: const EdgeInsets.all(12),

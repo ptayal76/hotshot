@@ -30,3 +30,5 @@ MyUser dummyUser = MyUser(
     mobile: '1234567890',
     profile: '',
     uid: '');
+
+const MONGO_URL = 'http://192.168.1.109:8080';

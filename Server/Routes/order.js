@@ -74,6 +74,7 @@ router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) =
 //CREATE QR FOR USER
 router.get("/food/order/qr/:orderId", async (req, res, next) => {
     try {
+    
         const orderid = req.params.orderId;
         let data = { orderid };
         let stringdata = JSON.stringify(data);
@@ -81,13 +82,16 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
             if (err) {
                 console.log(err);
             } else {
+                
                 console.log('QR code generated!');
             }
         })
         const promise = fs.promises.readFile('./qr1.png');
-        Promise.resolve(promise).then(function (buffer) {
+        promise.then(function (buffer) {
             const stringdata = JSON.stringify(buffer);
-            res.status(200).json(stringdata);
+            res.status(200).json(buffer);
+            
+            // console.log(Object.values(buffer)[0]);
         })
     }
     catch (err) {
@@ -163,6 +167,7 @@ router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (
 //REJECTING THE ORDER
 router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (req, res) => {
     try {
+        
         const order = await Order.findById(req.params.orderid);
         if (req.restaurant == order.restaurant_id) {
             order.Order_status = 'rejected';
@@ -218,6 +223,7 @@ router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req,
 //PAYMENT
 router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
+    console.log(order);
     const restaurant = await Restaurant.findById(order.restaurant_id);
     if (order.user_id != req.user) {
         return res.status(403).json({ message: "you are not authenticated" });
@@ -230,7 +236,9 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         if (err) {
             return res.status(400).send(err.message);
         }
+
         else {
+            console.log(result);
             return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCred.Key_id });
         }
     })
@@ -238,11 +246,18 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
 
 //ACKNOWLEDGE A PAYMENT
 router.put("/food/order/acknowledge/:orderId", async (req, res) => {
+    try{
     const order = await Order.findById(req.params.orderId);
     order.paymentId = req.body.razorpay_payment_id;
     order.Order_status = 'responsePending';
     order.save();
-    res.status(200).send({message:"Successss"});
+    res.status(200).send({message: "Success"});
+    }
+    catch(e)
+    {
+        console.log(e.message)
+        res.status(400).json({message:"erooorrr"});
+    }
 })
 
 module.exports = router;

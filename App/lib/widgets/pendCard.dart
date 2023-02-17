@@ -5,8 +5,14 @@ import 'package:hotshot/model/otherInfo.dart';
 import 'package:hotshot/screens/describe.dart';
 import 'package:expandable/expandable.dart';
 
-class PendCard extends StatefulWidget {
+import '../constants/globvar.dart';
+import '../model/dishInfo.dart';
+import '../model/orderInfo.dart';
 
+class PendCard extends StatefulWidget {
+  final Order orders;
+  final Map<DishInfo,int> mp;
+  const PendCard({Key? key, required this.orders,required this.mp}) : super(key: key);
   @override
   State<PendCard> createState() => _PendCardState();
 }
@@ -49,8 +55,8 @@ class _PendCardState extends State<PendCard> {
                               //  mainAxisAlignment: MainAxisAlignment.,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Lohit Canteen',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
-                                Text('Lohit Hostel',style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
+                                Text(allRest[widget.orders.restaurantId]!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
+                                Text(allRest[widget.orders.restaurantId]!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
                               ],
                             ),
 
@@ -85,11 +91,13 @@ class _PendCardState extends State<PendCard> {
                         scrollDirection: Axis.vertical,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         itemBuilder: (context, index) {
+                          DishInfo key=widget.mp.keys.elementAt(index);
+                          int value=widget.mp.values.elementAt(index);
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Noodles',style: TextStyle(fontSize: 15),),                 //widget.data.dish[i].name
-                              Text('3 x ₹80',style: TextStyle(fontSize: 15),)                 //item count x item price
+                              Text(key.name!,style: TextStyle(fontSize: 15),),                 //widget.data.dish[i].name
+                              Text('${value} x ₹${key.price}',style: TextStyle(fontSize: 15),)                 //item count x item price
                             ],
                           ); //(data: widget.stat[index]
                         },
@@ -104,14 +112,17 @@ class _PendCardState extends State<PendCard> {
                         itemCount: 1
                     ),
                     expanded: ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         itemBuilder: (context, index) {
+                          DishInfo key=widget.mp.keys.elementAt(index);
+                          int value=widget.mp.values.elementAt(index);
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Noodles',style: TextStyle(fontSize: 15),),
-                              Text('3 x ₹80',style: TextStyle(fontSize: 15),)                 //item count x item price
+                              Text(key.name!,style: TextStyle(fontSize: 15),),
+                              Text('${value} x ₹${key.price}',style: TextStyle(fontSize: 15),)                 //item count x item price
                             ],
                           ); //(data: widget.stat[index]
                         },
@@ -123,7 +134,7 @@ class _PendCardState extends State<PendCard> {
                             height: 1,
                           );
                         },
-                        itemCount: 15
+                        itemCount: widget.mp.length
                     ),
 
                     //tapHeaderToExpand: true,
@@ -138,8 +149,8 @@ class _PendCardState extends State<PendCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('15/02/2023 at 9:53 p.m.',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400),),
-                      Text('₹1200',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))                                                     //total amount
+                      Text(widget.orders.timeOfOrder.substring(0,10),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400),),
+                      Text('₹${widget.orders.total.toString()}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))                                                     //total amount
                     ],
                   ),
                   //Container(height: 1,color: Colors.black,)

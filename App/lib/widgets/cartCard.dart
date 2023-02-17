@@ -92,11 +92,13 @@ class _CartCardState extends State<CartCard> {
                         scrollDirection: Axis.vertical,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         itemBuilder: (context, index) {
+                          DishInfo key=widget.mp.keys.elementAt(index);
+                          int value=widget.mp.values.elementAt(index);
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Noodles',style: TextStyle(fontSize: 15),),                 //widget.data.dish[i].name
-                              Text('3 x ₹80',style: TextStyle(fontSize: 15),)                 //item count x item price
+                              Text(key.name!,style: TextStyle(fontSize: 15),),                 //widget.data.dish[i].name
+                              Text('${value} x ₹${key.price}',style: TextStyle(fontSize: 15),)                 //item count x item price
                             ],
                           ); //(data: widget.stat[index]
                         },
@@ -123,7 +125,7 @@ class _CartCardState extends State<CartCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(key.name!,style: TextStyle(fontSize: 15),),
-                              Text('${value} x ${key.price}',style: TextStyle(fontSize: 15),)                 //item count x item price
+                              Text('${value} x ₹${key.price}',style: TextStyle(fontSize: 15),)                 //item count x item price
                             ],
                           ); //(data: widget.stat[index]
                         },
@@ -151,7 +153,7 @@ class _CartCardState extends State<CartCard> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       //Text('15/02/2023 at 9:53 p.m.',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400),),
-                      Text('₹1200',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))                                                     //total amount
+                      Text('₹${widget.orders.total.toString()}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))                                                     //total amount
                     ],
                   ),
                   //Container(height: 1,color: Colors.black,)
