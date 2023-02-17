@@ -10,6 +10,7 @@ import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
+import '../widgets/my_shopkeeper_drawer.dart';
 import '../widgets/sideDrawerShopkeeper.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -27,10 +28,10 @@ class StatShopkeeperHomePage extends StatefulWidget {
 }
 
 class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
-  // var textEditingController = TextEditingController();
-  // int index = 0;
+  var textEditingController = TextEditingController();
+  int index = 0;
 
-  // bool isLoading = true;
+  bool isLoading = true;
 
   List<bool> isSelected = [true, false];
 
@@ -133,7 +134,7 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
           )
         ),
       ),
-      drawer: MyNavigationDrawer(),
+      drawer: MyShopkeeperDrawer(),
       body: Column(
         children: <Widget>[
           const SizedBox(height: 10),

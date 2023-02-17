@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/widgets/dishCard.dart';
+import 'package:hotshot/widgets/my_drawer.dart';
 import 'package:hotshot/widgets/otherHelper.dart';
 import 'package:hotshot/screens/checkout.dart';
 import 'package:hotshot/screens/cart.dart';
@@ -43,9 +44,9 @@ class _OtherHomeState extends State<OtherHome>
         decoration: !isSelected
             ? null
             : BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color(0xff307A59),
-        ),
+                borderRadius: BorderRadius.circular(10),
+                color: const Color(0xff307A59),
+              ),
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
@@ -74,32 +75,28 @@ class _OtherHomeState extends State<OtherHome>
       // appBar: AppBar(
       //
       // ),
-      drawer: NavigationDrawerWidget(),
+      drawer: MyDrawer(),
       bottomNavigationBar: Container(
         height: 100,
-
         padding: const EdgeInsets.all(12),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50.0),
           child: Container(
             color: Colors.green.withOpacity(0.2),
             child: TabBar(
-
                 onTap: (x) {
                   setState(() {
                     _selectedIndex = x;
-                    if(x == 0)
-                    {
-                      Navigator.pushReplacement(context,
-                          new MaterialPageRoute(builder: (BuildContext context) => RestHome())
-                      );
-                    }
-                    else if(x==1)
-                    {
-                      Navigator.pushReplacement(context,
-                          new MaterialPageRoute(builder: (BuildContext context) => StatHome())
-                      );
-
+                    if (x == 0) {
+                      Navigator.pushReplacement(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) => RestHome()));
+                    } else if (x == 1) {
+                      Navigator.pushReplacement(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) => StatHome()));
                     }
                   });
                 },
@@ -114,7 +111,6 @@ class _OtherHomeState extends State<OtherHome>
                       _icons[i],
                       _labels[i],
                       isSelected: i == 2,
-
                     ),
                 ],
 
@@ -123,94 +119,127 @@ class _OtherHomeState extends State<OtherHome>
           ),
         ),
       ),
-      body: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: <Widget>[
+      body:
+          CustomScrollView(physics: BouncingScrollPhysics(), slivers: <Widget>[
+        SliverAppBar(
+          pinned: true,
+          floating: true,
+          expandedHeight: 100,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text('HotShot'),
+            centerTitle: true,
+          ),
+          backgroundColor: Color(0xff307A59),
+          //pinned: false,
+          //floating: false,
+          actions: [
+            badges.Badge(
+              position: badges.BadgePosition.topEnd(top: 3, end: 3),
+              badgeContent: Text(''),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (BuildContext context) => cart()));
+                },
 
-            SliverAppBar(
-              pinned: true,
-              floating: true,
-              expandedHeight: 100,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text('HotShot'),
-                centerTitle: true,
+                icon: Icon(Icons.shopping_cart),
+                //alignment: Alignment(x, y),
+                tooltip: 'Cart',
               ),
-              backgroundColor: Color(0xff307A59),
-              //pinned: false,
-              //floating: false,
-              actions: [
-                badges.Badge(
-                  position: badges.BadgePosition.topEnd(top: 3, end: 3),
-                  badgeContent: Text(''),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          new MaterialPageRoute(builder: (BuildContext context) => cart())
-                      );
-                    },
-
-                    icon: Icon(Icons.shopping_cart),
-                    //alignment: Alignment(x, y),
-                    tooltip: 'Cart',
-                  ),
-                )
-              ],
-            ),
-
-            SliverList(
-              delegate: SliverChildListDelegate(
-                  [
+            )
+          ],
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            Container(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              //if(widget.hospital.length == 0)
+                      //if(widget.hospital.length == 0)
 
-                              margin: EdgeInsets.only(top: 12),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              width: MediaQuery.of(context).size.width,
-                              child: const Text(
-                                'Hospital',
-                                style: TextStyle(
-                                  // color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-
-                            // SliverList(
-                            //     delegate: SliverChildBuilderDelegate((context,index){
-                            //       return RestCard(data: widget.topPicks[index]);
-                            //     },
-                            //     childCount: widget.topPicks.length,
-                            //     )
-                            // ),
-                            ListView.separated(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                itemBuilder: (context, index) {
-                                  return OtherCard(data: widget.hospital[index]);
-                                },
-                                shrinkWrap: true,
-                                //scrollDirection: Axis.vertical,
-                                physics: NeverScrollableScrollPhysics(),
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    height: 16,
-                                  );
-                                },
-                                itemCount: widget.hospital.length),
-                          ]
+                      margin: EdgeInsets.only(top: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      child: const Text(
+                        'Hospital',
+                        style: TextStyle(
+                          // color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    // SliverList(
+                    //     delegate: SliverChildBuilderDelegate((context,index){
+                    //       return RestCard(data: widget.topPicks[index]);
+                    //     },
+                    //     childCount: widget.topPicks.length,
+                    //     )
+                    // ),
+                    ListView.separated(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        itemBuilder: (context, index) {
+                          return OtherCard(data: widget.hospital[index]);
+                        },
+                        shrinkWrap: true,
+                        //scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            height: 16,
+                          );
+                        },
+                        itemCount: widget.hospital.length),
+                  ]),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              width: MediaQuery.of(context).size.width,
+              child: Text(
+                'Rentals',
+                style: TextStyle(
+                  // color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 12),
+              height: 150,
+              child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  itemBuilder: (context, index) {
+                    return OtherCard(data: widget.topPicks[index]);
+                  },
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      width: 16,
+                    );
+                  },
+                  itemCount: widget.topPicks.length),
+            ),
+            Container(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Container(
                       margin: EdgeInsets.only(top: 12),
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        'Rentals',
+                        'Cycle Repair',
                         style: TextStyle(
                           // color: Colors.black,
                           fontSize: 18,
@@ -224,7 +253,44 @@ class _OtherHomeState extends State<OtherHome>
                       child: ListView.separated(
                           padding: EdgeInsets.symmetric(horizontal: 16),
                           itemBuilder: (context, index) {
-                            return OtherCard(data: widget.topPicks[index]);
+                            return OtherCard(data: widget.suggested[index]);
+                          },
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              width: 16,
+                            );
+                          },
+                          itemCount: widget.topPicks.length),
+                    ),
+                  ]),
+            ),
+            Container(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        'Souvenir',
+                        style: TextStyle(
+                          // color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 12),
+                      height: 150,
+                      child: ListView.separated(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          itemBuilder: (context, index) {
+                            return OtherCard(data: widget.suggested[index]);
                           },
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
@@ -245,7 +311,7 @@ class _OtherHomeState extends State<OtherHome>
                               padding: EdgeInsets.symmetric(horizontal: 16),
                               width: MediaQuery.of(context).size.width,
                               child: Text(
-                                'Cycle Repair',
+                                'Mobile Repair',
                                 style: TextStyle(
                                   // color: Colors.black,
                                   fontSize: 18,
@@ -259,7 +325,8 @@ class _OtherHomeState extends State<OtherHome>
                               child: ListView.separated(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
                                   itemBuilder: (context, index) {
-                                    return OtherCard(data: widget.suggested[index]);
+                                    return OtherCard(
+                                        data: widget.suggested[index]);
                                   },
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
@@ -271,10 +338,7 @@ class _OtherHomeState extends State<OtherHome>
                                   },
                                   itemCount: widget.topPicks.length),
                             ),
-
-
-                          ]
-                      ),
+                          ]),
                     ),
                     Container(
                       child: Column(
@@ -285,7 +349,7 @@ class _OtherHomeState extends State<OtherHome>
                               padding: EdgeInsets.symmetric(horizontal: 16),
                               width: MediaQuery.of(context).size.width,
                               child: Text(
-                                'Souvenir',
+                                'Barber',
                                 style: TextStyle(
                                   // color: Colors.black,
                                   fontSize: 18,
@@ -299,7 +363,8 @@ class _OtherHomeState extends State<OtherHome>
                               child: ListView.separated(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
                                   itemBuilder: (context, index) {
-                                    return OtherCard(data: widget.suggested[index]);
+                                    return OtherCard(
+                                        data: widget.suggested[index]);
                                   },
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
@@ -311,101 +376,18 @@ class _OtherHomeState extends State<OtherHome>
                                   },
                                   itemCount: widget.topPicks.length),
                             ),
-                            Container(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(top: 12),
-                                      padding: EdgeInsets.symmetric(horizontal: 16),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Text(
-                                        'Mobile Repair',
-                                        style: TextStyle(
-                                          // color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 12),
-                                      height: 150,
-                                      child: ListView.separated(
-                                          padding: EdgeInsets.symmetric(horizontal: 16),
-                                          itemBuilder: (context, index) {
-                                            return OtherCard(data: widget.suggested[index]);
-                                          },
-                                          physics: BouncingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          separatorBuilder: (context, index) {
-                                            return SizedBox(
-                                              width: 16,
-                                            );
-                                          },
-                                          itemCount: widget.topPicks.length),
-                                    ),
-
-
-                                  ]
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(top: 12),
-                                      padding: EdgeInsets.symmetric(horizontal: 16),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Text(
-                                        'Barber',
-                                        style: TextStyle(
-                                          // color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 12),
-                                      height: 150,
-                                      child: ListView.separated(
-                                          padding: EdgeInsets.symmetric(horizontal: 16),
-                                          itemBuilder: (context, index) {
-                                            return OtherCard(data: widget.suggested[index]);
-                                          },
-                                          physics: BouncingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          separatorBuilder: (context, index) {
-                                            return SizedBox(
-                                              width: 16,
-                                            );
-                                          },
-                                          itemCount: widget.topPicks.length),
-                                    ),
-
-
-                                  ]
-                              ),
-                            ),
-
-
-                          ]
-                      ),
+                          ]),
                     ),
-                  ]
-              ),
-              // physics: BouncingScrollPhysics(),
-              // children: [
-              //
-              //
-              // ],
+                  ]),
             ),
-          ]
-      ),
+          ]),
+          // physics: BouncingScrollPhysics(),
+          // children: [
+          //
+          //
+          // ],
+        ),
+      ]),
     );
   }
 }

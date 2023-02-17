@@ -11,6 +11,7 @@ import 'package:hotshot/services/restaurantServ.dart';
 import 'package:hotshot/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
+import '../widgets/my_shopkeeper_drawer.dart';
 import '../widgets/sideDrawerShopkeeper.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -134,7 +135,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
           )
         ),
       ),
-      drawer: MyNavigationDrawer(),
+      drawer: MyShopkeeperDrawer(),
       body: Column(
         children: <Widget>[
           const SizedBox(height: 10),

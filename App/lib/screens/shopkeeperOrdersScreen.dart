@@ -6,6 +6,7 @@ import '../constants/loader.dart';
 import '../model/orderInfo.dart';
 import '../services/orderServ.dart';
 // import '../widgets/shopkeeperOrderCard.dart';
+import '../widgets/my_shopkeeper_drawer.dart';
 import '../widgets/sideDrawer.dart';
 import '../widgets/sideDrawerShopkeeper.dart';
 import 'package:mongo_dart/mongo_dart.dart' hide State, Size, Builder;
@@ -69,7 +70,7 @@ class _ShopkeeperOrdersScreenState extends State<ShopkeeperOrdersScreen>
               centerTitle: true,
               elevation: 5,
             ),
-            drawer: MyNavigationDrawer(),
+            drawer: MyShopkeeperDrawer(),
             body: ListView.separated(
                 padding: const EdgeInsets.all(8),
                 itemCount: order!.length,
