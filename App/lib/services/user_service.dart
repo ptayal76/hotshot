@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:hotshot/model/my_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constants/constants.dart';
+
 class UserServ {
   Future<String> postUser(MyUser? user) async {
     print('STEP 1 POSt');
@@ -14,7 +16,7 @@ class UserServ {
     };
     Map<String, String> customHeaders = {"content-type": "application/json"};
     final userjson = jsonEncode(m);
-    const uri = 'http://192.168.1.106:8080/login';
+    const uri = '${MONGO_URL}/login';
 
     var res =
         await http.post(Uri.parse(uri), headers: customHeaders, body: userjson);

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
+import 'package:hotshot/services/listdishesTomap.dart';
 
 import '../constants/colors.dart';
 import '../constants/loader.dart';
@@ -73,6 +74,7 @@ class _OrderCardState extends State<OrderCard> {
     fetchallorder();
     // List<int> bufferInt= widget.data.pic.map((e) => e as int).toList();
     var fav = false;
+    var map = convert().listToMap(abc(dishes!));
     return dishes == null
         ? const Loader()
         : Stack(
@@ -126,9 +128,9 @@ class _OrderCardState extends State<OrderCard> {
                             // )),
                             child: dishes != null
                                 ? Text(
-                                    'Order Items: ${abc(dishes!)}'
-                                        .replaceAll('[', '')
-                                        .replaceAll(']', ''),
+                                    'Order Items: ${map}'
+                                        .replaceAll('{', '')
+                                        .replaceAll('}', ''),
                                     style: const TextStyle(fontSize: 20),
                                     maxLines: 1,
                                     softWrap: false,

@@ -31,5 +31,4 @@ MyUser dummyUser = MyUser(
     profile: '',
     uid: '');
 
-
-const MONGO_URL = 'http://192.168.1.106:8080';
+const MONGO_URL = 'http://192.168.1.109:8080';

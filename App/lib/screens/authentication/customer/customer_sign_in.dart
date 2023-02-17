@@ -142,9 +142,9 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                     print(token);
                                     print('STEP 2');
 
-                                    setState(() {
-                                      loading = false;
-                                    });
+                                    // setState(() {
+                                    //   loading = false;
+                                    // });
                                   },
                                 ),
                                 // const SizedBox(
