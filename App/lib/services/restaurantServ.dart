@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
+import 'package:hotshot/constants/constants.dart';
 import '../model/orderInfo.dart';
 
 //String tokenFinal =
@@ -22,11 +23,9 @@ String tokenFinal =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VlNmQwZWYzZDUwYmI3Y2E0OTcyYjUiLCJpYXQiOjE2NzY1Njk4NzB9.A8X6k6Dx4HFaPdxE5zIRq3IpFD4Z9lrv27s4ILa2jCc';
 
 class RestaurantServ {
-  String MONGO_URL = 'http://10.0.2.2:8080';
-  void postRestaurant(ShopVerificationInfo info, MyUser? user)async{
-
-                        
-    Map<String,dynamic> body = {
+  //String MONGO_URL = 'http://10.0.2.2:8080';
+  void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
+    Map<String, dynamic> body = {
       'ownerName': user!.fullName,
       'restaurantName': info.shopName,
       'phoneNumber': 'info.phoneNumber',
@@ -60,8 +59,7 @@ class RestaurantServ {
 
       List<DishInfo> result = await fetchDish(context, restaurant.menu);
       return result;
-    }
-    catch(e){
+    } catch (e) {
       print('ERROR FETCHING MENU');
       print(e.toString());
       return null;

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/model/orderInfo.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +17,10 @@ String tokenFinal =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
 String Bearer = 'Bearer ' +
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjp0cnVlLCJpZCI6IjYzZWQxNDZiMWJhODZjNzkwYjQzMGQ1ZCIsImlhdCI6MTY3NjQ4MTY0M30.SE1sBa1XYTEMmmyIPCWSnzRMl-CAEIXyJgc_WFcMpFk';
-String uri = 'http://192.168.1.106:8080';
+String uri = MONGO_URL; //'http://192.168.1.106:8080';
 
 class OrderServ {
-  String MONGO_URL = 'http://10.0.2.2:8080';
+  // String MONGO_URL = 'http://10.0.2.2:8080';
   Future<Order> fetchOrderbyId(BuildContext context, String orderId) async {
     // final userProvider = Provider.of(context)
     List<Order> OrderList = [];
@@ -63,21 +64,21 @@ class OrderServ {
     // print('xxx');
     return OrderList[0];
   }
-  Future<Map<String,dynamic>?> checkout(BuildContext context,String orderId) async {
+
+  Future<Map<String, dynamic>?> checkout(
+      BuildContext context, String orderId) async {
     String Bearer = 'Bearer $tokenFinal';
-    try{
+    try {
       String url = MONGO_URL + '/food/order/checkout/$orderId';
       print('hi1');
-      http.Response res = await http.put(
-          Uri.parse(url),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': Bearer
-          });
+      http.Response res = await http.put(Uri.parse(url), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': Bearer
+      });
       print('hi');
       print(res.body);
-      Map<String,dynamic> obj = jsonDecode(res.body);
+      Map<String, dynamic> obj = jsonDecode(res.body);
       print(res.body);
       httpErrorHandle(
         response: res,
@@ -91,19 +92,19 @@ class OrderServ {
           // print("hi");
         },
       );
-      return (obj==null)?{}:obj;
-    }catch(e){
+      return (obj == null) ? {} : obj;
+    } catch (e) {
       print(e);
     }
   }
-  Future<void> acknowledge(BuildContext context,String orderId,Map<String,dynamic> json) async {
+
+  Future<void> acknowledge(
+      BuildContext context, String orderId, Map<String, dynamic> json) async {
     String Bearer = 'Bearer $tokenFinal';
-    try{
+    try {
       String url = MONGO_URL + '/food/order/acknowledge/$orderId';
       print('hi1');
-      http.Response res = await http.put(
-          Uri.parse(url),
-          body: json);
+      http.Response res = await http.put(Uri.parse(url), body: json);
       print('hi');
       print(res.body);
       // Map<String,dynamic> obj = jsonDecode(res.body);
@@ -121,10 +122,11 @@ class OrderServ {
         },
       );
       // return (obj==null)?{}:obj;
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
+
   Future<List<Order>> fetchResponsePendingOrders(BuildContext context) async {
     // final userProvider = Provider.of(context)
     List<Order> OrderList = [];
