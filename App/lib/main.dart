@@ -11,6 +11,8 @@ import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/screens/stat_shopkeeper_main_page.dart';
 import 'package:hotshot/screens/statshopkeeperhome.dart';
+import 'package:hotshot/screens/restaurant_final_form.dart';
+import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'package:hotshot/wrapper.dart';

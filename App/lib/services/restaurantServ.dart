@@ -44,21 +44,33 @@ class RestaurantServ {
       //   }
       // ],
       'status': 'on',
+      'razorpayCred': jsonEncode(
+        {
+          'Key_id': info.keyId,
+          'KeySecret': info.secretKey
+        }
+      )
     };
     Map<String, String> customHeaders = {"content-type": "application/json"};
     var pobj = jsonEncode(body);
     String url = MONGO_URL + '/food/rest';
     var res =
         await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
-    // print(res.body);
-    // print('SUCCESS');
+
+    SharedPrefs().setToken(res.headers['token']!);
+    final restID = jsonDecode(res.body)['_id'];
+    print(restID);
+
+    await SharedPrefs().setRestId(restID);
+    await SharedPrefs().setRestCreated(true);
+    print('SUCCESS');
   }
 
   Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID) async {
     List<DishInfo> menu = [];
 
     try {
-      http.Response res = await http.get(Uri.parse(''));
+      //http.Response res = await http.get(Uri.parse('$MONGO_URL'));
       RestInfo restaurant = await fetchRestaurantsbyID(context, restID);
 
       List<DishInfo> result = await fetchDish(context, restaurant.menu);

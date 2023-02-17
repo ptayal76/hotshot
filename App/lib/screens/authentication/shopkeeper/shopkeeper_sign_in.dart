@@ -61,7 +61,7 @@ class _ShopkeeperSignInState extends State<ShopkeeperSignIn> {
                                 const Text(
                                   'Welcome to Hotshot! Your one stop solution to everything',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 15),
+                                  style: TextStyle(fontSize: 20),
                                 ),
                                 const SizedBox(
                                   height: 20,
