@@ -121,6 +121,7 @@ class _checkoutState extends State<checkout> {
       msg: "SUCCESS: ${response.paymentId}",
       timeInSecForIosWeb: 4,
     );
+    Navigator.pop(context);
   }
   catch(e)
     {

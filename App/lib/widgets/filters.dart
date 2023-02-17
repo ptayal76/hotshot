@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-class Pair<T1, T2> {
-  final T1 a;
-  final T2 b;
-
-  Pair(this.a, this.b);
-}
+import 'package:hotshot/screens/restHome.dart';
+// class Pair<T1, T2> {
+//   final T1 a;
+//   final T2 b;
+//
+//   Pair(this.a, this.b);
+// }
 class Filters extends StatefulWidget {
    Filters({Key? key}) : super(key: key);
 
@@ -56,6 +57,7 @@ class _FiltersState extends State<Filters> {
               ),
               onTap: (){
                 setState(() {
+
                   filterselected[index]=!filterselected[index];
                   if(index==2 || index==3){
                     if(filterselected[index]==true){

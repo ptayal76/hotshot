@@ -100,6 +100,38 @@ class RestaurantServ {
     }
     return RestList;
   }
+  Future<List<RestInfo>> fetchOpenRestaurants(BuildContext context) async {
+    // final userProvider = Provider.of(context)
+    List<RestInfo> RestList = [];
+    try {
+      http.Response res = await http.get(Uri.parse('${MONGO_URL}/food/rest?status=on'));
+      var obj = jsonDecode(res.body);
+      // print(obj[0].runtimeType);
+      // print(obj.length);
+      // print(res.body);
+      // print(res.body.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < obj.length; i++) {
+            // var obj=;
+            RestList.add(RestInfo.fromJson(obj[i]));
+          }
+          // print(RestList);
+          //print("hi");
+        },
+      );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    return RestList;
+  }
 
   Future<RestInfo> fetchRestaurantsbyID(
       BuildContext context, String restid) async {
