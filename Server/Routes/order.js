@@ -23,44 +23,54 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
-    if (req.isowner) {
-        const obj = { restaurant_id: req.restaurant };
-        if (req.query.status) {
-            obj.Order_status = req.query.status;
+    try{
+        if (req.isowner) {
+            const obj = { restaurant_id: req.restaurant };
+            if (req.query.status) {
+                obj.Order_status = req.query.status;
+            }
+            const orders = await Order.find(obj);
+            res.status(200).json(orders);
+        } else {
+            const obj = { user_id: req.user };
+            if (req.query.status) {
+                obj.Order_status = req.query.status;
+            }
+            const orders = await Order.find(obj);
+            res.status(200).json(orders);
         }
-        const orders = await Order.find(obj);
-        res.status(200).json(orders);
-    } else {
-        const obj = { user_id: req.user };
-        if (req.query.status) {
-            obj.Order_status = req.query.status;
-        }
-        const orders = await Order.find(obj);
-        res.status(200).json(orders);
+    } catch (err){
+        res.status(400).json(err);
     }
 })
 
 //GET ORDERS BY RESTID
 router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) => {
-    const order = await Order.findById(req.params.orderId);
-    if (req.isowner) {
-        if (req.restaurant == order.restaurant_id) {
-            res.status(200).json(order);
+    try{
+        const order = await Order.findById(req.params.orderId);
+        if (req.isowner) {
+            if (req.restaurant == order.restaurant_id) {
+                res.status(200).json(order);
+            }
+            else {
+                res.status(403).json({ message: "Not Authenticated" });
+            }
         }
         else {
-            res.status(403).json({ message: "Not Authenticated" });
+    
+            if (req.user == order.user_id) {
+                res.status(200).json(order);
+            }
+            else {
+                res.status(403).json({ message: "Not Authenticated" });
+            }
         }
-    }
-    else {
-
-        if (req.user == order.user_id) {
-            res.status(200).json(order);
-        }
-        else {
-            res.status(403).json({ message: "Not Authenticated" });
-        }
+    } catch(err) {
+        res.status(400).json(err);
     }
 })
+
+
 //CREATE QR FOR USER
 router.get("/food/order/qr/:orderId", async (req, res, next) => {
     try {
@@ -174,7 +184,6 @@ router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (
 
     }
     catch (error) {
-
         return res.status(402).send(error.message)
     }
 })
@@ -195,7 +204,6 @@ router.put('/food/rest/complete/:orderid', async (req, res) => {
 
 //DELETING AN ORDER
 router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
-
     const order = await Order.findById(req.params.orderId);
     if (order.user_id == req.user) {
         await Order.findByIdAndDelete(req.params.orderId);
@@ -204,9 +212,10 @@ router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req,
     else {
         res.status(403).send("Not Authorized to delete this order");
     }
-
 })
-//payment 
+
+
+//PAYMENT
 router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
     const restaurant = await Restaurant.findById(order.restaurant_id);
@@ -226,6 +235,8 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         }
     })
 })
+
+//ACKNOWLEDGE A PAYMENT
 router.put("/food/order/acknowledge/:orderId", async (req, res) => {
     const order = await Order.findById(req.params.orderId);
     order.paymentId = req.body.razorpay_payment_id;
