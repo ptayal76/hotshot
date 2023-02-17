@@ -231,6 +231,7 @@ router.put("/food/order/acknowledge/:orderId", async (req, res) => {
     order.paymentId = req.body.razorpay_payment_id;
     order.Order_status = 'responsePending';
     order.save();
+    res.status(200).send({message:"Successss"});
 })
 
 module.exports = router;
