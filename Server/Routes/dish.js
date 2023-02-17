@@ -32,10 +32,24 @@ router.get('/food/dish/:dishId', async (req, res) => {
     try {
         const id = req.params.dishId;
         const dish = await Dish.findById(id);
-        
         res.status(200).json(dish);
     } catch (err) {
         
+        res.status(400).json(err);
+    }
+})
+
+//GET RESTAURANTS BY DISH
+router.get('/food/dish/rest/:dishId', async (req, res) => {
+    try{
+        const id = req.params.dishId;
+        const dish = await Dish.findById(id);
+        const restid = dish.Rest_Id;
+        const obj = {_id: restid}
+        console.log(obj);
+        const restaurants = await Restaurant.find({obj});
+        res.status(200).json(restaurants._id);
+    } catch(err) {
         res.status(400).json(err);
     }
 })
