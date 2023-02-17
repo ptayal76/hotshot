@@ -43,7 +43,6 @@ router.get('/food/rest/:restid', async (req, res) => {
   try {
     const id = req.params.restid;
     const restaurant = await Restaurant.findById(id);
-    
     return res.json(restaurant);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -53,19 +52,22 @@ router.get('/food/rest/:restid', async (req, res) => {
 //CREATE A RESTAURANT
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
-    const restaurant = new Restaurant(req.body);
-    if (req.file) {
-      restaurant.pic.data = req.file.buffer;
-      restaurant.pic.contentType = req.file.mimetype;
+    var existingRest = await Restaurant.findOne({email:req.body.email});
+    if(!existingRest) {
+      const restaurant = new Restaurant(req.body);
+      if (req.file) {
+        restaurant.pic.data = req.file.buffer;
+        restaurant.pic.contentType = req.file.mimetype;
+      }
+      existingRest= restaurant;
+      restaurant.save();
     }
-    await restaurant.save();
-
     jwt.sign(
-      { isowner: true, id: restaurant._id },
+      { isowner: true, id: existingRest._id },
       process.env.JWT_SEC,
       (err, token) => {
         res.header('token', `${token}`);
-        return res.json(restaurant);
+        return res.json(existingRest);
       }
     );
   } catch (err) {

@@ -19,7 +19,6 @@ const stationary = new schema({
         type: String
     },
     password: {
-        required: true,
         type: String
     },
     CA4:{
@@ -73,7 +72,6 @@ const stationary = new schema({
         enum: ['on', 'off']
     },
     order_types: {
-
         not_collected: [
             {
                 type: String

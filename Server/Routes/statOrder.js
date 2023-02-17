@@ -1,10 +1,12 @@
-//Order routes
-const RestOrder = require('../Models/RestOrder');
-const Dish = require("../Models/Dish");
+//Stationary Order routes
+const StatOrder = require('../Models/StatOrder');
 const Razorpay = require('razorpay');
 const mongoose = require('mongoose');
-const Order = RestOrder;
-const Restaurant = require("../Models/Restaurant");
+const Order = StatOrder;
+const Stationary = require("../Models/Stationary");
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 const {
     verifyToken,
     authenticateOwner,
@@ -12,7 +14,8 @@ const {
     authorizeOwner,
     authorizeUser,
     restOrder,
-    authenticate
+    authenticate,
+    authenticateStationaryOwner
 } = require('../Middlewares/verifyToken');
 const jwt = require('jsonwebtoken');
 const router = require('express').Router();
@@ -22,9 +25,9 @@ const qrCodeReader = require('qrcode-reader');
 const qr = require('qrcode');
 
 //GET ALL ORDERS
-router.get("/food/order", verifyToken, authenticate, async (req, res) => {
+router.get("/stationary/order", verifyToken, authenticate, async (req, res) => {
     if (req.isowner) {
-        const obj = { restaurant_id: req.restaurant };
+        const obj = { stationaryId: req.restaurant };
         if (req.query.status) {
             obj.Order_status = req.query.status;
         }
@@ -40,11 +43,11 @@ router.get("/food/order", verifyToken, authenticate, async (req, res) => {
     }
 })
 
-//GET ORDERS BY RESTID
-router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) => {
+//GET ORDERS BY SHOP ID
+router.get("/stationary/order/:orderId", verifyToken, authenticate, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
     if (req.isowner) {
-        if (req.restaurant == order.restaurant_id) {
+        if (req.restaurant == order.stationaryId) {
             res.status(200).json(order);
         }
         else {
@@ -61,8 +64,9 @@ router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) =
         }
     }
 })
+
 //CREATE QR FOR USER
-router.get("/food/order/qr/:orderId", async (req, res, next) => {
+router.get("/stationary/order/qr/:orderId", async (req, res, next) => {
     try {
         const orderid = req.params.orderId;
         let data = { orderid };
@@ -85,57 +89,27 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
     }
 })
 
-//ADDING ORDER
-router.post('/food/order/add/:dishId', verifyToken, authenticateUser, async (req, res) => {
+//CREATING ORDER
+router.post('/stationary/order/:statId', upload.single('pic'), verifyToken, authenticateUser, async (req, res) => {
     try {
-        const dish = await Dish.findById(req.params.dishId);
-        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'paymentPending' });
-        if (order.length) {
-            order[0].items.push(req.params.dishId);
-            order[0].total = order[0].total + dish.price;
-            await order[0].save();
-            return res.status(200).json(order[0]);
+        var today = new Date();
+        const newOrder = new Order({ stationaryId: mongoose.Types.ObjectId(req.params.statId), user_id: mongoose.Types.ObjectId(req.user), timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'paymentPending', category: req.body.category, numberOfCopies: req.body.numberOfCopies, BothSides: req.body.BothSides, Orientation: req.body.Orientation, total: req.body.total })
+        if (req.file) {
+            newOrder.img.data = req.file.buffer;
+            newOrder.img.contentType = req.file.mimetype;
         }
-        else {
-            var today = new Date();
-            const newOrder = new Order({ restaurant_id: dish.Rest_Id, user_id: req.user, items: [req.params.dishId], total: dish.price, timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'paymentPending' });
-            await newOrder.save()
-            //payment gateway
-            return res.status(200).json(newOrder);
-        }
-
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-//REMOVING THE ITEM
-router.post('/food/order/remove/:dishId', verifyToken, authenticateUser, async (req, res) => {
-    try {
-        const dish = await Dish.findById(req.params.dishId);
-        const order = await Order.find({ restaurant_id: dish.Rest_Id, user_id: mongoose.Types.ObjectId(req.user), Order_status: 'paymentPending' });
-        if (order.length) {
-            const index = order[0].items.indexOf(req.params.dishId);
-            if (index > -1) {
-                order[0].items.splice(index, 1); // 2nd parameter means remove one item only
-                order[0].total = order[0].total - dish.price;
-                if (order[0].items.length == 0) {
-                    await Order.findByIdAndDelete(order[0]._id)
-                }
-            }
-            await order[0].save();
-            return res.status(200).json(order[0]);
-        }
+        await newOrder.save();
+        return res.status(200).json(newOrder);
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
 //ACCEPTING THE ORDER
-router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (req, res) => {
+router.put('/stationary/order/accept/:orderid', verifyToken, authenticateStationaryOwner, async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if (req.restaurant == order.restaurant_id) {
+        if (req.restaurant == order.stationaryId) {
             order.Order_status = 'accepted';
             await order.save();
             res.status(200).send("Order Accepted");
@@ -151,43 +125,39 @@ router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (
 })
 
 //REJECTING THE ORDER
-router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (req, res) => {
+router.put('/stationary/order/reject/:orderid', verifyToken, authenticateStationaryOwner, async (req, res) => {
     try {
-        
         const order = await Order.findById(req.params.orderid);
-        if (req.restaurant == order.restaurant_id) {
+        if (req.restaurant == order.stationaryId) {
             order.Order_status = 'rejected';
             await order.save();
-            const razorpayInstance = new Razorpay({
-                key_id: req.restaurant.razorpayCred.Key_id || process.env.RZP_KEY_ID,
-                key_secret: req.restaurant.razorpayCred.KeySecret || process.env.RZP_SEC_KEY
-            })
-            razorpayInstance.payments.refund(paymentId, {
-                "speed": "optimum",
-
-            })
+            // const razorpayInstance = new Razorpay({
+            //     key_id: req.restaurant.razorpayCred.Key_id || process.env.RZP_KEY_ID,
+            //     key_secret: req.restaurant.razorpayCred.KeySecret || process.env.RZP_SEC_KEY
+            // })
+            // razorpayInstance.payments.refund(paymentId, {
+            //     "speed": "optimum",
+            // })
             res.status(200).send("Order Rejected");
             //refund gateway
         }
         else {
             res.status(403).json({ message: "not authorized" });
         }
-
     }
     catch (error) {
-
         return res.status(402).send(error.message)
     }
 })
 
 //COMPLETING THE ORDER
-router.put('/food/rest/complete/:orderid', async (req, res) => {
+router.put('/stationary/order/complete/:orderid', async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
         order.Order_status = 'completed';
         await order.save();
-        console.log('here');
         res.status(200).json(order);
+
     }
     catch (error) {
         return res.status(402).send(error.message)
@@ -195,8 +165,7 @@ router.put('/food/rest/complete/:orderid', async (req, res) => {
 })
 
 //DELETING AN ORDER
-router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
-
+router.delete("/stationary/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
     if (order.user_id == req.user) {
         await Order.findByIdAndDelete(req.params.orderId);
@@ -207,11 +176,11 @@ router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req,
     }
 
 })
+
 //payment 
 router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
-    console.log(order);
-    const restaurant = await Restaurant.findById(order.restaurant_id);
+    const restaurant = await Stationary.findById(order.stationaryId);
     if (order.user_id != req.user) {
         return res.status(403).json({ message: "you are not authenticated" });
     }
@@ -223,26 +192,19 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         if (err) {
             return res.status(400).send(err.message);
         }
-
         else {
-            console.log(result);
             return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCred.Key_id });
         }
     })
 })
-router.put("/food/order/acknowledge/:orderId", async (req, res) => {
-    try{
+
+//AFTER PAYMENT IS DONE
+router.put("/stationary/order/acknowledge/:orderId", async (req, res) => {
     const order = await Order.findById(req.params.orderId);
     order.paymentId = req.body.razorpay_payment_id;
     order.Order_status = 'responsePending';
     order.save();
-    res.status(200).send({message: "Success"});
-    }
-    catch(e)
-    {
-        console.log(e.message)
-        res.status(400).json({message:"erooorrr"});
-    }
 })
 
 module.exports = router;
+

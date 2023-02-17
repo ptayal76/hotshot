@@ -36,7 +36,6 @@ const order = new schema({
         KeySecret:{
             type:String
         }
-
     }
 })
 module.exports= mongoose.model('Order', order);

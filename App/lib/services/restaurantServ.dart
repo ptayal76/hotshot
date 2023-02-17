@@ -6,15 +6,20 @@ import 'package:hotshot/model/shop_verification_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
 import '../model/orderInfo.dart';
 
+//String tokenFinal =
+//  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+
 String tokenFinal =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VlNmQwZWYzZDUwYmI3Y2E0OTcyYjUiLCJpYXQiOjE2NzY1Njk4NzB9.A8X6k6Dx4HFaPdxE5zIRq3IpFD4Z9lrv27s4ILa2jCc';
 
 class RestaurantServ {
   String MONGO_URL = 'http://10.0.2.2:8080';
@@ -46,18 +51,18 @@ class RestaurantServ {
     // print('SUCCESS');
   }
 
-  Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID)async{
+  Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID) async {
     List<DishInfo> menu = [];
 
     try {
       //http.Response res = await http.get(Uri.parse(''));
       RestInfo restaurant = await fetchRestaurantsbyID(context, restID);
-      
+
       List<DishInfo> result = await fetchDish(context, restaurant.menu);
       return result;
     }
     catch(e){
-      print('ERROR FETHING MENU');
+      print('ERROR FETCHING MENU');
       print(e.toString());
       return null;
     }
@@ -175,10 +180,13 @@ class RestaurantServ {
   }
 
   Future<void> postCartOrder(BuildContext context, String dishid) async {
-    // final userProvider = Provider.of(context)
+    final user = Provider.of<MyUser?>(context, listen: false);
+    final tkn = await AuthService().getToken();
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
-    String token = 'Bearer $tokenFinal'; // +
+    String token = 'Bearer $tkn'; // +
+
+    print('TOKEN = $tkn');
     //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
+import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/screens/PendingOrders.dart';
+import 'package:hotshot/screens/feedback.dart';
+import 'package:hotshot/screens/ordHistory.dart';
+import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +18,13 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<MyUser?>(context);
 
-  final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    final name = (user ?? dummyUser).fullName ?? 'user';
+    final email = (user ?? dummyUser).email ?? 'email';
+    final profile = (user ?? dummyUser).profile ?? '';
 
     return Drawer(
       width: 250,
@@ -23,23 +33,29 @@ class _MyDrawerState extends State<MyDrawer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 30,),
-            const CircleAvatar(
-              radius: 60,
+            const SizedBox(
+              height: 30,
             ),
-            const SizedBox(height: 10,),
-            const Text(
-              'User\'s Full Name',
+            CircleAvatar(
+              radius: 60,
+              foregroundImage: NetworkImage(profile),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              name,
               style: TextStyle(
                 fontSize: 24,
               ),
             ),
-            const Text(
-              'useremail@lohit.iitg.in',
-              style: TextStyle(
-              ),
+            Text(
+              email,
+              style: TextStyle(),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               height: 0.8,
             ),
@@ -51,39 +67,71 @@ class _MyDrawerState extends State<MyDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(
-                      onPressed: (){},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrdHistory(),
+                            ));
+                      },
                       style: drawerButtonStyle,
                       label: const Text('Order History'),
                       icon: const Icon(Icons.history_rounded),
                     ),
                     TextButton.icon(
-                      onPressed: (){},
-                      style: drawerButtonStyle,
-                      label: const Text('Insights'),
-                      icon: const Icon(Icons.auto_graph_rounded),
-                    ),
-                    TextButton.icon(
-                      onPressed: (){
+                      icon: const Icon(Icons.pending_actions_rounded),
+                      label: const Text('Pending Orders'),
+                      onPressed: () {
                         Navigator.pop(context);
-                        final provider = Provider.of<ThemeProvider>(context, listen: false);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PendHistory(),
+                            ));
+                      },
+                    ),
+                    // TextButton.icon(
+                    //   onPressed: () {},
+                    //   style: drawerButtonStyle,
+                    //   label: const Text('Insights'),
+                    //   icon: const Icon(Icons.auto_graph_rounded),
+                    // ),
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        final provider =
+                            Provider.of<ThemeProvider>(context, listen: false);
                         provider.toggleTheme(!themeProvider.isDarkMode);
                       },
                       style: drawerButtonStyle,
-                      label: Text(themeProvider.isDarkMode ? 'Light Mode' : 'Dark Mode'),
-                      icon: themeProvider.isDarkMode ? const Icon(Icons.sunny) : const Icon(Icons.nightlight_round),
+                      label: Text(themeProvider.isDarkMode
+                          ? 'Light Mode'
+                          : 'Dark Mode'),
+                      icon: themeProvider.isDarkMode
+                          ? const Icon(Icons.sunny)
+                          : const Icon(Icons.nightlight_round),
                     ),
                     TextButton.icon(
-                      onPressed: (){},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => feedback(),
+                            ));
+                      },
                       style: drawerButtonStyle,
-                      label: const Text('Rate Us'),
+                      label: const Text('Feedback'),
                       icon: const Icon(Icons.star_rate_rounded),
                     ),
                     TextButton.icon(
-                      onPressed: (){},
-                      style: drawerButtonStyle,
-                      icon: const Icon(Icons.logout),
-                      label: const Text('Logout')
-                    ),
+                        onPressed: () {
+                          GoogleAuthentication().googleLogout();
+                        },
+                        style: drawerButtonStyle,
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Logout')),
                   ],
                 ),
               ),

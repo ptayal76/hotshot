@@ -16,7 +16,7 @@ import '../services/restaurantServ.dart';
 class checkout extends StatefulWidget {
   // final String orderID;
   final Order order;
-  const checkout({Key? key,required this.order}) : super(key: key);
+  const checkout({Key? key, required this.order}) : super(key: key);
 
   @override
   State<checkout> createState() => _checkoutState();
@@ -24,10 +24,10 @@ class checkout extends StatefulWidget {
 
 class _checkoutState extends State<checkout> {
   Order? refOrder;
-  Map<String,int> dishes={};
-  Map<DishInfo,int> fetchedDishes={};
-  fetchorder() async{
-    refOrder=await OrderServ().fetchOrderbyId(context,widget.order.id);
+  Map<String, int> dishes = {};
+  Map<DishInfo, int> fetchedDishes = {};
+  fetchorder() async {
+    refOrder = await OrderServ().fetchOrderbyId(context, widget.order.id);
     fetchmenu();
     // setState(() {
     //
@@ -42,15 +42,13 @@ class _checkoutState extends State<checkout> {
       // print("keyyyyysssss");
       dishIdsOrder.add(key);
     }
-    List<DishInfo>x=await RestaurantServ().fetchDish(context, dishIdsOrder);
-    Map<DishInfo,int>mp={};
-    for(int j=0;j<x!.length;j++){
-      mp[x[j]]=dishes![x[j].id]!;
+    List<DishInfo> x = await RestaurantServ().fetchDish(context, dishIdsOrder);
+    Map<DishInfo, int> mp = {};
+    for (int j = 0; j < x.length; j++) {
+      mp[x[j]] = dishes[x[j].id]!;
     }
-    fetchedDishes=(mp);
-    setState(() {
-
-    });
+    fetchedDishes = (mp);
+    setState(() {});
   }
   postcartdish(String dishid) async {
     await RestaurantServ().postCartOrder(context, dishid);
@@ -145,6 +143,7 @@ class _checkoutState extends State<checkout> {
       timeInSecForIosWeb: 4,
     );
   }
+
   final List<int> count = [1, 1, 1, 1, 1];
   var itemc = 0;
   final List<int> price = [100, 200, 300, 400, 500];
@@ -159,12 +158,16 @@ class _checkoutState extends State<checkout> {
         centerTitle: true,
       ),
       body: ListView(
-
         children: [
           Container(
             height: 50,
             // decoration: BoxDecoration(color: Colors.white),
-            child: Center(child: Text((allRest[widget.order.restaurantId]!.restaurantName),style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,)),
+            child: Center(
+              child: Text((allRest[widget.order.restaurantId]!.restaurantName),
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
           ),
           ListView.separated(
@@ -208,21 +211,26 @@ class _checkoutState extends State<checkout> {
                   height: 1,
                 );
               },
-              itemCount: fetchedDishes.length
-          ),
+              itemCount: fetchedDishes.length),
           SizedBox(
             height: 2,
             child: Container(color: Colors.black),
           ),
           SizedBox(
             height: 60,
-            child:Padding(
+            child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Total Amount : ',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                  Text('₹${refOrder!.total.toString()}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
+                  Text(
+                    'Total Amount : ',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '₹${refOrder!.total.toString()}',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
             ),

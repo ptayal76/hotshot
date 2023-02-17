@@ -1,13 +1,13 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:hotshot/services/orderServ.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 enum Options { Yes, No }
-enum Options2 { Breakfast, Lunch, Snacks, Dinner }
+enum Options2 { Breakfast, Lunch, Dinner }
 
 class add_item extends StatefulWidget {
   const add_item({super.key});
@@ -17,6 +17,20 @@ class add_item extends StatefulWidget {
 }
 
 class _add_itemState extends State<add_item> {
+   Map<String,dynamic> m = 
+  {
+    'name': '',
+    'category': '',
+    'suggestedTime': '',
+    'price': 0,
+    // 'pic': null,
+    'InStock' :false,
+  };
+  String name="";
+  String category="";
+  String suggestedTime="";
+  int price=0;
+  File? pic;
   Options? option = Options.Yes;
   Options2? option2 = Options2.Breakfast;
   File? _image;
@@ -116,7 +130,7 @@ class _add_itemState extends State<add_item> {
                           const Padding(
                             padding: EdgeInsets.only(top: 10, left: 15),
                             child: Text(
-                              "Item price",
+                              "Item price(in ₹)",
                               style: TextStyle(fontSize: 25),
                             ),
                           ),
@@ -128,7 +142,7 @@ class _add_itemState extends State<add_item> {
                               controller: _priceTextController,
                               style: const TextStyle(fontSize: 22),
                               decoration: const InputDecoration(
-                                  hintText: "Write here", prefixText: "₹ "),
+                                  hintText: "Write here"),
                             ),
                           )
                         ],
@@ -265,25 +279,25 @@ class _add_itemState extends State<add_item> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: 35,
-                                  child: ListTile(
-                                    title: const Text(
-                                      "Snacks",
-                                      style: TextStyle(fontSize: 22),
-                                    ),
-                                    leading: Radio<Options2>(
-                                      // activeColor: const Color.fromARGB(255, 29, 146, 33),
-                                      value: Options2.Snacks,
-                                      groupValue: option2,
-                                      onChanged: (Options2? value) {
-                                        setState(() {
-                                          option2 = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
+                                // Container(
+                                //   height: 35,
+                                //   child: ListTile(
+                                //     title: const Text(
+                                //       "Snacks",
+                                //       style: TextStyle(fontSize: 22),
+                                //     ),
+                                //     leading: Radio<Options2>(
+                                //       // activeColor: const Color.fromARGB(255, 29, 146, 33),
+                                //       value: Options2.Snacks,
+                                //       groupValue: option2,
+                                //       onChanged: (Options2? value) {
+                                //         setState(() {
+                                //           option2 = value;
+                                //         });
+                                //       },
+                                //     ),
+                                //   ),
+                                // ),
                                 ListTile(
                                   title: const Text(
                                     "Dinner",
@@ -367,7 +381,7 @@ class _add_itemState extends State<add_item> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16,bottom: 100),
                   child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if(_nameTextController.text==""){
                           Widget okbutton = TextButton(
                                   onPressed: () {
@@ -431,6 +445,23 @@ class _add_itemState extends State<add_item> {
                               );
                               return;
                         }
+                          
+                        name=_nameTextController.text;
+                        category= ((option==Options.Yes)?"veg":"nonveg");
+                        suggestedTime=((option2==Options2.Breakfast)?("Breakfast"):((option2==Options2.Dinner)?"Dinner":"Lunch"));
+                        price=int.parse(_priceTextController.text);
+                        pic= _image;
+                        m['name']=name;
+                        m['category']=category;
+                        m['suggestedTime']=suggestedTime;
+                        m['price']=price;
+                        m['pic']=pic!.path;
+                        m['InStock']=false;
+                        setState(() {});
+
+                        await OrderServ().Createdish(context, m);
+                        setState(() {});
+
                         Navigator.of(context).pop(true);
                       },
                       style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),

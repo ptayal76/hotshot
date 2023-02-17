@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/model/shop_verification_info.dart';
+import 'package:hotshot/screens/shopkeeper_main_page.dart';
+import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -63,6 +65,13 @@ class _ShopkeeperVerificationFormState
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await GoogleAuthentication().googleLogout();
+              },
+              icon: const Icon(Icons.logout))
+        ],
         elevation: 1,
         title: const Text('HotShot'),
       ),
@@ -73,7 +82,9 @@ class _ShopkeeperVerificationFormState
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   'Back',
                   style: TextStyle(fontSize: 18),
@@ -81,7 +92,7 @@ class _ShopkeeperVerificationFormState
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: OutlinedButton(
+            child: FilledButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     if (shopType == null || locationCategory == null) {
@@ -106,6 +117,8 @@ class _ShopkeeperVerificationFormState
                       }
                     }
                   }
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => MainPage()));
                 },
                 child: const Text(
                   'Submit',

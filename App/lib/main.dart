@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/authentication/customer/customer_sign_in.dart';
+import 'package:hotshot/screens/authentication/customer/customer_wrapper.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/phone_verification.dart';
 import 'package:hotshot/screens/dummy_checkout.dart';
 import 'package:hotshot/screens/home.dart';
@@ -10,9 +11,11 @@ import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
+import 'package:hotshot/wrapper.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:hotshot/screens/verification_pending.dart';
+import 'package:hotshot/screens/shopkeeperhome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
