@@ -27,14 +27,14 @@ class StatShopkeeperHomePage extends StatefulWidget {
 }
 
 class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
-  // var textEditingController = TextEditingController();
-  // int index = 0;
+  var textEditingController = TextEditingController();
+  int index = 0;
 
-  // bool isLoading = true;
+  bool isLoading = true;
 
   List<bool> isSelected = [true, false];
 
-  // List<DishInfo> menu = [];
+  List<DishInfo> menu = [];
   String restName = '';
 
   // void getData(BuildContext context)async{

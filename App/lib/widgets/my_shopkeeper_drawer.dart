@@ -8,14 +8,14 @@ import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class MyDrawer extends StatefulWidget {
-  const MyDrawer({super.key});
+class MyShopkeeperDrawer extends StatefulWidget {
+  const MyShopkeeperDrawer({super.key});
 
   @override
-  State<MyDrawer> createState() => _MyDrawerState();
+  State<MyShopkeeperDrawer> createState() => _MyShopkeeperDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class _MyShopkeeperDrawerState extends State<MyShopkeeperDrawer> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<MyUser?>(context);
@@ -49,7 +49,9 @@ class _MyDrawerState extends State<MyDrawer> {
                 fontSize: 24,
               ),
             ),
-            Text(email,),
+            Text(
+              email,
+            ),
             const SizedBox(
               height: 10,
             ),
