@@ -8,6 +8,7 @@ import 'package:hotshot/services/restaurantServ.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShopkeeperVerificationForm extends StatefulWidget {
   const ShopkeeperVerificationForm({super.key});
@@ -114,11 +115,20 @@ class _ShopkeeperVerificationFormState
                         } catch (e) {
                           print(e.toString());
                         }
+
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('isVeriFormSubmitted', true);
+                        await prefs.setString('shopType', 'Eatery');
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainPage()
+                          ),
+                        );
                       }
                     }
                   }
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => MainPage()));
                 },
                 child: const Text(
                   'Submit',

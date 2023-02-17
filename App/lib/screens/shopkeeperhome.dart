@@ -8,6 +8,7 @@ import 'package:hotshot/screens/add_item_page.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/restaurantServ.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
 import '../widgets/sideDrawerShopkeeper.dart';
@@ -39,14 +40,15 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
 
   void getData(BuildContext context)async{
 
-    final tkn = await AuthService().getToken();
+    final tkn = await SharedPrefs().getToken();
 
+    //final tkn = '';
     List<DishInfo>? result = await RestaurantServ().fetchMenu(context, tkn!);
     RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, tkn);
 
     setState(() {
       menu = result ?? [];
-      restName = restaurant.restaurantName;
+      //restName = restaurant.restaurantName;
       isLoading = false;
     });
   }

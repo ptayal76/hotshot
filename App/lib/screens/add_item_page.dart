@@ -65,21 +65,26 @@ class _add_itemState extends State<add_item> {
             //backgroundColor: Colors.green,
             title: const Text(
               "Item details",
-              style: TextStyle(fontSize: 30),
             ),
             centerTitle: true,
             ),
         body: ListView(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 26, top: 36, bottom: 4),
-              child: Text("We are excited to know about your new item!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Text("We are excited to know about your new item!",
+                textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20,)),
+              ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 80, bottom: 40),
-              child: Text("Please fill the following details.",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Text("Please fill the following details.",
+                textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20,)),
+              ),
             ),
             Column(
               children: [
@@ -343,28 +348,32 @@ class _add_itemState extends State<add_item> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton.icon(
-                                  onPressed: getImage1,
-                                  icon: const Icon(Icons.image),
-                                  label: const Text("Pick from gallery"),
-                                  style: ElevatedButton.styleFrom(
-                                      //backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10))),
-                                ),
-                                ElevatedButton.icon(
-                                  onPressed: getImage2,
-                                  icon: const Icon(Icons.camera_alt),
-                                  label: const Text("Capture from camera"),
-                                  style: ElevatedButton.styleFrom(
-                                      //backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10))),
-                                ),
-                              ],
+                            child: SizedBox(
+                              width: double.maxFinite,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  FilledButton.icon(
+                                    onPressed: getImage2,
+                                    icon: const Icon(Icons.camera_alt),
+                                    label: const Text("Capture from camera"),
+                                    style: ElevatedButton.styleFrom(
+                                        //backgroundColor: Colors.green,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10))),
+                                  ),
+                                  FilledButton.icon(
+                                    onPressed: getImage1,
+                                    icon: const Icon(Icons.image),
+                                    label: const Text("Pick from gallery"),
+                                    style: ElevatedButton.styleFrom(
+                                        //backgroundColor: Colors.green,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10))),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Container(

@@ -4,6 +4,7 @@ import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/google_auth.dart';
 import 'package:hotshot/services/microsoft_auth.dart';
 import 'package:hotshot/services/restaurantServ.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'package:hotshot/services/user_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -116,7 +117,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                       loading = true;
                                     });
 
-                                    await AuthService().setIsCustomer(true);
+                                    await SharedPrefs().setIsCustomer(true);
 
                                     final user = await GoogleAuthentication()
                                         .googleSignIn();

@@ -7,26 +7,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:hotshot/services/auth_service.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/error_handling.dart';
 import '../constants/globvar.dart';
 import '../model/dishInfo.dart';
+import 'package:hotshot/constants/constants.dart';
 import '../model/orderInfo.dart';
+import 'package:hotshot/constants/constants.dart';
 
 //String tokenFinal =
 //  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
 
-String tokenFinal =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VlNmQwZWYzZDUwYmI3Y2E0OTcyYjUiLCJpYXQiOjE2NzY1Njk4NzB9.A8X6k6Dx4HFaPdxE5zIRq3IpFD4Z9lrv27s4ILa2jCc';
+// String tokenFinal =
+//     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VlNmQwZWYzZDUwYmI3Y2E0OTcyYjUiLCJpYXQiOjE2NzY1Njk4NzB9.A8X6k6Dx4HFaPdxE5zIRq3IpFD4Z9lrv27s4ILa2jCc';
+
+
 
 class RestaurantServ {
-  String MONGO_URL = 'http://10.0.2.2:8080';
-  void postRestaurant(ShopVerificationInfo info, MyUser? user)async{
-
-                        
-    Map<String,dynamic> body = {
+  //String MONGO_URL = 'http://10.0.2.2:8080';
+  void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
+    Map<String, dynamic> body = {
       'ownerName': user!.fullName,
       'restaurantName': info.shopName,
       'phoneNumber': 'info.phoneNumber',
@@ -55,13 +58,12 @@ class RestaurantServ {
     List<DishInfo> menu = [];
 
     try {
-      //http.Response res = await http.get(Uri.parse(''));
+      http.Response res = await http.get(Uri.parse(''));
       RestInfo restaurant = await fetchRestaurantsbyID(context, restID);
 
       List<DishInfo> result = await fetchDish(context, restaurant.menu);
       return result;
-    }
-    catch(e){
+    } catch (e) {
       print('ERROR FETCHING MENU');
       print(e.toString());
       return null;
@@ -174,34 +176,38 @@ class RestaurantServ {
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
     try {
-      for (int i = 0; i < menu!.length; i++) {
-        http.Response res = await http
-            .get(Uri.parse('${MONGO_URL}/food/dish/${menu[i].toString()}'));
-        var obj = jsonDecode(res.body);
-        // print(obj[0].runtimeType);
-        // print(obj);
-        // print(res.body);
-        // print(res.body.runtimeType);
-        // print(res.body.length);
-        //print("hi1");
-        httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () {
-            dishes.add(DishInfo.fromJson(obj));
-            // for (int i = 0; i < obj.length; i++) {
-            //   // var obj=;
-            //   RestList.add(
-            //       RestInfo.fromJson(obj[i])
-            //   );
-            // }
-
-            // print(dishes);
-            // print("hi");
-          },
-        );
+      if(menu == []){
+        return [];
       }
-      ;
+      else{
+        for (int i = 0; i < menu!.length; i++) {
+          http.Response res = await http
+              .get(Uri.parse('${MONGO_URL}/food/dish/${menu[i].toString()}'));
+          var obj = jsonDecode(res.body);
+          // print(obj[0].runtimeType);
+          // print(obj);
+          // print(res.body);
+          // print(res.body.runtimeType);
+          // print(res.body.length);
+          //print("hi1");
+          httpErrorHandle(
+            response: res,
+            context: context,
+            onSuccess: () {
+              dishes.add(DishInfo.fromJson(obj));
+              // for (int i = 0; i < obj.length; i++) {
+              //   // var obj=;
+              //   RestList.add(
+              //       RestInfo.fromJson(obj[i])
+              //   );
+              // }
+
+              // print(dishes);
+              // print("hi");
+            },
+          );
+        }
+      }
     } catch (e) {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
       print(e);
@@ -213,7 +219,7 @@ class RestaurantServ {
 
   Future<void> postCartOrder(BuildContext context, String dishid) async {
     final user = Provider.of<MyUser?>(context, listen: false);
-    final tkn = await AuthService().getToken();
+    final tkn = await SharedPrefs().getToken();
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
     String token = 'Bearer $tkn'; // +
@@ -280,6 +286,9 @@ class RestaurantServ {
   }
 
   Future<void> removeCartOrder(BuildContext context, String dishid) async {
+
+    final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
+
     // final userProvider = Provider.of(context)
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];

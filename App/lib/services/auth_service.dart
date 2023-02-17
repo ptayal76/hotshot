@@ -43,18 +43,6 @@ class AuthService {
   //   );
   // }
 
-  Future<void> setIsCustomer(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    prefs.setBool('isCustomer', value);
-
-    print('PREFS SAVED');
-  }
-
-  Future<String?> getToken()async{
-    return (await SharedPreferences.getInstance()).getString('token');
-  }
-
   Future register(String email, String password, String fullName) async {
     try {
       UserCredential result = await _authService.createUserWithEmailAndPassword(

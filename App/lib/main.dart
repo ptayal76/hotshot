@@ -8,7 +8,7 @@ import 'package:hotshot/screens/dummy_checkout.dart';
 import 'package:hotshot/screens/home.dart';
 import 'package:hotshot/screens/restHome.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
-import 'package:hotshot/screens/shopkeeper_verification_form.dart';
+import 'package:hotshot/screens/shopkeeper_final_form.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/theme_provider.dart';
 import 'package:hotshot/wrapper.dart';
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                     colorSchemeSeed: const Color(0xff307A59)),
                 themeMode: themeProvider.themeMode,
                 // home: CustomerSignIn(),
-                home: RestHome()),
+                home: Wrapper()),
           );
         });
   }
