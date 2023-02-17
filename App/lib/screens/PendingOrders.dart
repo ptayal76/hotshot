@@ -29,21 +29,21 @@ class _PendHistoryState extends State<PendHistory> {
   fetchAcceptedorder() async {
     // print(dishes.length);
     Orders = await orderServ.fetchAcceptedOrders(context);
-    print(Orders!.length);
-    print('0000');
+    // print(Orders!.length);
+    // print('0000');
     for (int i = 0; i < Orders!.length; i++) {
-      print("hereee");
+      // print("hereee");
 
       dishes.add(convert().listToMap(Orders![i].items));
-      print(dishes.length);
+      // print(dishes.length);
     }
 
     for (int i = 0; i < dishes.length; i++) {
       List<String> dishIdsOrder = [];
-      print("keeyyyy11111111");
+      // print("keeyyyy11111111");
       for (String key in dishes[i].keys.toList()) {
-        print(key);
-        print("keyyyyysssss");
+        // print(key);
+        // print("keyyyyysssss");
         dishIdsOrder.add(key);
       }
       List<DishInfo> x =
@@ -94,7 +94,7 @@ class _PendHistoryState extends State<PendHistory> {
                     height: 10,
                   );
                 },
-                itemCount: 10
+                itemCount: Orders!.length
             ),
 
 

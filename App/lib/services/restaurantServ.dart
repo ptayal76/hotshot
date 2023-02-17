@@ -64,8 +64,8 @@ class RestaurantServ {
       List<DishInfo> result = await fetchDish(context, restaurant.menu);
       return result;
     } catch (e) {
-      print('ERROR FETCHING MENU');
-      print(e.toString());
+      //print('ERROR FETCHING MENU');
+      //print(e.toString());
       return null;
     }
   }
@@ -224,7 +224,7 @@ class RestaurantServ {
     List<DishInfo> dishes = [];
     String token = 'Bearer $tkn'; // +
 
-    print('TOKEN = $tkn');
+   // print('TOKEN = $tkn');
     //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){
