@@ -28,6 +28,12 @@ router.get('/food/rest', async (req, res) => {
     if (req.query.status) obj.status = req.query.status
     if (req.query.rating) obj.rating = { $gte: req.query.rating }
     if (req.query.locationCategory) obj.locationCategory = req.query.locationCategory;
+    if(req.query.name)
+    {
+      obj.restaurantName={
+        "$regex":`${req.query.name}`,"$options":'i'
+      }
+    }
     const restaurants = await Restaurant.find(obj);
     return res.json(restaurants);
   } catch (err) {
@@ -75,7 +81,31 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
     return res.status(400).send(err.message);
   }
 });
-
+//login for restaurant 
+router.post('/food/rest/login',async (req,res)=>{
+  try{
+  const restaurant=await Restaurant.findOne({email:req.body.email});
+  if(!restaurant)
+  {
+    return res.status(403).json({message:"You are not registered"});
+  }
+  else
+  {
+    jwt.sign(
+      { isowner: true, id: restaurant._id },
+      process.env.JWT_SEC,
+      (err, token) => {
+        res.header('token', `${token}`);
+        return res.json(restaurant);
+      }
+    );
+  }
+  }
+  catch(err)
+  {
+    res.status(403).send(err.message);
+  }
+})
 //UPDATE A RESTAURANT BY ID
 router.put(
   '/food/rest/:restid',
