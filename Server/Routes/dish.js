@@ -21,9 +21,9 @@ router.get('/food/dish', async (req, res) => {
         if(req.query.category)obj.category=req.query.category;
         if(req.query.price)obj.price={$lte:req.query.price };
         const dishes = await Dish.find(obj);
-        res.status(200).json(dishes);
+        return res.status(200).json(dishes);
     } catch (err) {
-        res.status(400).json(err);
+        return res.status(400).json(err);
     }
 })
 
@@ -32,24 +32,11 @@ router.get('/food/dish/:dishId', async (req, res) => {
     try {
         const id = req.params.dishId;
         const dish = await Dish.findById(id);
-        res.status(200).json(dish);
+        if(!dish){
+            return res.status(400).json('No dish by this ID exists!');
+        }
+        return res.status(200).json(dish);
     } catch (err) {
-        
-        res.status(400).json(err);
-    }
-})
-
-//GET RESTAURANTS BY DISH
-router.get('/food/dish/rest/:dishId', async (req, res) => {
-    try{
-        const id = req.params.dishId;
-        const dish = await Dish.findById(id);
-        const restid = dish.Rest_Id;
-        const obj = {_id: restid}
-        console.log(obj);
-        const restaurants = await Restaurant.find({obj});
-        res.status(200).json(restaurants._id);
-    } catch(err) {
         res.status(400).json(err);
     }
 })
@@ -68,9 +55,9 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
         const restaurant = await Owner.findById(req.restaurant);
         restaurant.menu.push(savedDish);
         await restaurant.save();
-        res.status(200).json(savedDish);
+        return res.status(200).json(savedDish);
     } catch (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 })
 
@@ -78,11 +65,14 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
 router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res) => {
     try {
         const dish = await Dish.findByIdAndUpdate(req.params.dishId, req.body);
+        if(!dish){
+            return res.status(400).json('Wrong DishId');
+        }
         if (dish.Rest_Id == req.restaurant) {
-            res.status(200).json(dish);
+            return res.status(200).json(dish);
         }
         else {
-            res.sendStatus(400);
+            return res.status(400).json('Wrong restaurant!');
         }
     } catch (err) {
         res.status(403).json(err);
@@ -93,12 +83,15 @@ router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res
 router.delete('/food/dish/:dish_id', verifyToken, authenticateOwner, async (req, res) => {
     try {
         const dish = await Dish.findById(req.params.dish_id);
+        if(!dish){
+            return res.status(400).json('Wrong DishId');
+        }
         if (dish && dish.Rest_Id == req.restaurant) {
             await Dish.findByIdAndDelete(req.params.dish_id);
-            res.status(200).json(dish);
+            return res.status(200).json(dish);
         }
         else {
-            res.sendStatus(400);
+            return res.status(400).json("Couldn't delete dish!");
         }
     } catch (err) {
         res.status(403).json(err);

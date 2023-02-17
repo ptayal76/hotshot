@@ -23,10 +23,13 @@ router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req,
     try {
         const id = req.params.restId;
         const restaurant = await Restaurant.findById(id);
+        if(!restaurant){
+            return res.status(400).json('Wrong RestaurantId');
+        }
         const user = await User.findById(req.user);
         user.favRest.push(restaurant);
         await user.save();
-        res.status(200).json('Added to favorites!');
+        return res.status(200).json('Added to favorites!');
     } catch (err) {
         return res.status(400).send(err.message);
     }
@@ -34,7 +37,6 @@ router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req,
 
 //LOGIN OR SIGNUP
 router.post('/login', async (req, res) => {
-    console.log(req.body);
     try {
         var existingUser = await User.findOne({ email: req.body.email });
         if (!existingUser) {
@@ -51,10 +53,8 @@ router.post('/login', async (req, res) => {
             }
         );
     } catch (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 })
-
-
 
 module.exports = router;
