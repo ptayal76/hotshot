@@ -198,6 +198,16 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                               ]),
                         ],
                       ),
+                      const SizedBox(
+                        height: 60,
+                      ),
+                      const Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          'Let\'s Get Started! ->',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
                     ],
                   ),
                 ),

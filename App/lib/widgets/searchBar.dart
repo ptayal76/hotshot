@@ -25,7 +25,9 @@ class SearchBar extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.search,size: 30),
-            onPressed: () {},
+            onPressed: () {
+
+            },
           ),
           IconButton(
             icon: const Icon(Icons.filter_alt_outlined,size: 30),

@@ -49,11 +49,11 @@ class MyApp extends StatelessWidget {
                     colorSchemeSeed: const Color(0xff307A59)),
                 darkTheme: ThemeData(
                     useMaterial3: true,
-                    brightness: Brightness.dark,
+                    brightness: Brightness.light,
                     colorSchemeSeed: const Color(0xff307A59)),
                 themeMode: themeProvider.themeMode,
                 // home: CustomerSignIn(),
-                home: StatMainPage()),
+                home: Wrapper()),
           );
         });
   }

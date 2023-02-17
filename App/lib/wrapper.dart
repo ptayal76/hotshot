@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/getstarted.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/authentication/customer/customer_wrapper.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_wrapper.dart';

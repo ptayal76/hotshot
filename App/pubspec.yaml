@@ -57,6 +57,7 @@ dependencies:
   shared_preferences: ^2.0.17
   qr_code_scanner: ^1.0.1
   swipe_to: ^1.0.2
+  carousel_slider: ^4.2.1
 
 
 dev_dependencies:
