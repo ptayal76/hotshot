@@ -17,7 +17,7 @@ const restaurant = new schema({
     },
     email: {
         required: true,
-        type: String
+        type: String,
     },
     menu: [
         {

@@ -18,6 +18,7 @@ const orderRoute = require('./Routes/order');
 const stationaryRoutes = require('./Routes/stationary');
 const otherShopRoutes = require('./Routes/otherShop');
 const userRoutes = require('./Routes/user');
+const orderStatRoutes = require('./Routes/statOrder');
 
 //Node.js MongoDB connection
 mongoose
@@ -36,6 +37,7 @@ app.use(orderRoute);
 app.use(stationaryRoutes);
 app.use(otherShopRoutes);
 app.use(userRoutes);
+app.use(orderStatRoutes);
 
 app.listen(process.env.PORT || 8080, () => {
   console.log('Backend server is running fine!');

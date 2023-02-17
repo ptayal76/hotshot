@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const Restaurant = require('../Models/Restaurant');
 const User=require("../Models/User")
 const Owner = Restaurant;
+const Stationary = require('../Models/Stationary')
 
 const verifyToken = (req, res, next) => {
     const bearerHeader = req.headers['authorization'];
@@ -67,6 +68,30 @@ const authenticateOwner = async (req, res, next) => {
     })
 }
 
+const authenticateStationaryOwner = async (req, res, next) => {
+    jwt.verify(req.token, process.env.JWT_SEC, async (err, authData) => {
+        if (err) {
+            res.status(403).json('Error!');
+        } else {
+            console.log(authData)
+            if (!authData.isowner) {
+                res.status(403).json('Not auth owner!');
+            }
+            else {
+                const owner = await Stationary.findById(authData.id);
+                if (!owner) {
+                    res.status(403).json('Unauthenticated owner!');
+                }
+                else {
+                    req.restaurant = authData.id;
+                    req.isowner = authData.isowner;
+                    next();
+                }
+            }
+        }
+    })
+}
+
 const authorizeOwner = (req, res, next) => {
     if (req.restaurant === req.params.restid) {
         next();
@@ -115,5 +140,6 @@ module.exports = {
     authenticateUser,
     authorizeUser,
     restOrder,
-    authenticate
+    authenticate,
+    authenticateStationaryOwner
 };
