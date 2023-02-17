@@ -6,6 +6,7 @@ import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/screens/add_item_page.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/screens/stat_shopkeeper_main_page.dart';
 import 'package:hotshot/services/auth_service.dart';
 import 'package:hotshot/services/restaurantServ.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
+import 'package:swipe_to/swipe_to.dart';
 
 class StatShopkeeperHomePage extends StatefulWidget {
   const StatShopkeeperHomePage({Key? key}) : super(key: key);
@@ -31,9 +33,13 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
   var textEditingController = TextEditingController();
   int index = 0;
 
-  bool isLoading = true;
-
+  // bool isLoading = true;
+  // final TextEditingController pricecontroller=TextEditingController();
   List<bool> isSelected = [true, false];
+  List<String> categories=['Colored A4', 'Colored A3', 'Black and White A4', 'Black and White A3', 'Poster', 'Certificate', 'PVC Print', ];
+  List<int> prices= [0,0,0,0,0,0,0];
+  List<bool> available= [false, false, false, false, false, false, false, ];
+  List<TextEditingController>pricecontroller=[TextEditingController(),TextEditingController(),TextEditingController(),TextEditingController(),TextEditingController(),TextEditingController(),TextEditingController(),];
 
   List<DishInfo> menu = [];
   String restName = '';
@@ -51,6 +57,39 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
   //     isLoading = false;
   //   });
   // }
+  Future<void> _displayTextInputDialog(BuildContext context,int index) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Enter new price (in ₹)'),
+          content: TextField(
+            keyboardType: TextInputType.number,
+            controller: pricecontroller[index],
+            decoration: InputDecoration(hintText: "Write here"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                print(pricecontroller[index].text);
+                Navigator.pop(context);
+                setState(() {
+                  
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -88,7 +127,7 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return MyQR();
+                            return MyQR2();
                           },
                         ));
         return;
@@ -134,233 +173,98 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
           )
         ),
       ),
-      drawer: MyShopkeeperDrawer(),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(height: 10),
-          // Container(
-          //   height: 60,
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(10),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         // AnimSearchBar(
-          //         //   width: 250,
-          //         //   textController: textEditingController,
-          //         //   onSuffixTap: () {},
-          //         //   onSubmitted: (p0) => "",
-          //         // ),
-          //         Align(
-          //           alignment: Alignment.topRight,
-          //           child: ElevatedButton.icon(
-          //               onPressed: () {
-          //                 Navigator.push(
-          //                                 context,
-          //                                 MaterialPageRoute(
-          //                                   builder: (context) => add_item(),
-          //                                 ));
-
-
-          //               },
-          //               icon: const Icon(Icons.add),
-          //               label: const Text('Add Items')),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-
-          // ElevatedButton.icon(
-          //   style: ElevatedButton.styleFrom(
-          //     // backgroundColor: greenColor,
-          //     minimumSize: Size(80, 50),
-          //   ),
-          //   onPressed: () {
-          //     Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //             builder: (context) => ShopkeeperOrdersScreen()));
-          //   },
-          //   // label: modified_text(text: 'Current Orders',color: blackColor,size: 20),
-          //   label: const Text('Current Orders',
-          //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-
-          //   icon: const Icon(Icons.food_bank),
-          // ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: menu.length,
-              itemBuilder:  (context, index){
-              bool imgavail=false;
-              menu[index].pic==null? imgavail=false:imgavail=true;
-              List<int> bufferInt= (imgavail)?menu[index].pic!.map((e) => e as int).toList():[];
-              Image img=(imgavail)?Image.memory(Uint8List.fromList(bufferInt)):Image.asset('assets/images/restdefault.webp');
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
+      drawer: MyNavigationDrawer(),
+      body: ListView.builder(
+            itemCount: 8,
+            itemBuilder:  (context, index){
+            return (index!=7)?SwipeTo(
+              onLeftSwipe: () {
+                setState(() {
+                  available[index]=false;
+                });
+              },
+              onRightSwipe: () {
+                setState(() {
+                  available[index]=true;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
-                      Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.transparent),
-                          image: DecorationImage(
-                            image: img.image,
-                            // colorFilter: (menu[index].status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: const BorderSide(
-                                  color: Colors.white)),
-                          color:
-                              (menu[index].InStock! ? Colors.green : Colors.red),
-                          child: InkWell(
-                              onTap: () {
-                                // instock = !instock;
-                                // itemc++;
-                                // if (itemc == 1) {
-                                //   controller!.forward();
-                                // }
-                                setState(() {});
-                              },
-                              child: (menu[index].InStock!
-                                  ? const Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: Text(
-                                        "In stock",
-                                        style: TextStyle(
-                                            //fontSize: 15,
-                                            // color: Colors.white,
-                                            fontWeight:
-                                                FontWeight.w500),
-                                      ),
-                                    )
-                                  : const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Out of stock",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            // color: Colors.white,
-                                            fontWeight:
-                                                FontWeight.w500),
-                                      ),
-                                    ))))
-                    ]),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12),
-                                child: Stack(
-                                alignment: Alignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.crop_square_sharp,
-                                      color: (menu[index].category == 'veg')
-                                          ? Colors.green
-                                          : Colors.red,
-                                      size: 18,
-                                    ),
-                                    Icon(Icons.circle,
-                                        color: (menu[index].category == 'veg')
-                                            ? Colors.green
-                                            : Colors.red,
-                                        size: 9),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color:
-                                        Color.fromARGB(255, 244, 100, 56),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(6)),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 2.0, horizontal: 6.0),
-                                    child: Text(
-                                      menu[index].suggestedTime ?? 'null',
-                                      style: const TextStyle(
-                                          // color: Colors.white,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        Icon(available[index]?Icons.check:Icons.close),
                         Padding(
                           padding:
                               const EdgeInsets.only(left: 12),
                           child: Text(
-                            menu[index].name!,
+                            categories[index],
                             style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
                               ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12),
-                              child: Text(
-                                '₹${menu[index].price}',
-                                style: const TextStyle(
-                                    fontSize: 19, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.delete),
-                            ),
-                          ],
-                        )
                       ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(((pricecontroller[index].text=='')?"₹0":"₹${pricecontroller[index].text}"),style: TextStyle(fontSize: 25)),
+                        IconButton(
+                          onPressed: () {
+                            _displayTextInputDialog(context,index);
+                          },
+                          icon: const Icon(Icons.edit),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ):
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Swipe right to make the category available.",style: TextStyle(fontWeight: FontWeight.w500),),
+                      Text("("),
+                      Icon(Icons.check,size: 18,),
+                      Text(")"),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Swipe left to make the category unavailable.",style: TextStyle(fontWeight: FontWeight.w500),),
+                      Text("("),
+                      Icon(Icons.close,size: 18,),
+                      Text(")"),
+                    ],
                   ),
                 ],
-              );
-              }
+              ),
             )
+            ;
+            }
           )
-        ]
-      ),
     );
   }
 }
 
-class MyQR extends StatefulWidget {
-  const MyQR({Key? key}) : super(key: key);
+class MyQR2 extends StatefulWidget {
+  const MyQR2({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _MyQRState();
+  State<StatefulWidget> createState() => _MyQR2State();
 }
 
-class _MyQRState extends State<MyQR> {
+class _MyQR2State extends State<MyQR2> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -401,7 +305,7 @@ class _MyQRState extends State<MyQR> {
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
+      onQRViewCreated: _onQRView2Created,
       overlay: QrScannerOverlayShape(
           borderColor: Colors.white,
           borderRadius: 0,
@@ -412,7 +316,7 @@ class _MyQRState extends State<MyQR> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRView2Created(QRViewController controller) {
     setState(() {
       this.controller = controller;
       controller.resumeCamera();
@@ -468,12 +372,13 @@ class _MyQRState extends State<MyQR> {
   //  }
    ScaffoldMessenger.of(context).showSnackBar(snack);
       //Navigator.of(context).pop(true);
-        dispose();
+        controller.stopCamera();
+        //dispose();
         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return MainPage();
+                            return StatMainPage();
                           },
                         ));
         return;

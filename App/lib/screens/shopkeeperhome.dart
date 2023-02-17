@@ -469,7 +469,8 @@ class _MyQRState extends State<MyQR> {
   //  }
    ScaffoldMessenger.of(context).showSnackBar(snack);
       //Navigator.of(context).pop(true);
-        dispose();
+        //dispose();
+        controller.stopCamera();
         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
