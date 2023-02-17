@@ -122,6 +122,7 @@ class _checkoutState extends State<checkout> {
       timeInSecForIosWeb: 4,
     );
     Navigator.pop(context);
+    Navigator.pop(context);
   }
   catch(e)
     {
