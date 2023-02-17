@@ -30,4 +30,6 @@ MyUser dummyUser = MyUser(
     mobile: '1234567890',
     profile: '',
     uid: '');
-String MONGO_URL = 'http://192.168.1.106:8080';
+
+
+const MONGO_URL = 'http://192.168.1.106:8080';
