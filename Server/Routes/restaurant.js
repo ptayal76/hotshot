@@ -291,7 +291,7 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
               );
           }
         );
-        await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+         streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
       }
     }
   } catch (err) {

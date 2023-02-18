@@ -86,7 +86,7 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
                     return res.status(200).json(newDish);
                 }
             );
-            await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+             streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
         
         
         
