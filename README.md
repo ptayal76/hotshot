@@ -25,8 +25,8 @@ Hotshot is an app where you can search and discover local restaurants' status, p
 
 # Screenshots
 
-![App Screenshot](![image](https://user-images.githubusercontent.com/106883186/219885031-10d77365-0451-4bc2-a83d-20e3b1df470a.png))
-![App Screenshot](![image](https://user-images.githubusercontent.com/106883186/219885099-635ffca7-24e0-4343-bcde-50c4278ece1b.png))
+![image](https://user-images.githubusercontent.com/106883186/219885031-10d77365-0451-4bc2-a83d-20e3b1df470a.png)
+![image](https://user-images.githubusercontent.com/106883186/219885099-635ffca7-24e0-4343-bcde-50c4278ece1b.png)
 
 
 
