@@ -14,7 +14,7 @@ import '../widgets/buttons1.dart';
 
 class RestaurantPage extends StatefulWidget {
   final String data;
-  final Image image;
+  final String image;
   const RestaurantPage({Key? key, required this.data, required this.image}) : super(key: key);
   @override
   State<StatefulWidget> createState() => RestaurantPageState();
@@ -114,12 +114,14 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                   children: [
                     Container(
                       child: Image(
-                          image: widget.image.image,
+                          image: NetworkImage(widget.image),
         // colorFilter: (restaurant.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation)
                       ),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: const Icon(
                           Icons.arrow_back,
                           color: Colors.white,
@@ -133,7 +135,10 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                             color: Colors.green,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10))),
+                                topRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)
+                            )),
                         child: Row(
                           children: const [
                             Padding(
@@ -155,33 +160,33 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: 38,
-                      right: 10,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
-                        child: Column(
-                          children: const [
-                            Text("124"),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 2.0),
-                              child: Text("Reviews"),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 38,
+                    //   right: 10,
+                    //   child: Container(
+                    //     decoration: const BoxDecoration(
+                    //         color: Colors.white,
+                    //         borderRadius: BorderRadius.only(
+                    //             bottomLeft: Radius.circular(10),
+                    //             bottomRight: Radius.circular(10))),
+                    //     child: Column(
+                    //       children: const [
+                    //         Text("124"),
+                    //         Padding(
+                    //           padding: EdgeInsets.only(
+                    //               left: 8.0, right: 8.0, bottom: 2.0),
+                    //           child: Text("Reviews"),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                      Positioned(
                         left: 10,
-                        bottom: 20,
+                        bottom: 25,
                         child: BlurryContainer(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          blur: 4,
+                          blur: 0,
                           color: Colors.transparent,
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
@@ -192,17 +197,17 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                           ),
                         )),
                      Positioned(
-                        right: 8,
+                        left: 10,
                         bottom: 6,
                         child: BlurryContainer(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          blur: 4,
+                          blur: 0,
                           color: Colors.transparent,
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
                               restaurant.location,
-                              style: TextStyle(fontSize: 20, color: Colors.white),
+                              style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ),
                         )),
@@ -231,48 +236,48 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                       }
                         },),
                         ),
-                        Container(
-                          child: Column(
-                            children: [
-                              ClipOval(
-                                child: Container(
-                                  padding: EdgeInsets.all(1.5),
-                                  color: Colors.blue,
-                                  child: ClipOval(
-                                    child: Container(
-                                      color: Colors.white,
-                                      padding: const EdgeInsets.all(0.1),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            isfav = !isfav;
-                                          });
-                                        },
-                                        icon: Icon(
-                                          isfav
-                                              ? CupertinoIcons.heart_fill
-                                              : CupertinoIcons.heart,
-                                          color: isfav ? Colors.red : Colors.blue,
-                                          size: 28,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Text(
-                                  "FAVOURITE",
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 17),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   child: Column(
+                        //     children: [
+                        //       ClipOval(
+                        //         child: Container(
+                        //           padding: EdgeInsets.all(1.5),
+                        //           color: Colors.blue,
+                        //           child: ClipOval(
+                        //             child: Container(
+                        //               color: Colors.white,
+                        //               padding: const EdgeInsets.all(0.1),
+                        //               child: IconButton(
+                        //                 onPressed: () {
+                        //                   setState(() {
+                        //                     isfav = !isfav;
+                        //                   });
+                        //                 },
+                        //                 icon: Icon(
+                        //                   isfav
+                        //                       ? CupertinoIcons.heart_fill
+                        //                       : CupertinoIcons.heart,
+                        //                   color: isfav ? Colors.red : Colors.blue,
+                        //                   size: 28,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //       const Padding(
+                        //         padding: EdgeInsets.all(4.0),
+                        //         child: Text(
+                        //           "FAVOURITE",
+                        //           style: TextStyle(
+                        //               color: Colors.blue,
+                        //               fontWeight: FontWeight.w700,
+                        //               fontSize: 17),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -315,39 +320,39 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
-                    color: Color.fromARGB(255, 225, 216, 240),
+                    // color: Color.fromARGB(255, 225, 216, 240),
                     height: 45,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 10),
-                          child: DropdownButton(
-                            // Initial Value
-                            value: dropdownvalue,
-
-                            // Down Arrow Icon
-                            icon: const Icon(Icons.keyboard_arrow_down),
-
-                            // Array list of items
-                            items: items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(
-                                  items,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              );
-                            }).toList(),
-                            // After selecting the desired option,it will
-                            // change button value to selected value
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownvalue = newValue!;
-                              });
-                            },
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 20, right: 10),
+                        //   child: DropdownButton(
+                        //     // Initial Value
+                        //     value: dropdownvalue,
+                        //
+                        //     // Down Arrow Icon
+                        //     icon: const Icon(Icons.keyboard_arrow_down),
+                        //
+                        //     // Array list of items
+                        //     items: items.map((String items) {
+                        //       return DropdownMenuItem(
+                        //         value: items,
+                        //         child: Text(
+                        //           items,
+                        //           style: TextStyle(fontSize: 20),
+                        //         ),
+                        //       );
+                        //     }).toList(),
+                        //     // After selecting the desired option,it will
+                        //     // change button value to selected value
+                        //     onChanged: (String? newValue) {
+                        //       setState(() {
+                        //         dropdownvalue = newValue!;
+                        //       });
+                        //     },
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: ElevatedButton(
@@ -528,10 +533,33 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(left: 12),
-                                          child: Image.asset(
-                                            "assets/Veg.png",
-                                            height: 20,
-                                          ),
+                                          child: Wrap(
+                                              crossAxisAlignment: WrapCrossAlignment.center,
+                                              children: [
+                                                // Icon(Icons.location_pin, size: 12, color: Colors.white),
+                                                Stack(
+                                                  alignment: Alignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.crop_square_sharp,
+                                                      color: (dishes![index].category == 'veg')
+                                                          ? Colors.green
+                                                          : Colors.red,
+                                                      size: 18,
+                                                    ),
+                                                    Icon(Icons.circle,
+                                                        color: (dishes![index].category == 'veg')
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                        size: 7),
+                                                  ],
+                                                ),
+
+                                              ]),
+                                          // child: Image.asset(
+                                          //   "assets/Veg.png",
+                                          //   height: 20,
+                                          // ),
                                         ),
                                         Padding(
                                           padding:
@@ -547,7 +575,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                               padding: const EdgeInsets.symmetric(
                                                   vertical: 2.0, horizontal: 6.0),
                                               child: Text(
-                                                "Dinner",
+                                                dishes![index].suggestedTime.toString(),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.w500),
@@ -572,7 +600,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                     padding:
                                         const EdgeInsets.only(left: 12, right: 12),
                                     child: Text(
-                                      "₹${price[index]}",
+                                      "₹${dishes![index].price}",
                                       style: TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.w700),

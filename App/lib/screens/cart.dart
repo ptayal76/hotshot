@@ -21,11 +21,16 @@ class cart extends StatefulWidget {
 
 class _cartState extends State<cart> {
   List<Order>? Orders;
-  List<Map<String, int>> dishes = [];
-  List<Map<DishInfo, int>> fetchedDishes = [];
+
+  // List<Map<DishInfo, int>> fetchedDishes = [];
   final OrderServ orderServ = OrderServ();
-  fetchusercart() async {
+  List<Map<DishInfo, int>> fetchedDishes = [];
+  // late Future<List<Map<DishInfo, int>>> datafuture;
+  Future<List<Map<DishInfo, int>>> fetchusercart() async {
     // print(dishes.length);
+    List<Map<DishInfo, int>> fetchedDisheslocal = [];
+    List<Map<String, int>> dishes = [];
+
     Orders = await orderServ.fetchUserCart(context);
     print(Orders!.length);
     print('0000');
@@ -50,10 +55,14 @@ class _cartState extends State<cart> {
       for (int j = 0; j < x.length; j++) {
         mp[x[j]] = dishes[i][x[j].id]!;
       }
-      fetchedDishes.add(mp);
+      fetchedDisheslocal.add(mp);
     }
+    setState(() {
+        fetchedDishes=fetchedDisheslocal;
+    });
+    return fetchedDishes;
     // fetchDishesCart();
-    setState(() {});
+
   }
 
   // Future<List<DishInfo>> fetchDishesCart(List<String> items) async {
@@ -78,36 +87,111 @@ class _cartState extends State<cart> {
         backgroundColor: const Color(0xff307A59),
         centerTitle: true,
       ),
-      body: ListView(children: [
-        SizedBox(
-            height: 40,
-            child: Center(
-                child: Text(
-              'Your Orders',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ))),
-        Lottie.asset('assets/lottie/cart.json', height: 200, width: 50),
-        Orders == null
-            ? Loader()
-            : ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 2),
-                itemBuilder: (context, index) {
-                  return CartCard(
-                    orders: Orders![index],
-                    mp: fetchedDishes[index],
-                  ); //(data: widget.stat[index]
-                },
-                shrinkWrap: true,
-                //scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    height: 1,
-                  );
-                },
-                itemCount: Orders!.length,
-              ),
-      ]),
+    //   floatingActionButton: FloatingActionButton(
+    //     child: Icon(Icons.refresh),
+    //     onPressed: () async =>
+    //     {
+    //       await fetchusercart(),
+    //       // setState(() {}),
+    // }
+    //   ),
+      body: RefreshIndicator(
+        onRefresh: fetchusercart,
+        child: Column(children: [
+          SizedBox(
+              height: 40,
+              child: Center(
+                  child: Text(
+                'Your Orders',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ))),
+          // Lottie.asset('assets/lottie/cart.json', height: 200, width: 50),
+         (Orders==null)?Loader():ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 2),
+                  itemBuilder: (context, index) {
+
+                    print(Orders!.length);
+                    // print(Orders![2]);
+                    return CartCard(
+                      orders: Orders![index],
+                      mp: fetchedDishes![index],
+                    ); //(data: widget.stat[index]
+                  },
+                  shrinkWrap: true,
+                  //scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: 1,
+                    );
+                  },
+                  itemCount: (fetchedDishes==null)?0:fetchedDishes!.length,
+                )
+                // FutureBuilder(
+                //   future: fetchusercart(),
+                //   builder: (context,snapshot){
+                //     switch (snapshot.connectionState){
+                //       case ConnectionState.none:
+                //         {return Text('none');}
+                //       case ConnectionState.active:
+                //         return Text('active');
+                //       case ConnectionState.waiting:
+                //         return Text('waiting');
+                //       case ConnectionState.done:
+                //         if (snapshot.hasData) {
+                //           // build your widget tree that displays the fetched data here
+                //           ListView.separated(
+                //             padding: EdgeInsets.symmetric(horizontal: 2),
+                //             itemBuilder: (context, index) {
+                //               print(Orders!.length);
+                //               print(Orders![2]);
+                //               return CartCard(
+                //                 orders: Orders![index],
+                //                 mp: snapshot.data![index],
+                //               ); //(data: widget.stat[index]
+                //             },
+                //             shrinkWrap: true,
+                //             //scrollDirection: Axis.vertical,
+                //             physics: BouncingScrollPhysics(),
+                //             separatorBuilder: (context, index) {
+                //               return SizedBox(
+                //                 height: 1,
+                //               );
+                //             },
+                //             itemCount: snapshot.data!.length,
+                //           );
+                //         } else if (snapshot.hasError) {
+                //           // handle the error here
+                //           Text("error");
+                //         }
+                //         return Loader();
+                //     }
+                //
+                //   },
+                //   // child: ListView.separated(
+                //   //     padding: EdgeInsets.symmetric(horizontal: 2),
+                //   //     itemBuilder: (context, index) {
+                //   //       print(Orders!.length);
+                //   //       print(Orders![2]);
+                //   //       return CartCard(
+                //   //         orders: Orders![index],
+                //   //         mp: fetchedDishes[index],
+                //   //       ); //(data: widget.stat[index]
+                //   //     },
+                //   //     shrinkWrap: true,
+                //   //     //scrollDirection: Axis.vertical,
+                //   //     physics: BouncingScrollPhysics(),
+                //   //     separatorBuilder: (context, index) {
+                //   //       return SizedBox(
+                //   //         height: 1,
+                //   //       );
+                //   //     },
+                //   //     itemCount: fetchedDishes!.length,
+                //   //   ),
+                // ),
+
+        ]),
+      ),
     );
   }
 }

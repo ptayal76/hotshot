@@ -1,3 +1,4 @@
+// import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -16,16 +17,15 @@ class _RestCardState extends State<RestCard> {
   @override
   Widget build(BuildContext context) {
     bool imgavail=false;
-    widget.data.pic==null? imgavail=false:imgavail=true;
-    List<int> bufferInt= (imgavail)?widget.data.pic!.map((e) => e as int).toList():[];
+    widget.data.pic==null? widget.data.pic='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Domino%27s_pizza_logo.svg/800px-Domino%27s_pizza_logo.svg.png':imgavail=true;    // List<int> bufferInt= (imgavail)?widget.data.pic!.map((e) => e as int).toList():[];
     
 
-    Image img=(imgavail)?Image.memory(Uint8List.fromList(bufferInt)):Image.asset('assets/images/restdefault.webp');
+    // Image img=(imgavail)?Image.memory(Uint8List.fromList(bufferInt)):Image.asset('assets/images/restdefault.webp');
     var fav=false;
     return GestureDetector(
       onTap: () {
         (widget.data.status=='on')?
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> RestaurantPage(data: widget.data.id,image: img,)) ): null;
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> RestaurantPage(data: widget.data.id,image: widget.data.pic!,)) ): null;
       },
       // Card Wrapper
       child:
@@ -40,7 +40,7 @@ class _RestCardState extends State<RestCard> {
             color: Colors.grey,
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: img.image,
+              image: NetworkImage(widget.data.pic!),
                colorFilter: (widget.data.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
               fit: BoxFit.cover,
             ),

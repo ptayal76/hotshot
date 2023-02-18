@@ -94,7 +94,7 @@ class _PendHistoryState extends State<PendHistory> {
                     height: 10,
                   );
                 },
-                itemCount: Orders!.length
+                itemCount: (Orders==null)?0:Orders!.length
             ),
 
 

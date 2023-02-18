@@ -26,11 +26,12 @@ class _OrdHistoryState extends State<OrdHistory> {
   List<Map<String, int>> dishes = [];
   List<Map<DishInfo, int>> fetchedDishes = [];
   final OrderServ orderServ = OrderServ();
-  fetchcompletedorder() async {
+  fetchorderhistory() async {
     // print(dishes.length);
     Orders = await orderServ.fetchCompletedOrders(context);
-    // print(Orders!.length);
-    // print('0000');
+    Orders?.addAll(await orderServ.fetchRejectedOrders(context));
+    print(Orders!.length);
+    print('0000');
     for (int i = 0; i < Orders!.length; i++) {
       // print("hereee");
 
@@ -60,7 +61,7 @@ class _OrdHistoryState extends State<OrdHistory> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchcompletedorder();
+    fetchorderhistory();
     // _tabController = TabController(vsync: this, length: 3);
   }
   @override

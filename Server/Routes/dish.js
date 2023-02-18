@@ -20,6 +20,7 @@ router.get('/food/dish', async (req, res) => {
         var obj={};
         if(req.query.category)obj.category=req.query.category;
         if(req.query.price)obj.price={$lte:req.query.price };
+        if(req.query.suggestedTime)obj.suggestedTime=req.query.suggestedTime;
         const dishes = await Dish.find(obj);
         return res.status(200).json(dishes);
     } catch (err) {
