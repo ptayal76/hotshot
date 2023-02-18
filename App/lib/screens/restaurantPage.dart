@@ -190,8 +190,8 @@ class RestaurantPageState extends State<RestaurantPage>
                               left: 10,
                               bottom: 25,
                               child: BlurryContainer(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8.0)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(8.0)),
                                 blur: 0,
                                 color: Colors.transparent,
                                 child: Padding(
@@ -207,8 +207,8 @@ class RestaurantPageState extends State<RestaurantPage>
                               left: 10,
                               bottom: 6,
                               child: BlurryContainer(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8.0)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(8.0)),
                                 blur: 0,
                                 color: Colors.transparent,
                                 child: Padding(
@@ -297,7 +297,8 @@ class RestaurantPageState extends State<RestaurantPage>
                                   text: "CONTACT",
                                   ic: Icons.phone,
                                   onTap: () async {
-                                    Uri phoneno = Uri.parse('tel:' + phone);
+                                    Uri phoneno = Uri.parse(
+                                        'tel:' + restaurant.phoneNumber);
                                     if (await launchUrl(phoneno)) {
                                     } else {
                                       print("error calling log");
@@ -311,14 +312,17 @@ class RestaurantPageState extends State<RestaurantPage>
                                     ClipOval(
                                       child: Container(
                                         padding: const EdgeInsets.all(1.5),
-                                        color:
-                                            const Color.fromARGB(255, 239, 102, 105),
+                                        color: const Color.fromARGB(
+                                            255, 239, 102, 105),
                                         child: ClipOval(
                                           child: Container(
                                             color: Colors.white,
                                             padding: const EdgeInsets.all(0.1),
                                             child: IconButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                await RestaurantServ()
+                                                    .FavoriteRestaurant(
+                                                        context, widget.data);
                                                 setState(() {
                                                   isfav = !isfav;
                                                 });
@@ -364,14 +368,15 @@ class RestaurantPageState extends State<RestaurantPage>
                                       horizontal: 56.0),
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      x = await Navigator.push(
+                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const RateMe(),
+                                            builder: (context) =>
+                                                RateMe(restid: widget.data),
                                           ));
-                                      x[1] = false;
-                                      await RestaurantServ().RateRestaurant(
-                                          context, widget.data, x[0]);
+                                      // x[1] = false;
+                                      // await RestaurantServ().RateRestaurant(
+                                      //     context, widget.data, x[0]);
                                       // israted = (await Navigator.push(
                                       //             context,
                                       //             MaterialPageRoute(
@@ -385,8 +390,8 @@ class RestaurantPageState extends State<RestaurantPage>
                                       // print(x[0]);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 239, 102, 105),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 239, 102, 105),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(16.0))),
@@ -663,7 +668,8 @@ class RestaurantPageState extends State<RestaurantPage>
                                                 padding: const EdgeInsets.only(
                                                     left: 10),
                                                 child: Container(
-                                                  decoration: const BoxDecoration(
+                                                  decoration:
+                                                      const BoxDecoration(
                                                     color: Color.fromARGB(
                                                         255, 244, 100, 56),
                                                     borderRadius:
@@ -768,8 +774,7 @@ class RestaurantPageState extends State<RestaurantPage>
                                                         children: [
                                                           const Padding(
                                                             padding:
-                                                                EdgeInsets
-                                                                        .only(
+                                                                EdgeInsets.only(
                                                                     left: 20,
                                                                     right: 6,
                                                                     top: 7,
@@ -787,8 +792,7 @@ class RestaurantPageState extends State<RestaurantPage>
                                                           ),
                                                           const Padding(
                                                             padding:
-                                                                EdgeInsets
-                                                                        .only(
+                                                                EdgeInsets.only(
                                                                     top: 3,
                                                                     right: 6),
                                                             child: Icon(

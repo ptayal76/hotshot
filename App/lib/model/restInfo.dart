@@ -9,20 +9,20 @@ RestInfo restInfoFromJson(String str) => RestInfo.fromJson(json.decode(str));
 String restInfoToJson(RestInfo data) => json.encode(data.toJson());
 
 class RestInfo {
-  RestInfo({
-    required this.id,
-    required this.ownerName,
-    required this.restaurantName,
-    required this.phoneNumber,
-    required this.email,
-    this.menu,
-    required this.location,
-    required this.status,
-    // required this.orderTypes,
-    this.pic,
-    // this.timing,
-
-  });
+  RestInfo(
+      {required this.id,
+      required this.ownerName,
+      required this.restaurantName,
+      required this.phoneNumber,
+      required this.email,
+      this.menu,
+      required this.location,
+      required this.status,
+      // required this.orderTypes,
+      this.pic,
+      // this.start_time,
+      // this.close_time
+      });
 
   String id;
   String ownerName;
@@ -33,7 +33,9 @@ class RestInfo {
   String location;
   String status;
   String? pic;
-   // orderTypes;
+  // String start_time = '9:00';
+  // String close_time = '21:00';
+  // orderTypes;
   // List<dynamic>? timing;
 
   factory RestInfo.fromJson(Map<String, dynamic> json) => RestInfo(
@@ -42,15 +44,20 @@ class RestInfo {
         restaurantName: json["restaurantName"],
         phoneNumber: json["phoneNumber"],
         email: json["email"],
-        menu: json['menu'] != null ? List<String>.from(json['menu']!.map((x) => x,),) : [],
+        menu: json['menu'] != null
+            ? List<String>.from(
+                json['menu']!.map(
+                  (x) => x,
+                ),
+              )
+            : [],
         // List<String>.from(json["menu"].map((x) => x)),
         location: json["location"],
         status: json["status"],
         // orderTypes: OrderTypes.fromJson(json["order_types"]),
-        pic: json['pic'] != null ?json["pic"]:null,
+        pic: json['pic'] != null ? json["pic"] : null,
         // timing: json['timing'] != null ? List<String>.from(json['timing']!.map((x) => x,),) : [],
         // List<dynamic>.from(json["timing"].map((x) => x)),
-
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,7 +66,7 @@ class RestInfo {
         "restaurantName": restaurantName,
         "phoneNumber": phoneNumber,
         "email": email,
-        "menu":menu == null ? [] : List<dynamic>.from(menu!.map((x) => x)),
+        "menu": menu == null ? [] : List<dynamic>.from(menu!.map((x) => x)),
         // menu   != null ? List<String>.from(menu?.map((x) => x,),) : null,
         // List<dynamic>.from(menu.map((x) => x)),
         "location": location,

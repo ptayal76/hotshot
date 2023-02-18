@@ -331,40 +331,40 @@ class InsideStatState extends State<InsideStat> with SingleTickerProviderStateMi
                     ),
                   ),
                 ),
-                (!israted)
-                    ? Container(
-                        child: Builder(builder: (context) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 56.0),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                israted = (await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => RateMe(),
-                                            )) ==
-                                        null
-                                    ? false
-                                    : true);
-                                setState(() {});
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 64.0),
-                                child: Text("RATE ME!",
-                                    style: TextStyle(fontSize: 20)),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color.fromARGB(255, 239, 102, 105),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.0))),
-                            ),
-                          );
-                        }),
-                      )
-                    : SizedBox(
-                        height: 0,
-                      ),
+                // (!israted)
+                //     ? Container(
+                //         child: Builder(builder: (context) {
+                //           return Padding(
+                //             padding: const EdgeInsets.symmetric(horizontal: 56.0),
+                //             child: ElevatedButton(
+                //               onPressed: () async {
+                //                 israted = (await Navigator.push(
+                //                             context,
+                //                             MaterialPageRoute(
+                //                               builder: (context) => RateMe(),
+                //                             )) ==
+                //                         null
+                //                     ? false
+                //                     : true);
+                //                 setState(() {});
+                //               },
+                //               child: Padding(
+                //                 padding: const EdgeInsets.symmetric(
+                //                     vertical: 8.0, horizontal: 64.0),
+                //                 child: Text("RATE ME!",
+                //                     style: TextStyle(fontSize: 20)),
+                //               ),
+                //               style: ElevatedButton.styleFrom(
+                //                   backgroundColor: Color.fromARGB(255, 239, 102, 105),
+                //                   shape: RoundedRectangleBorder(
+                //                       borderRadius: BorderRadius.circular(16.0))),
+                //             ),
+                //           );
+                //         }),
+                //       )
+                //     : SizedBox(
+                //         height: 0,
+                //       ),
                       Lottie.asset('assets/lottie/print.json',height: 300), 
                       Padding(
                             padding: const EdgeInsets.only(left: 56,right: 56,

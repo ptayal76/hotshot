@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hotshot/services/restaurantServ.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RateMe extends StatefulWidget {
-  const RateMe({super.key});
+  String restid;
+  RateMe({super.key, required this.restid});
 
   @override
   State<RateMe> createState() => _RateMeState();
@@ -14,6 +16,11 @@ class _RateMeState extends State<RateMe> {
   var rating = 0.0;
   var rat = 0.0;
   List x = [0.0, true];
+  raterest() async {
+    await RestaurantServ().RateRestaurant(context, widget.restid, x[0]);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +86,10 @@ class _RateMeState extends State<RateMe> {
             return Padding(
               padding: const EdgeInsets.only(top: 16),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(x);
+                onPressed: () async {
+                  
+                  await raterest();
+                  Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 239, 102, 105),
