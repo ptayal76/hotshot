@@ -42,6 +42,10 @@ const stationary = new schema({
         type:Boolean,
         default:false
     },
+    bothSides:{
+        type:Boolean,
+        default:false
+    },
     BWA4:{
         type:Boolean,
         default:false
