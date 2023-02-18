@@ -25,8 +25,7 @@ const restaurant = new schema({
         }
     ],
     pic: {
-        data: Buffer,
-        contentType: String
+        type:String
     },
     razorpayCredKey_id: {
         type: String,

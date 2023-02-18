@@ -2,6 +2,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const mongoose = require('mongoose');
+const cloudinary = require("cloudinary");
+const streamifier = require('streamifier');
 
 //Restaurant routes
 const Restaurant = require('../Models/Restaurant');
@@ -20,6 +22,12 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+cloudinary.config({
+  cloud_name: 'dmuviaz8x',
+  api_key: 232983377535948,
+  api_secret: 'eGv35fpj-wodC6lw15MhBHvDb3M',
+});
+
 //GET ALL RESTAURANTS BY QUERY
 router.get('/food/rest', async (req, res) => {
   try {
@@ -33,6 +41,7 @@ router.get('/food/rest', async (req, res) => {
       }
     }
     const restaurants = await Restaurant.find(obj);
+  
     return res.json(restaurants);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -47,6 +56,7 @@ router.get('/food/rest/:restid', async (req, res) => {
   try {
     const id = req.params.restid;
     const restaurant = await Restaurant.findById(id);
+    console.log(restaurant);
     if (!restaurant) {
       return res.status(400).json('Wrong RestId');
     }
@@ -63,20 +73,29 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
     if (!existingRest) {
       const restaurant = new Restaurant(req.body);
       if (req.file) {
-        restaurant.pic.data = req.file.buffer;
-        restaurant.pic.contentType = req.file.mimetype;
+        let cld_upload_stream = cloudinary.uploader.upload_stream(
+          
+          function( result,error) {
+              restaurant.pic = result.secure_url
+              existingRest = restaurant;
+              restaurant.save();
+              jwt.sign(
+                { isowner: true, id: existingRest._id },
+                process.env.JWT_SEC,
+                (err, token) => {
+                  res.header('token', `${token}`);
+                  return res.json(existingRest);
+                }
+              );
+          }
+          );
+      
+       streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+
       }
-      existingRest = restaurant;
-      restaurant.save();
+      
     }
-    jwt.sign(
-      { isowner: true, id: existingRest._id },
-      process.env.JWT_SEC,
-      (err, token) => {
-        res.header('token', `${token}`);
-        return res.json(existingRest);
-      }
-    );
+    
   } catch (err) {
     return res.status(400).send(err.message);
   }
