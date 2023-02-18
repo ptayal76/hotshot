@@ -36,12 +36,9 @@ class RestaurantPageState extends State<RestaurantPage>
 
   final RestaurantServ restServ = RestaurantServ();
   fetchrestaurantbyID() async {
-    RestInfo restlocal =
-        await restServ.fetchRestaurantsbyID(context, widget.data);
-    await fetchalldish();
-    setState(() {
-      restaurant = restlocal;
-    });
+    restaurant = await restServ.fetchRestaurantsbyID(context, widget.data);
+    fetchalldish();
+    setState(() {});
   }
 
   fetchalldish() async {
@@ -105,7 +102,6 @@ class RestaurantPageState extends State<RestaurantPage>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       home: dishes == null
           ? const Loader()
           : ColorFiltered(
@@ -146,22 +142,22 @@ class RestaurantPageState extends State<RestaurantPage>
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10))),
                               child: Row(
-                                children: [
+                                children: const [
                                   Padding(
-                                    padding: const EdgeInsets.only(
+                                    padding: EdgeInsets.only(
                                         left: 8.0,
                                         right: 4.0,
                                         top: 4.0,
                                         bottom: 4.0),
                                     child: Text(
-                                      "${restaurant.rating}",
-                                      style: const TextStyle(
+                                      "4.5",
+                                      style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 20),
                                     ),
                                   ),
-                                  const Icon(
+                                  Icon(
                                     Icons.star_rate_rounded,
                                     color: Colors.amber,
                                   ),
@@ -179,11 +175,8 @@ class RestaurantPageState extends State<RestaurantPage>
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10))),
                               child: Column(
-                                children: [
-                                  restaurant.usersRated == null
-                                      ? Text('0')
-                                      : Text(restaurant.usersRated!.length
-                                          .toString()),
+                                children: const [
+                                  Text("124"),
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: 8.0, right: 8.0, bottom: 2.0),
@@ -256,15 +249,15 @@ class RestaurantPageState extends State<RestaurantPage>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
-                                        children: const [
-                                          Padding(
+                                        children: [
+                                          const Padding(
                                             padding: EdgeInsets.all(2.0),
                                             child: Text(
                                               "Opens at: " + "9:00",
                                               style: TextStyle(fontSize: 20),
                                             ),
                                           ),
-                                          Padding(
+                                          const Padding(
                                             padding: EdgeInsets.all(2.0),
                                             child: Text(
                                               "Closes at: " + "17:00",
@@ -423,7 +416,7 @@ class RestaurantPageState extends State<RestaurantPage>
                           height: 45,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            children: const [
+                            children: [
                               // Padding(
                               //   padding: const EdgeInsets.only(left: 20, right: 10),
                               //   child: DropdownButton(
@@ -778,8 +771,8 @@ class RestaurantPageState extends State<RestaurantPage>
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
-                                                        children: const [
-                                                          Padding(
+                                                        children: [
+                                                          const Padding(
                                                             padding:
                                                                 EdgeInsets.only(
                                                                     left: 20,
@@ -797,7 +790,7 @@ class RestaurantPageState extends State<RestaurantPage>
                                                                   fontSize: 20),
                                                             ),
                                                           ),
-                                                          Padding(
+                                                          const Padding(
                                                             padding:
                                                                 EdgeInsets.only(
                                                                     top: 3,

@@ -4,9 +4,7 @@ import 'package:hotshot/screens/shopkeeperOrdersScreen.dart';
 import 'package:hotshot/screens/stationery_accepted_orders.dart';
 import 'package:hotshot/screens/stationery_shopkeeperOrdersScreen.dart';
 import 'package:hotshot/screens/statshopkeeperhome.dart';
-import 'package:hotshot/widgets/my_shopkeeper_drawer.dart';
 import 'shopkeeperhome.dart';
-import '../widgets/sideDrawerShopkeeper.dart';
 
 class StatMainPage extends StatefulWidget {
   // final int currentIndex;
@@ -35,7 +33,6 @@ class _StatMainPageState extends State<StatMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: MyShopkeeperDrawer(),
       body: IndexedStack(
         index: currentIndex,
         children: screens,

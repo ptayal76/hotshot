@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hotshot/screens/cart.dart';
 import 'package:hotshot/screens/statshopkeeperhome.dart';
 import 'package:image_picker/image_picker.dart';
 //import 'package:open_file/open_file.dart';
@@ -24,14 +23,6 @@ class _PrintOrderState extends State<PrintOrder> {
   Options? option = Options.Portrait;
   Options2? option2 = Options2.CA4;
   Options3? option3 = Options3.Yes;
-  // Map<String,dynamic>?m = {
-  //   'name': '',
-  //   'category': '',
-  //   'suggestedTime': '',
-  //   'price': 0,
-  //   // 'pic': null,
-  //   'InStock': false,
-  // };
   File? _image;
   PlatformFile? file1;
   Future getImage(ImageSource source) async {
@@ -214,34 +205,22 @@ class _PrintOrderState extends State<PrintOrder> {
                       ),
                       Container(
                         child: (file1 != null
-                            // ? ListTile(children: [
-                              
-                            //   Padding(
-                            //     padding: const EdgeInsets.only(top: 4,bottom: 6,left: 4),
-                            //     child: TextButton.icon(
-                            //       icon: Icon(Icons.file_present,size: 25,color: Colors.black),
-                            //       onPressed: () {
-                            //         //_openFile(file1!);
-                            //       },
-                            //       label: Text(file1!.name,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 20,),overflow: TextOverflow.clip,),
-                            //       ),
-                            //   ),
-                            //   Padding(
-                            //     padding: const EdgeInsets.only(bottom: 2),
-                            //     child: Text("(${(file1!.size/1000000).toStringAsFixed(2)} MB)",style: TextStyle(fontSize: 20,overflow: TextOverflow.clip,),),
-                            //   ),
-                            // ],
-                            // // width:MediaQuery.of(context).,
-                            
-                            // //scrollDirection: Axis.horizontal,
-                            
-                            // )
-                            ?ListTile(
-                              title: Text(file1!.name,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15,),),
-                              trailing: Text("(${(file1!.size/1000000).toStringAsFixed(2)} MB)",style: TextStyle(fontSize: 15,overflow: TextOverflow.clip,),),
-                              leading:  Icon(Icons.file_present,size: 25,),
-                              isThreeLine: false,
-                            )
+                            ? Row(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4,bottom: 6,left: 4),
+                                child: TextButton.icon(
+                                  icon: Icon(Icons.file_present,size: 25,color: Colors.black),
+                                  onPressed: () {
+                                    //_openFile(file1!);
+                                  },
+                                  label: Text(file1!.name,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 20,color: Colors.black),),
+                                  ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 2),
+                                child: Text("(${(file1!.size/1000000).toStringAsFixed(2)} MB)",style: TextStyle(fontSize: 20),),
+                              ),
+                            ],)
                             : null),
                       ),
                     ],
@@ -615,28 +594,17 @@ class _PrintOrderState extends State<PrintOrder> {
                       );
                       return;
                     }
-                    // setState(() {
-                    //         m['pic'] = file1!.path;
-                    //       m['category'] = category;
-                    //       m['suggestedTime'] = suggestedTime;
-                    //       m['price'] = price;
-                    //       m['pic'] = pic!.path;
-                    //       m['InStock'] = false;
-                    //       });
-
-                    //       await OrderServ().Createdish(context, m);
-                    //       setState(() {});
-                    Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => cart(),       //cart ki jagah payOrder
-                                  ));
+                    // Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (context) => StatShopkeeperHomePage(),
+                    //               ));
                   },
                   child: Container(
-                    width: 130,
+                    width: 100,
                     child: Center(
                       child: Text(
-                        "Order Now",
+                        "Submit",
                         style: TextStyle(fontSize: 20),
                       ),
                     ),

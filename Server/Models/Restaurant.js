@@ -49,13 +49,10 @@ const restaurant = new schema({
         type: Number,
         default: 0,
     },
-    start_time:{
-        type:String
+    timing: {
+        start_time: String,
+        end_time: String
     },
-    end_time:{
-        type:String
-    },
-   
     status: {
         type: String,
         enum: ['on', 'off'],
