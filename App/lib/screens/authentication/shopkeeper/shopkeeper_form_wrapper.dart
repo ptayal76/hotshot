@@ -22,11 +22,12 @@ class ShopkeeperFormWrapper extends StatefulWidget {
 }
 
 class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
+  bool postSent = false;
 
   bool? isRestCreated;
   String? tkn;
 
-  void setIsRestCreated()async{
+  void setIsRestCreated() async {
     bool? b = await SharedPrefs().isRestCreated();
 
     setState(() {
@@ -34,7 +35,7 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
     });
   }
 
-  void fetchToken()async{
+  void fetchToken() async {
     String? t = await SharedPrefs().getToken();
 
     print('fetching token');
@@ -47,54 +48,45 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
     print('KSJFGSKLJGSLKJGSL');
   }
 
-  void postEmail(String email)async{
-    try{
-    String uri = '$MONGO_URL/food/rest/login';
+  void postEmail(String email) async {
+    try {
+      String uri = '$MONGO_URL/food/rest/login';
 
-
-
-    final body = jsonEncode({
-        'email': email
-      });
+      final body = jsonEncode({'email': email});
 
       //Map<String, String> customHeaders = {'Accept':'application/json'};
-      final res = await http.post(
-        Uri.parse(uri),
-        body: body, 
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        });
+      final res = await http.post(Uri.parse(uri), body: body, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      });
 
       String? t = res.headers['token'];
       SharedPrefs().setToken(t!);
-    }
-    catch(e)
-    {
+    } catch (e) {
       print(e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     setIsRestCreated();
     fetchToken();
 
     print(isRestCreated);
 
-    if(isRestCreated == true){
-      if(tkn == null){
-        String? email = Provider.of<MyUser?>(context)!.email;
-        postEmail(email!);
+    if (isRestCreated == true) {
+      if (tkn == null) {
+        if (postSent == false) {
+          String? email = Provider.of<MyUser?>(context)!.email;
+          postEmail(email!);
+        }
+        postSent = true;
         return const Loading();
-      }
-      else{
+      } else {
         return const MainPage();
       }
-    }
-    else{
-      return SignIn();
+    } else {
+      return ShopkeeperVerificationForm();
     }
   }
 }

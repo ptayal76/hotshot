@@ -35,12 +35,20 @@ class _RestHomeState extends State<RestHome>
   List filtername = ['Open Now', 'Rating 4+'];
   List filterselected = [false, false, false, false];
   List<RestInfo>? restaur;
+  List<RestInfo>? toprestaur;
   final RestaurantServ restServ = RestaurantServ();
+  final RestaurantServ toprestServ = RestaurantServ();
+
   fetchallrest() async {
     restaur = await restServ.fetchAllRestaurants(context);
     for (int i = 0; i < restaur!.length; i++) {
       allRest[restaur![i].id] = restaur![i];
     }
+    setState(() {});
+  }
+
+  fetchtoprest() async {
+    toprestaur = await toprestServ.fetchTopRestaurants(context);
     setState(() {});
   }
 
@@ -94,6 +102,7 @@ class _RestHomeState extends State<RestHome>
   void initState() {
     // TODO: implement initState
     super.initState();
+    fetchtoprest();
     fetchallrest();
     s = '';
     fetchsearchedrest(s);
@@ -319,7 +328,7 @@ class _RestHomeState extends State<RestHome>
                     child: ListView.separated(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemBuilder: (context, index) {
-                          return RestCard(data: restaur![index]);
+                          return RestCard(data: toprestaur![index]);
                         },
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -329,7 +338,7 @@ class _RestHomeState extends State<RestHome>
                             width: 16,
                           );
                         },
-                        itemCount: restaur!.length),
+                        itemCount: toprestaur!.length),
                   ),
                   // Container(
                   //   child: Column(

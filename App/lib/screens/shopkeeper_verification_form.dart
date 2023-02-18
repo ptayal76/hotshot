@@ -130,12 +130,12 @@ class _ShopkeeperVerificationFormState
 
                         final tkn = await SharedPrefs().getToken();
 
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => MainPage()
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainPage()
+                          ),
+                        );
                       }
                     }
                   }
