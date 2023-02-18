@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hotshot/getstarted.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/authentication/customer/customer_wrapper.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_wrapper.dart';
 import 'package:hotshot/screens/home.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +19,7 @@ class _WrapperState extends State<Wrapper> {
   bool? isCustomer;
 
   void setIsCustomer() async {
-    bool? b = (await SharedPreferences.getInstance()).getBool('isCustomer');
+    bool? b = await SharedPrefs().getIsCostumer();
 
     setState(() {
       isCustomer = b;

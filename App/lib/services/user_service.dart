@@ -29,7 +29,7 @@ class UserServ {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString('token', tkn!);
+    await prefs.setString('token', tkn!);
 
     print('TOKEN = $tkn');
 

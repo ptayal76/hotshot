@@ -66,23 +66,24 @@ class OrderServ {
     // print('xxx');
     return OrderList[0];
   }
-  Future<Map<String,dynamic>?> checkout(BuildContext context,String orderId) async {
 
+  Future<Map<String, dynamic>?> checkout(
+      BuildContext context, String orderId) async {
     final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
 
     String Bearer = 'Bearer $tokenFinal';
     try {
       String url = MONGO_URL + '/food/order/checkout/$orderId';
-      print('hi1');
+      // print('hi1');
       http.Response res = await http.put(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': Bearer
       });
-      print('hi');
-      print(res.body);
+      //print('hi');
+      //print(res.body);
       Map<String, dynamic> obj = jsonDecode(res.body);
-      print(res.body);
+      //print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -100,19 +101,20 @@ class OrderServ {
       print(e);
     }
   }
-  Future<void> acknowledge(BuildContext context,String orderId,Map<String,dynamic> json) async {
 
+  Future<void> acknowledge(
+      BuildContext context, String orderId, Map<String, dynamic> json) async {
     final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
 
     String Bearer = 'Bearer $tokenFinal';
     try {
       String url = MONGO_URL + '/food/order/acknowledge/$orderId';
-      print('hi1');
+      //print('hi1');
       http.Response res = await http.put(Uri.parse(url), body: json);
-      print('hi');
-      print(res.body);
+      //print('hi');
+      //print(res.body);
       // Map<String,dynamic> obj = jsonDecode(res.body);
-      print(res.body);
+      //print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -132,7 +134,6 @@ class OrderServ {
   }
 
   Future<List<Order>> fetchResponsePendingOrders(BuildContext context) async {
-
     final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
     // final userProvider = Provider.of(context)
     List<Order> OrderList = [];
@@ -421,8 +422,7 @@ class OrderServ {
 
   Future<void> Createdish(
       BuildContext context, Map<String, dynamic> mymap) async {
-
-        final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
+    final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
     // final userProvider = Provider.of(context)
     // List<Order> OrderList = [];
     // String Bearer = 'Bearer ' +
@@ -431,9 +431,9 @@ class OrderServ {
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VjZTFkMTdlOGI2MzljZTA5MzZmZDEiLCJpYXQiOjE2NzY0Njg2ODl9.aOMv7NFrXVyV0T74wz2zfWsEYXHDqI5kDHcIec-KxZo';
     // print(Bearer);
     try {
-      print('hello1234');
-      print(mymap['pic']);
-      print(mymap['price'].runtimeType);
+      //print('hello1234');
+      //print(mymap['pic']);
+      //print(mymap['price'].runtimeType);
       var req =
           await http.MultipartRequest('post', Uri.parse('$uri/food/dish'));
       req.headers.addAll({"Authorization": 'Bearer $tokenFinal'});
@@ -447,7 +447,7 @@ class OrderServ {
       var res = await req.send();
       var responsed = await http.Response.fromStream(res);
       var obj = jsonDecode(responsed.body);
-      print(obj); // http.Response res = await http.post(
+      //print(obj); // http.Response res = await http.post(
       //     Uri.parse('$uri/food/dish'),
       //     headers: {
       //       'Content-Type': 'application/json',

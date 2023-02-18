@@ -4,7 +4,9 @@ import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/model/shop_verification_info.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/services/google_auth.dart';
+import 'package:hotshot/services/microsoft_auth.dart';
 import 'package:hotshot/services/restaurantServ.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -32,6 +34,9 @@ class _ShopkeeperVerificationFormState
     'Cycle Repair',
     'Laundry'
   ];
+
+  String keyId = '';
+  String keySecret = '';
 
   String? shopType;
   String? locationCategory;
@@ -110,7 +115,10 @@ class _ShopkeeperVerificationFormState
                               startTime: startingTime,
                               location: location,
                               locationCategory: locationCategory!,
-                              phoneNumber: '');
+                              phoneNumber: '',
+                              keyId: keyId,
+                              secretKey: keySecret
+                            );
                           RestaurantServ().postRestaurant(data, user);
                         } catch (e) {
                           print(e.toString());
@@ -120,12 +128,14 @@ class _ShopkeeperVerificationFormState
                         await prefs.setBool('isVeriFormSubmitted', true);
                         await prefs.setString('shopType', 'Eatery');
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainPage()
-                          ),
-                        );
+                        final tkn = await SharedPrefs().getToken();
+
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => MainPage()
+                        //   ),
+                        // );
                       }
                     }
                   }
@@ -289,7 +299,7 @@ class _ShopkeeperVerificationFormState
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                       child: TextFormField(
                         controller: closeTimeController,
                         readOnly: true,
@@ -315,6 +325,44 @@ class _ShopkeeperVerificationFormState
                         decoration: textInputDecoration.copyWith(
                             hintText: 'Closing Time',
                             prefixIcon: const Icon(Icons.watch_later_outlined)),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
+                      child: Text(
+                        'RazorPay Credentials',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: TextFormField(
+                        validator: (value) =>
+                            value == '' ? 'Field cannot be empty' : null,
+                        onChanged: (value) {
+                          setState(() {
+                            keyId = value;
+                          });
+                        },
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Key ID',
+                            prefixIcon: const Icon(Icons.key_rounded)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: TextFormField(
+                        validator: (value) =>
+                            value == '' ? 'Field cannot be empty' : null,
+                        onChanged: (value) {
+                          setState(() {
+                            keySecret = value;
+                          });
+                        },
+                        obscureText: true,
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Key Secret',
+                            prefixIcon: const Icon(Icons.lock)),
                       ),
                     ),
                   ],

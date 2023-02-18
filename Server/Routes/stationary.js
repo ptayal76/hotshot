@@ -6,6 +6,7 @@ const {
   verifyToken,
   authenticateOwner,
   authorizeOwner,
+  authenticateStationaryOwner
 } = require('../Middlewares/verifyToken');
 const Stationary = require('../Models/Stationary');
 const jwt = require('jsonwebtoken');
@@ -31,6 +32,9 @@ router.get('/stationary/stationaryShop/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const stationary = await Stationary.findById(id);
+    if(!stationary){
+      return res.status(400).json('Wrong shop id!');
+    }
     return res.json(stationary);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -60,12 +64,7 @@ router.post('/stationary/stationaryShop', upload.single('pic'), async (req, res)
 });
 
 //UPDATE A SHOP BY ID
-router.put(
-  '/stationary/stationaryShop/:statid',
-  verifyToken,
-  authenticateOwner,
-  authorizeOwner,
-  async (req, res) => {
+router.put('/stationary/stationaryShop/:statid',verifyToken,authenticateStationaryOwner,async (req, res) => {
     try {
       const stationary = await Stationary.findByIdAndUpdate(
         req.params.statid,
@@ -80,17 +79,12 @@ router.put(
 );
 
 //DELETE A SHOP
-router.delete(
-  '/stationary/stationaryShop/:statid',
-  verifyToken,
-  authenticateOwner,
-  authorizeOwner,
-  async (req, res) => {
+router.delete('/stationary/stationaryShop/:statid',verifyToken,authenticateStationaryOwner,async (req, res) => {
     try {
       await Stationary.findByIdAndDelete(req.params.statid);
-      res.status(200).json('Stationary shop has been deleted!');
+      return res.status(200).json('Stationary shop has been deleted!');
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   }
 );

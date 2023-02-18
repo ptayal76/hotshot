@@ -44,28 +44,40 @@ class RestaurantServ {
       //   }
       // ],
       'status': 'on',
+      'razorpayCred': jsonEncode(
+        {
+          'Key_id': info.keyId,
+          'KeySecret': info.secretKey
+        }
+      )
     };
     Map<String, String> customHeaders = {"content-type": "application/json"};
     var pobj = jsonEncode(body);
     String url = MONGO_URL + '/food/rest';
     var res =
         await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
-    // print(res.body);
-    // print('SUCCESS');
+
+    SharedPrefs().setToken(res.headers['token']!);
+    final restID = jsonDecode(res.body)['_id'];
+    print(restID);
+
+    await SharedPrefs().setRestId(restID);
+    await SharedPrefs().setRestCreated(true);
+    print('SUCCESS');
   }
 
   Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID) async {
     List<DishInfo> menu = [];
 
     try {
-      http.Response res = await http.get(Uri.parse(''));
+      //http.Response res = await http.get(Uri.parse('$MONGO_URL'));
       RestInfo restaurant = await fetchRestaurantsbyID(context, restID);
 
       List<DishInfo> result = await fetchDish(context, restaurant.menu);
       return result;
     } catch (e) {
-      print('ERROR FETCHING MENU');
-      print(e.toString());
+      //print('ERROR FETCHING MENU');
+      //print(e.toString());
       return null;
     }
   }
@@ -107,6 +119,38 @@ class RestaurantServ {
     List<RestInfo> RestList = [];
     try {
       http.Response res = await http.get(Uri.parse('${MONGO_URL}/food/rest?status=on'));
+      var obj = jsonDecode(res.body);
+      // print(obj[0].runtimeType);
+      // print(obj.length);
+      // print(res.body);
+      // print(res.body.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < obj.length; i++) {
+            // var obj=;
+            RestList.add(RestInfo.fromJson(obj[i]));
+          }
+          // print(RestList);
+          //print("hi");
+        },
+      );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    return RestList;
+  }
+  Future<List<RestInfo>> fetchSearchRestaurants(BuildContext context,String s) async {
+    // final userProvider = Provider.of(context)
+    List<RestInfo> RestList = [];
+    try {
+      http.Response res = await http.get(Uri.parse('${MONGO_URL}/food/rest?name=${s}'));
       var obj = jsonDecode(res.body);
       // print(obj[0].runtimeType);
       // print(obj.length);
@@ -224,7 +268,7 @@ class RestaurantServ {
     List<DishInfo> dishes = [];
     String token = 'Bearer $tkn'; // +
 
-    print('TOKEN = $tkn');
+   // print('TOKEN = $tkn');
     //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){

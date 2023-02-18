@@ -50,22 +50,22 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                       // const SizedBox(
                       //   height: 20,
                       // ),
-                      const Text(
-                        'Welcome to HotShot!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Your OneStop Solution for everything',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
+                      // const Text(
+                      //   'Welcome to HotShot!',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(
+                      //       fontSize: 25, fontWeight: FontWeight.bold),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // const Text(
+                      //   'Your OneStop Solution for everything',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(
+                      //     fontSize: 20,
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -91,14 +91,14 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                           const SizedBox(
                             height: 20,
                           ),
-                          // const Text(
-                          //   'Welcome to Hotshot! Your one stop solution to everything',
-                          //   textAlign: TextAlign.center,
-                          //   style: TextStyle(fontSize: 15),
-                          // ),
-                          // const SizedBox(
-                          //   height: 20,
-                          // ),
+                          const Text(
+                            'Welcome to Hotshot!\nYour one stop solution to everything',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -197,6 +197,16 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                 //     ),
                               ]),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 60,
+                      ),
+                      const Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          'Let\'s Get Started! ->',
+                          style: TextStyle(fontSize: 18),
+                        ),
                       ),
                     ],
                   ),

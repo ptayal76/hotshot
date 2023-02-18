@@ -48,8 +48,10 @@ class GoogleAuthentication {
   Future<void> googleLogout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.clear();
     await GoogleSignIn().disconnect();
     FirebaseAuth.instance.signOut();
+
+    await prefs.remove('token');
+    await prefs.remove('isCustomer');
   }
 }

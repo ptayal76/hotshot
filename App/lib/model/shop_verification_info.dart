@@ -6,6 +6,8 @@ class ShopVerificationInfo{
   String location;
   String locationCategory;
   String phoneNumber;
+  String keyId;
+  String secretKey;
 
   ShopVerificationInfo({
     required this.closeTime,
@@ -15,5 +17,7 @@ class ShopVerificationInfo{
     required this.location,
     required this.locationCategory,
     required this.phoneNumber,
+    required this.keyId,
+    required this.secretKey
   });
 }

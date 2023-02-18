@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/screens/add_item_page.dart';
@@ -42,16 +43,21 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
   void getData(BuildContext context)async{
 
     final tkn = await SharedPrefs().getToken();
+    final restID = await (await SharedPreferences.getInstance()).getString('restID');
 
     //final tkn = '';
-    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, tkn!);
-    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, tkn);
+    List<DishInfo>? result = await RestaurantServ().fetchMenu(context, restID!);
 
-    setState(() {
+
+
+
+    RestInfo restaurant = await RestaurantServ().fetchRestaurantsbyID(context, restID);
+
+    if(mounted){setState(() {
       menu = result ?? [];
       //restName = restaurant.restaurantName;
       isLoading = false;
-    });
+    });}
   }
 
   @override
@@ -425,7 +431,7 @@ class _MyQRState extends State<MyQR> {
       print(result!.code.runtimeType);
       if(result!=null){
         try {
-          final response = await http.put(Uri.parse('http://192.168.1.106:8080/food/rest/complete/${jsonDecode((result?.code)!)['orderid']}'));
+          final response = await http.put(Uri.parse('$MONGO_URL/food/rest/complete/${jsonDecode((result?.code)!)['orderid']}'));
           if (response.statusCode == 200) {
     print("success");
        snack = SnackBar(
@@ -469,7 +475,8 @@ class _MyQRState extends State<MyQR> {
   //  }
    ScaffoldMessenger.of(context).showSnackBar(snack);
       //Navigator.of(context).pop(true);
-        dispose();
+        //dispose();
+        controller.stopCamera();
         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -496,10 +503,10 @@ class _MyQRState extends State<MyQR> {
   }
   //starting
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller?.dispose();
+  //   super.dispose();
+  // }
 }
 

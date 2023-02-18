@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/colors.dart';
 
+import '../widgets/my_shopkeeper_drawer.dart';
 import '../widgets/sideDrawer.dart';
 import '../widgets/sideDrawerShopkeeper.dart';
 
@@ -25,7 +26,7 @@ class _StationeryShopkeeperOrdersScreenState
           actions: const [
             CircleAvatar(
               backgroundImage: AssetImage('assets/droppedImage.jpg'),
-              backgroundColor: greenColor,
+              // backgroundColor: greenColor,
             ),
           ],
           title: const Text(
@@ -33,13 +34,13 @@ class _StationeryShopkeeperOrdersScreenState
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              // color: Colors.black,
             ),
           ),
           centerTitle: true,
           elevation: 5,
         ),
-        drawer: MyNavigationDrawer(),
+        drawer: MyShopkeeperDrawer(),
         body: ListView.separated(
           padding: const EdgeInsets.all(8),
           itemCount: items.length,
@@ -53,7 +54,7 @@ class _StationeryShopkeeperOrdersScreenState
                 Container(
                     height: 152,
                     decoration: BoxDecoration(
-                        color: Colors.green[100],
+                        // color: Colors.green[100],
                         border: Border.all(
                           color: blackColor,
                         ),
@@ -106,8 +107,8 @@ class _StationeryShopkeeperOrdersScreenState
                                   return TextButton(
                                       onPressed: () {
                                         showModalBottomSheet(
-                                            backgroundColor:
-                                                Colors.green.shade100,
+                                            // backgroundColor:
+                                                // Colors.green.shade100,
                                             context: context,
                                             builder: (context) {
                                               return Wrap(
@@ -141,50 +142,50 @@ class _StationeryShopkeeperOrdersScreenState
                                                         'Quantity: ${index + 1}'),
                                                   ),
 
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      TextButton.icon(
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.check),
-                                                        label: const Text(
-                                                            'Accept'),
-                                                        style: TextButton
-                                                            .styleFrom(
-                                                          minimumSize:
-                                                              const Size(
-                                                                  120, 0),
-                                                          backgroundColor:
-                                                              Colors.lightGreen,
-                                                        ),
-                                                      ),
-                                                      TextButton.icon(
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.close),
-                                                        label: const Text(
-                                                            'Reject'),
-                                                        style: TextButton
-                                                            .styleFrom(
-                                                          minimumSize:
-                                                              const Size(
-                                                                  120, 0),
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .red.shade400,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
+                                                  // Row(
+                                                  //   mainAxisAlignment:
+                                                  //       MainAxisAlignment
+                                                  //           .spaceAround,
+                                                  //   children: [
+                                                  //     TextButton.icon(
+                                                  //       onPressed: () {
+                                                  //         Navigator.of(context)
+                                                  //             .pop();
+                                                  //       },
+                                                  //       icon: const Icon(
+                                                  //           Icons.check),
+                                                  //       label: const Text(
+                                                  //           'Accept'),
+                                                  //       style: TextButton
+                                                  //           .styleFrom(
+                                                  //         minimumSize:
+                                                  //             const Size(
+                                                  //                 120, 0),
+                                                  //         backgroundColor:
+                                                  //             Colors.lightGreen,
+                                                  //       ),
+                                                  //     ),
+                                                  //     TextButton.icon(
+                                                  //       onPressed: () {
+                                                  //         Navigator.of(context)
+                                                  //             .pop();
+                                                  //       },
+                                                  //       icon: const Icon(
+                                                  //           Icons.close),
+                                                  //       label: const Text(
+                                                  //           'Reject'),
+                                                  //       style: TextButton
+                                                  //           .styleFrom(
+                                                  //         minimumSize:
+                                                  //             const Size(
+                                                  //                 120, 0),
+                                                  //         backgroundColor:
+                                                  //             Colors
+                                                  //                 .red.shade400,
+                                                  //       ),
+                                                  //     ),
+                                                  //   ],
+                                                  // )
                                                 ],
                                               );
                                             });
@@ -199,13 +200,12 @@ class _StationeryShopkeeperOrdersScreenState
                     )
                     //Text("\tOrder ID: ${items[index]}"),
                     ),
-                itemsList[index].length > 2
-                    ? Container(
+                Container(
                         // alignment: Alignment.bottomCenter,
                         decoration: BoxDecoration(
-                          color: Colors.green[100],
+                          // color: Colors.green[100],
                           border: Border.all(
-                            color: Colors.green.shade100,
+                            // color: Colors.green.shade100,
                           ),
                           borderRadius: const BorderRadius.vertical(
                               bottom: Radius.circular(20)),
@@ -231,10 +231,7 @@ class _StationeryShopkeeperOrdersScreenState
                           ],
                         ),
                       )
-                    : Container(
-                        height: 0,
-                        width: 0,
-                      ),
+                    
               ],
             );
           },

@@ -49,14 +49,16 @@ class _cartState extends State<cart> {
       List<DishInfo> x =
           await RestaurantServ().fetchDish(context, dishIdsOrder);
       Map<DishInfo, int> mp = {};
-      for (int j = 0; j < x.length; j++) {
+      for (int j = 0; j < x.length; j++) {;
         mp[x[j]] = dishes[i][x[j].id]!;
       }
       fetchedDishes.add(mp);
     }
     // return fetchedDishes;
     // fetchDishesCart();
-    setState(() {});
+    setState(() {
+
+    });
   }
 
   // Future<List<DishInfo>> fetchDishesCart(List<String> items) async {
@@ -103,6 +105,8 @@ class _cartState extends State<cart> {
             : ListView.separated(
                 padding: EdgeInsets.symmetric(horizontal: 2),
                 itemBuilder: (context, index) {
+                  print(Orders!.length);
+                  print(Orders![2]);
                   return CartCard(
                     orders: Orders![index],
                     mp: fetchedDishes[index],
@@ -116,7 +120,7 @@ class _cartState extends State<cart> {
                     height: 1,
                   );
                 },
-                itemCount: Orders!.length,
+                itemCount: fetchedDishes!.length,
               ),
       ]),
     );
