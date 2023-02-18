@@ -672,67 +672,67 @@ class _ShopkeeperVerificationFormState
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                        child: Center(
-                          child: ElevatedButton.icon(onPressed: () {
-                            SimpleDialog alert = SimpleDialog(
-                              title: Text("Choose an action"),
-                              children: [
-                                SimpleDialogOption(
-                                    onPressed: () {
-                                      getImage(ImageSource.gallery);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Icon(CupertinoIcons.photo,
-                                              color: Colors.blue),
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(left: 2),
-                                          child: Text("Pick from gallery",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight:
-                                                  FontWeight.w500)),
-                                        )
-                                      ],
-                                    )),
-                                SimpleDialogOption(
-                                    onPressed: () {
-                                      getImage(ImageSource.camera);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 8),
-                                          child: Icon(
-                                            Icons.camera_alt,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(left: 10),
-                                          child: Text("Capture from camera",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight:
-                                                  FontWeight.w500)),
-                                        )
-                                      ],
-                                    ))
-                              ],
-                            );
-                            showDialog(
-                              context: context,
-                              builder: (context) => alert,
-                              barrierDismissible: true,
-                            );
-                          }, icon: Icon(Icons.image), label: Text("Choose shop image",style: TextStyle(fontSize: 20),)),
-                        )
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: Center(
+                        child: ElevatedButton.icon(onPressed: () {
+                          SimpleDialog alert = SimpleDialog(
+                                        title: Text("Choose an action"),
+                                        children: [
+                                          SimpleDialogOption(
+                                              onPressed: () {
+                                                getImage(ImageSource.gallery);
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Icon(CupertinoIcons.photo,
+                                                        color: Colors.blue),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(left: 2),
+                                                    child: Text("Pick from gallery",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w500)),
+                                                  )
+                                                ],
+                                              )),
+                                          SimpleDialogOption(
+                                              onPressed: () {
+                                                getImage(ImageSource.camera);
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 8),
+                                                    child: Icon(
+                                                      Icons.camera_alt,
+                                                      color: Colors.green,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(left: 10),
+                                                    child: Text("Capture from camera",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w500)),
+                                                  )
+                                                ],
+                                              ))
+                                        ],
+                                      );
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => alert,
+                                        barrierDismissible: true,
+                                      );
+                        }, icon: Icon(Icons.image), label: Text("Choose shop image",style: TextStyle(fontSize: 20),)),
+                      )
                     ),
                     const Padding(
                       padding: EdgeInsets.fromLTRB(5, 0, 0, 5),

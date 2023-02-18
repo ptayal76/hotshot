@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hotshot/model/statInfo.dart';
 import 'package:hotshot/screens/describe.dart';
+import 'package:hotshot/screens/insidestat.dart';
 class StatCard extends StatefulWidget {
   final StatInfo data;
   const StatCard({Key? key, required this.data}) : super(key: key);
@@ -17,11 +18,11 @@ class _StatCardState extends State<StatCard> {
     var fav=false;
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) =>
-        //             describe(data: widget.data)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    InsideStat()));
       },
       // Card Wrapper
       child:
@@ -36,7 +37,7 @@ class _StatCardState extends State<StatCard> {
           color: Colors.grey,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: AssetImage(widget.data.pic),
+            image: AssetImage('assets/images/dish1.jpg'),
             colorFilter: (widget.data.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
             fit: BoxFit.cover,
           ),

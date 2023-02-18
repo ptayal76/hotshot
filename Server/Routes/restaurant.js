@@ -23,9 +23,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDNAME||'dmuviaz8x',
-  api_key: process.env.APIKEY||232983377535948,
-  api_secret: process.env.APISECRET||'eGv35fpj-wodC6lw15MhBHvDb3M',
+  cloud_name: process.env.CLOUDNAME || 'dmuviaz8x',
+  api_key: process.env.APIKEY || 232983377535948,
+  api_secret: process.env.APISECRET || 'eGv35fpj-wodC6lw15MhBHvDb3M',
 });
 
 //GET ALL RESTAURANTS BY QUERY
@@ -41,7 +41,6 @@ router.get('/food/rest', async (req, res) => {
       }
     }
     const restaurants = await Restaurant.find(obj);
-  
     return res.json(restaurants);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -59,7 +58,7 @@ router.get('/food/rest/top', async (req, res) => {
     }
     return res.status(200).json(toprest);
   } catch (err) {
-    return res.status(200).json(err);
+    return res.status(400).json(err);
   }
 });
 
@@ -68,7 +67,6 @@ router.get('/food/rest/:restid', async (req, res) => {
   try {
     const id = req.params.restid;
     const restaurant = await Restaurant.findById(id);
-    console.log(restaurant);
     if (!restaurant) {
       return res.status(400).json('Wrong RestId');
     }
@@ -77,8 +75,197 @@ router.get('/food/rest/:restid', async (req, res) => {
     return res.status(400).send(err.message);
   }
 });
-
+/*router.post("/food/rest",upload.single('pic'),async(req,res)=>{
+  var existingRest = await Restaurant.findOne({ email: req.body.email })
+  if(existingRest)
+  {
+    console.log("You are already registered");
+    await existingRest.save();
+    jwt.sign(
+      { isowner: true, id: existingRest._id },
+      process.env.JWT_SEC,
+      (err, token) => {
+        res.header('token', `${token}`);
+        return res.json(existingRest);
+      }
+    );
+  }
+  else
+  {
+    console.log("Registeresss");
+    const restaurant=new Restaurant(req.body);
+    await restaurant.save();
+    jwt.sign(
+      { isowner: true, id: existingRest._id },
+      process.env.JWT_SEC,
+      (err, token) => {
+        res.header('token', `${token}`);
+        return res.json(restaurant);
+      }
+    );
+  }
+  
+})*/
 //CREATE A RESTAURANT
+
+// const bufferUpload = async (buffer) => {
+//   return new Promise((resolve, reject) => {
+//     const writeStream = cloudinary.uploader.upload_stream((err, result) => {
+//       if (err) {
+//         reject(err);
+//         return;
+//       }
+//       resolve(result);
+//     });
+//     const readStream = new Readable({
+//       read() {
+//         this.push(buffer);
+//         this.push(null);
+//       },
+//     });
+//     readStream.pipe(writeStream);
+//   });
+// };
+// router.post('/food/rest', upload.single('pic'), async (req, res) => {
+//   try {
+    
+//     console.log("registerrrr111");
+//     if(req.file)
+//     {
+//     const { buffer } = req.file;
+//     const { secure_url } = await bufferUpload(buffer);
+//     var existingRest = await Restaurant.findOne({ email: req.body.email });
+//     if(existingRest)
+//     {
+//       jwt.sign(
+//             { isowner: true, id: existingRest._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(existingRest);
+//             }
+//           );
+//       res.status(200).json(existingRest);
+//     }
+//     else
+//     {
+//       const restaurant=new Restaurant(req.body);
+//       restaurant.pic=secure_url;
+//       await restaurant.save();
+//       jwt.sign(
+//             { isowner: true, id: restaurant._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(restaurant);
+//             }
+//           );
+//     }
+//   }
+//   else
+//   {
+//     var existingRest = await Restaurant.findOne({ email: req.body.email });
+//     if(existingRest)
+//     {
+//       jwt.sign(
+//             { isowner: true, id: existingRest._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(existingRest);
+//             }
+//           );
+//       res.status(200).json(existingRest);
+//     }
+//     else
+//     {
+//       const restaurant=new Restaurant(req.body);
+      
+//       await restaurant.save();
+//       jwt.sign(
+//             { isowner: true, id: restaurant._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(restaurant);
+//             }
+//           );
+//     }
+//   }
+//     // console.log(existingRest);
+//     // if (!existingRest) {
+//     //   const restaurant = new Restaurant(req.body);
+//     //   // if(req.file)
+//     //   // {
+//     //     let cld_upload_stream = cloudinary.uploader.upload_stream(
+          
+//     //       async ( error,result) =>{
+//     //          if(error)
+//     //           return error.secure_url;
+//     //           else
+//     //           {
+//     //             return result.secure_url;
+//     //           }
+//     //       }
+//     //       );
+      
+//     //     console.log(req.file);
+//     //     if(req.file.buffer)
+//     //     {
+//     //     restaurant.pic=await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+//     //     }
+//     //   await restaurant.save();
+//     //   jwt.sign(
+//     //         { isowner: true, id: restaurant._id },
+//     //         process.env.JWT_SEC,
+//     //         (err, token) => {
+//     //           res.header('token', `${token}`);
+//     //           return res.json(restaurant);
+//     //         }
+//     //       );
+//       //  return "done";
+//       //  }
+//       //  else
+//       //  {
+//       //   console.log("No imageee")
+//       //   await restaurant.save();
+//       //   jwt.sign(
+//       //     { isowner: true, id: restaurant._id },
+//       //     process.env.JWT_SEC,
+//       //     (err, token) => {
+//       //       res.header('token', `${token}`);
+//       //       return res.json(restaurant);
+//       //     }
+//       //   );
+//       //   return "done"
+//       //  }
+
+      
+
+//       // else
+//       // {
+//       //   existingRest = restaurant;
+//       //         console.log(restaurant);
+//       //         console.log()
+//       //         restaurant.save();
+//       //         jwt.sign(
+//       //           { isowner: true, id: existingRest._id },
+//       //           process.env.JWT_SEC,
+//       //           (err, token) => {
+//       //             res.header('token', `${token}`);
+//       //             return res.json(existingRest);
+//       //           }
+//       //         );
+//       // }
+      
+//     // }
+    
+//   } catch (err) {
+//     console.log(err.message);
+//     return res.status(400).send(err.message);
+//   }
+// });
+
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
     var existingRest = await Restaurant.findOne({ email: req.body.email });
@@ -86,28 +273,27 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
       const restaurant = new Restaurant(req.body);
       if (req.file) {
         let cld_upload_stream = cloudinary.uploader.upload_stream(
+
           
-          function( result,error) {
+          async function( result,error) {
               restaurant.pic = result.secure_url
               existingRest = restaurant;
-              restaurant.save();
+              await restaurant.save();
               jwt.sign(
                 { isowner: true, id: existingRest._id },
                 process.env.JWT_SEC,
                 (err, token) => {
+                  console.log("here222")
+                  console.log(token);
                   res.header('token', `${token}`);
                   return res.json(existingRest);
                 }
               );
           }
-          );
-      
-       streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
-
+        );
+        await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
       }
-      
     }
-    
   } catch (err) {
     return res.status(400).send(err.message);
   }
@@ -139,20 +325,28 @@ router.post('/food/rest/login', async (req, res) => {
 //UPDATE A RESTAURANT BY ID
 router.put('/food/rest/:restid', verifyToken, authenticateOwner, authorizeOwner, async (req, res) => {
   try {
-    const restaurant = await Restaurant.findByIdAndUpdate(
-      req.params.restid,
-      req.body,
-      { runValidators: true, new: true }
-    );
-    return res.json(restaurant);
+    const restaurant = await Restaurant.findById(req.params.restid);
+    if(!restaurant){
+      return res.status(400).json('Wrong RestId');
+    }
+    if(restaurant._id == req.restaurant){
+      if(restaurant.status == 'on') {
+        restaurant.status = 'off';
+      } else {
+        restaurant.status = 'on';
+      }
+      restaurant.save();
+      return res.status(200).json(restaurant);
+    }
   } catch (err) {
     return res.status(400).send(err.message);
   }
 });
 
 //RATE A RESTAURANT
-router.put('/food/rest/rate/:restid', verifyToken, authenticateUser, authorizeUser, async (req, res) => {
+router.put('/food/rest/rate/:restid', verifyToken, authenticateUser, async (req, res) => {
   try {
+    console.log(req.body, req.body.rating);
     const restaurant = await Restaurant.findById(req.params.restid);
     const user = await User.findById(req.user);
     var found = 0;
