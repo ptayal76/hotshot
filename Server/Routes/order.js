@@ -89,8 +89,7 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
                 const promise = fs.promises.readFile('./qr1.png');
                 promise.then(function (buffer) {
                     const stringdata = JSON.stringify(buffer);
-
-                    res.status(200).json(buffer);
+                    return res.status(200).json(buffer);
                 })
             }
         })

@@ -47,7 +47,8 @@ const restaurant = new schema({
         }
     ],
     rating: {
-        type: Number
+        type: Number,
+        default: 0,
     },
     timing: {
         start_time: String,

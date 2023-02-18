@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Restaurant=require('./Restaurant');
-const Dish=require('./Dish');
-const User=require('./User');
+const Restaurant = require('./Restaurant');
+const Dish = require('./Dish');
+const User = require('./User');
 const schema = mongoose.Schema;
 
 const order = new schema({
@@ -9,9 +9,9 @@ const order = new schema({
         type: mongoose.Schema.Types.ObjectId, ref: `Restaurant`,
     },
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: `User` },
-   items: [
+    items: [
         {
-           type:mongoose.Schema.Types.ObjectId, ref: `Dish`
+            type: mongoose.Schema.Types.ObjectId, ref: `Dish`
         }
     ]
     ,
@@ -26,16 +26,16 @@ const order = new schema({
         type: String
     },
     Order_status: {
-        type:String,
-        enum: ['ready', 'completed', 'rejected', 'paymentPending','responsePending','accepted']
+        type: String,
+        enum: ['ready', 'completed', 'rejected', 'paymentPending', 'responsePending', 'accepted']
     },
-    razorpayCred:{
-        Key_id:{
-            type:String
+    razorpayCred: {
+        Key_id: {
+            type: String
         },
-        KeySecret:{
-            type:String
+        KeySecret: {
+            type: String
         }
     }
 })
-module.exports= mongoose.model('Order', order);
+module.exports = mongoose.model('Order', order);
