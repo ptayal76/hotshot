@@ -160,27 +160,27 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         ),
                       ),
                     ),
-                    // Positioned(
-                    //   top: 38,
-                    //   right: 10,
-                    //   child: Container(
-                    //     decoration: const BoxDecoration(
-                    //         color: Colors.white,
-                    //         borderRadius: BorderRadius.only(
-                    //             bottomLeft: Radius.circular(10),
-                    //             bottomRight: Radius.circular(10))),
-                    //     child: Column(
-                    //       children: const [
-                    //         Text("124"),
-                    //         Padding(
-                    //           padding: EdgeInsets.only(
-                    //               left: 8.0, right: 8.0, bottom: 2.0),
-                    //           child: Text("Reviews"),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    Positioned(
+                      top: 38,
+                      right: 10,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                        child: Column(
+                          children: const [
+                            Text("124"),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 8.0, right: 8.0, bottom: 2.0),
+                              child: Text("Reviews"),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                      Positioned(
                         left: 10,
                         bottom: 25,
@@ -225,59 +225,67 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         ),
                         Container(
                           child: new_button1(
-                              text: "LOCATION", ic: Icons.location_on,),
+                              text: "LOCATION", ic: Icons.location_on,
+                              onTap: () async{
+                          Uri map = Uri.parse('https://www.google.com/maps/search/?api=1&query=26.1899,91.6984');
+                      if (await launchUrl(map)) {
+                      }else{
+                          print("error calling map");
+                      }
+                        },
+                              ),
                         ),
                         Container(
                           child: new_button1(text: "CONTACT", ic: Icons.phone,onTap: () async{
                           Uri phoneno = Uri.parse('tel:'+ phone);
                       if (await launchUrl(phoneno)) {
                       }else{
-                          print("error");
+                          print("error calling log");
                       }
                         },),
                         ),
-                        // Container(
-                        //   child: Column(
-                        //     children: [
-                        //       ClipOval(
-                        //         child: Container(
-                        //           padding: EdgeInsets.all(1.5),
-                        //           color: Colors.blue,
-                        //           child: ClipOval(
-                        //             child: Container(
-                        //               color: Colors.white,
-                        //               padding: const EdgeInsets.all(0.1),
-                        //               child: IconButton(
-                        //                 onPressed: () {
-                        //                   setState(() {
-                        //                     isfav = !isfav;
-                        //                   });
-                        //                 },
-                        //                 icon: Icon(
-                        //                   isfav
-                        //                       ? CupertinoIcons.heart_fill
-                        //                       : CupertinoIcons.heart,
-                        //                   color: isfav ? Colors.red : Colors.blue,
-                        //                   size: 28,
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       const Padding(
-                        //         padding: EdgeInsets.all(4.0),
-                        //         child: Text(
-                        //           "FAVOURITE",
-                        //           style: TextStyle(
-                        //               color: Colors.blue,
-                        //               fontWeight: FontWeight.w700,
-                        //               fontSize: 17),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
+                        Container(
+                          child: Column(
+                            children: [
+                              ClipOval(
+                                child: Container(
+                                  padding: EdgeInsets.all(1.5),
+                                  color: Colors.blue,
+                                  child: ClipOval(
+                                    child: Container(
+                                      color: Colors.white,
+                                      padding: const EdgeInsets.all(0.1),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isfav = !isfav;
+                                          });
+                                        },
+                                        icon: Icon(
+                                          isfav
+                                              ? CupertinoIcons.heart_fill
+                                              : CupertinoIcons.heart,
+                                          color: isfav ? Colors.red : Colors.blue,
+                                          size: 28,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Text(
+                                  "FAVOURITE",
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

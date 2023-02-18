@@ -22,7 +22,7 @@ import '../constants/globvar.dart';
 String uri = MONGO_URL;
 
 class OrderServ {
-  //String MONGO_URL = 'http://10.0.2.2:8080';
+  // String MONGO_URL = 'http://10.0.2.2:8080';
   Future<Order> fetchOrderbyId(BuildContext context, String orderId) async {
     // final userProvider = Provider.of(context)
     List<Order> OrderList = [];
