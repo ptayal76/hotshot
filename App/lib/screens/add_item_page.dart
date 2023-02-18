@@ -493,6 +493,7 @@ class _add_itemState extends State<add_item> {
                           m['InStock'] = false;
 
                           await OrderServ().Createdish(context, m);
+                          setState(() {});
 
                           Navigator.of(context).pop(true);
                         },
