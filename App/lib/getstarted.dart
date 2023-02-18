@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hotshot/screens/home.dart';
+import 'package:lottie/lottie.dart';
 // import 'package:scheduler_flutter/Signin.dart';
 
 class StartingScreen extends StatefulWidget {
@@ -23,22 +24,27 @@ class _StartingScreenState extends State<StartingScreen> {
     List<Widget> items = [
       Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 9),
-          Container(
-            // color: Colors.blue,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 3,
-            decoration: BoxDecoration(
-              // borderRadius: BorderRadius.circular(15.0),
-              image: DecorationImage(
-                image: AssetImage('assets/welcome1.png'),
-                fit: BoxFit.fill,
-                alignment: Alignment.center,
-              ),
-            ),
+          SizedBox(height: MediaQuery.of(context).size.height / 15),
+          SizedBox(
+            height: 300,
+            width: double.infinity,
+            child: Lottie.asset('assets/lottie/random1.json', repeat: true),
           ),
+          // Container(
+          //   // color: Colors.blue,
+          //   width: MediaQuery.of(context).size.width,
+          //   height: MediaQuery.of(context).size.height / 3,
+          //   decoration: BoxDecoration(
+          //     // borderRadius: BorderRadius.circular(15.0),
+          //     image: DecorationImage(
+          //       image: AssetImage('assets/lottie/random1.png'),
+          //       fit: BoxFit.fill,
+          //       alignment: Alignment.center,
+          //     ),
+          //   ),
+          // ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 10),
             child: Center(
               child: Text(
                 "Welcome",
@@ -56,7 +62,7 @@ class _StartingScreenState extends State<StartingScreen> {
             padding: const EdgeInsets.only(top: 20),
             child: Center(
               child: Text(
-                "Your One-Stop Event Manager, where you can manage all you events",
+                "Your One-Stop Order Manager, where you can manage all your needs",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.amaticSc(
                   textStyle: TextStyle(
@@ -73,19 +79,24 @@ class _StartingScreenState extends State<StartingScreen> {
       Center(
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 9),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 4,
-              decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(15.0),
-                image: DecorationImage(
-                  image: AssetImage('assets/welcome2.png'),
-                  fit: BoxFit.fill,
-                  alignment: Alignment.center,
-                ),
-              ),
+            SizedBox(height: MediaQuery.of(context).size.height / 15),
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Lottie.asset('assets/lottie/random2.json', repeat: true),
             ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   height: MediaQuery.of(context).size.height / 4,
+            //   decoration: BoxDecoration(
+            //     // borderRadius: BorderRadius.circular(15.0),
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/lottie/random2.png'),
+            //       fit: BoxFit.fill,
+            //       alignment: Alignment.center,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Center(
@@ -105,7 +116,7 @@ class _StartingScreenState extends State<StartingScreen> {
               padding: const EdgeInsets.only(top: 20),
               child: Center(
                 child: Text(
-                  "Discover the Latest way to set event reminders",
+                  "Get notified when your food is ready to serve",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.amaticSc(
                     textStyle: TextStyle(
@@ -123,21 +134,26 @@ class _StartingScreenState extends State<StartingScreen> {
       Center(
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 9),
-            Container(
-              // color: Colors.blue,
-              // height: 400,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 4,
-              decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(15.0),
-                image: DecorationImage(
-                  image: AssetImage('assets/welcome3.png'),
-                  fit: BoxFit.fill,
-                  alignment: Alignment.center,
-                ),
-              ),
+            SizedBox(height: MediaQuery.of(context).size.height / 15),
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Lottie.asset('assets/lottie/random3.json', repeat: true),
             ),
+            // Container(
+            //   // color: Colors.blue,
+            //   // height: 400,
+            //   width: MediaQuery.of(context).size.width,
+            //   height: MediaQuery.of(context).size.height / 4,
+            //   decoration: BoxDecoration(
+            //     // borderRadius: BorderRadius.circular(15.0),
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/lottie/random3.png'),
+            //       fit: BoxFit.fill,
+            //       alignment: Alignment.center,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Center(
@@ -157,7 +173,7 @@ class _StartingScreenState extends State<StartingScreen> {
               padding: const EdgeInsets.only(top: 20),
               child: Center(
                 child: Text(
-                  "Now you won't miss any of your events",
+                  "Now get all the shop timings and live status through one app",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.amaticSc(
                     textStyle: TextStyle(
@@ -175,21 +191,28 @@ class _StartingScreenState extends State<StartingScreen> {
       Center(
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 9),
-            Container(
-              // color: Colors.blue,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 4,
-              decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(15.0),
-                image: DecorationImage(
-                  image: AssetImage('assets/welcome4.png'),
-                  // fit: BoxFit.cover,
-                  fit: BoxFit.fill,
-                  alignment: Alignment.center,
-                ),
-              ),
+            SizedBox(height: MediaQuery.of(context).size.height / 15),
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Lottie.asset('assets/lottie/90351-food-app.json',
+                  repeat: true),
             ),
+            // Container(
+            //   // color: Colors.blue,
+            //   width: MediaQuery.of(context).size.width,
+            //   height: MediaQuery.of(context).size.height / 4,
+            //   decoration: BoxDecoration(
+            //     // borderRadius: BorderRadius.circular(15.0),
+
+            //     // image: DecorationImage(
+            //     //   image: AssetImage('assets/lottie/90351-food-app.png'),
+            //     //   // fit: BoxFit.cover,
+            //     //   fit: BoxFit.fill,
+            //     //   alignment: Alignment.center,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Center(

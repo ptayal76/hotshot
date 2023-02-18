@@ -86,7 +86,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                             height: 200,
                             width: double.infinity,
                             child: Lottie.asset('assets/signin1.json',
-                                repeat: false),
+                                repeat: true),
                           ),
                           const SizedBox(
                             height: 20,
