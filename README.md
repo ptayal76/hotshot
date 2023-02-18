@@ -190,6 +190,7 @@ On this page, the owner can see all accepted orders whose responses are pendin
 # Authors
 
 - [@vd-coder](https://github.com/vd-coder)
+- [@ayushavi1](https://github.com/ayushavi1)
 - [@pratyush2105](https://github.com/pratyush2105)
 - [@ptayal76](https://github.com/ptayal76)
 - [@hardikroongta8](https://github.com/hardikroongta8)
