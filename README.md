@@ -1,3 +1,4 @@
+
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
 
@@ -5,6 +6,9 @@
 # Hotshot
 
 Hotshot is an app where you can search and discover local restaurants' status, prebook and prepay orders and collect it by just scanning a QR.
+# Ideation
+
+
 # Features
 
 - Light/dark mode toggle
@@ -14,98 +18,98 @@ Hotshot is an app where you can search and discover local restaurants' status, p
 - QR scanner
 # Tech Stack
 
-*Client:* Flutter
+**Client:** Flutter
 
-*Server:* Node, Express, Firebase
+**Server:** Node, Express, Firebase
 
-*Database:* MongoDB
+**Database:** MongoDB
 
-*External API Used:* Google Auth, Razorpay, Multer, jsonwebtoken, qrcode-reader, qrcode, jimp
+**External API Used:** Google Auth, Razorpay, Multer, jsonwebtoken, qrcode-reader, qrcode, jimp
 
+# Hosted server
 
-# Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
-# Run Locally
+[https://hotshot-a109.onrender.com](https://hotshot-a109.onrender.com)
+# Run server locally
 
 Clone the project
 
-bash
+```bash
   git clone https://github.com/ptayal76/hotshot.git
-
+```
 
 Go to the project directory
 
-bash
+```bash
   cd hotshot
-
+```
 
 Go to the backend directory
 
-bash
+```bash
   cd server
-
+```
 
 Install dependencies
 
-bash
+```bash
   npm install
-
+```
 
 Start the server
 
-bash
-  node app.js
+```bash
+  npm start
+```
 
 
+# Download Apk file
 
+Link of apk file 
 # API Documentation
 
-[https://documenter.getpostman.com/view/25646091/2s93CHtaUP](https://documenter.getpostman.com/view/25646091/2s93CHtaUP)
+[https://documenter.getpostman.com/view/25919046/2s93CHuEuU](https://documenter.getpostman.com/view/25919046/2s93CHuEuU)
 
 # Environmental Variables
 
 MongoDB Database URL 
-bash
-Mongo_URL
-
+```bash
+MONGO_URL
+```
 
 JSON Web Token Key
-bash
+```bash
 JWT_SEC
-
+```
 
 Razorpay Key ID
-bash
+```bash
 RZP_KEY_ID
-
+```
 
 Razorpay Secret Key
-bash
+```bash
 RZP_SEC_KEY
-
+```
 
 Port
-bash
+```bash
 PORT
-
+```
 
 Cloud
-bash
+```bash
 CLOUDNAME
-
+```
 
 API key
-bash
+```bash
 APIKEY
-
+```
 
 API Secret
-bash
-APIKEY
-
+```bash
+APISECRET
+```
 # Demo
 
 Insert gif or link to demo
@@ -142,6 +146,8 @@ All dishes are displayed, which are available on the restaurant's menu. Users ca
 ### Cart
 
 In the user cart, all orders of the user are displayed .here all orders are segregated based on the restaurant. For every order, a checkout page is available for the user through which it is directed to the payment page. In the cart also, there is a feature to increase or decrease the number of dishes.
+
+### 5 possible status   
 
 Every order has five possible states: paymentpending, responsepending, accepted, rejected, completed.
 
@@ -201,3 +207,4 @@ If you have any feedback, please reach out to us at dawravaibhav@gmail.com
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
 | Theme Color |  #EF6669 |
+
