@@ -41,7 +41,6 @@ router.get('/food/rest', async (req, res) => {
       }
     }
     const restaurants = await Restaurant.find(obj);
-  
     return res.json(restaurants);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -59,7 +58,7 @@ router.get('/food/rest/top', async (req, res) => {
     }
     return res.status(200).json(toprest);
   } catch (err) {
-    return res.status(200).json(err);
+    return res.status(400).json(err);
   }
 });
 
@@ -89,7 +88,6 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
       const restaurant = new Restaurant(req.body);
       if (req.file) {
         let cld_upload_stream = cloudinary.uploader.upload_stream(
-          
           function( result,error) {
              
               restaurant.pic = result.secure_url
@@ -106,9 +104,7 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
               );
           }
           );
-      
        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
-
       }
 
       else
