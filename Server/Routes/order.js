@@ -87,14 +87,16 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
                 console.log(err);
             } else {
                 
-                console.log('QR code generated!');
-            }
-        })
-        const promise = fs.promises.readFile('./qr1.png');
-        promise.then(function (buffer) {
+                
+            const promise = fs.promises.readFile('./qr1.png');
+            promise.then(function (buffer) {
             const stringdata = JSON.stringify(buffer);
+            
             res.status(200).json(buffer);
         })
+            }
+        })
+        
     }
     catch (err) {
         res.status(400).json(err);
@@ -234,8 +236,8 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         return res.status(403).json({ message: "you are not authenticated" });
     }
     const razorpayInstance = new Razorpay({
-        key_id: restaurant.razorpayCred.Key_id || process.env.RZP_KEY_ID,
-        key_secret: restaurant.razorpayCred.KeySecret || process.env.RZP_SEC_KEY
+        key_id: restaurant.razorpayCredKey_id || process.env.RZP_KEY_ID,
+        key_secret: restaurant.razorpayCredKeySecret || process.env.RZP_SEC_KEY
     })
     razorpayInstance.orders.create({ amount: order.total * 100, currency: "INR" }, (err, result) => {
         if (err) {
@@ -244,7 +246,7 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
 
         else {
             console.log(result);
-            return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCred.Key_id });
+            return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCredKey_id });
         }
     })
 })

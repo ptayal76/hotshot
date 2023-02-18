@@ -61,7 +61,7 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
     console.log(req.body,"register");
     var existingRest = await Restaurant.findOne({email:req.body.email});
     if(!existingRest) {
-      JSON.parse(req.body.razorpayCred)
+      
       const restaurant = new Restaurant(req.body);
       if (req.file) {
         restaurant.pic.data = req.file.buffer;
