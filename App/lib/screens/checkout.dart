@@ -153,7 +153,7 @@ class _checkoutState extends State<checkout> {
         : Scaffold(
             appBar: AppBar(
               title: Text('CheckOut'),
-              backgroundColor: const Color(0xff307A59),
+              backgroundColor: const Color.fromARGB(255, 239, 102, 105),
               centerTitle: true,
             ),
             body: ListView(

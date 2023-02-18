@@ -97,6 +97,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
     offset = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
         .animate(controller!);
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +222,41 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                       children: [
                         Container(
                           child: new_button1(
-                              text: "TIMING", ic: Icons.access_time_outlined),
+                              text: "TIMING", ic: Icons.access_time_outlined,
+                              onTap: () {
+                            Widget okbutton = TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
+                                  },
+                                  child: Text("OK",style: TextStyle(fontSize: 20),));
+                              AlertDialog alert = AlertDialog(
+                                title: Text("Timing"),
+                                content: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text("Opens at: "+"9:00",style: TextStyle(fontSize: 20),),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text("Closes at: "+"17:00",style: TextStyle(fontSize: 20),),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  okbutton,
+                                ],
+                              );
+                              showDialog(
+                                context: context,
+                                builder: (context) => alert,
+                                barrierDismissible: true,
+                              );
+                              },
+                              ),
                         ),
                         Container(
                           child: new_button1(

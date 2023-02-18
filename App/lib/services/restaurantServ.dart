@@ -27,7 +27,7 @@ import 'package:hotshot/constants/constants.dart';
 
 
 class RestaurantServ {
-  String MONGO_URL = 'http://192.168.50.88:8080';
+  //String MONGO_URL = 'http://192.168.50.88:8080';
   void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
     Map<String, dynamic> body = {
       'ownerName': user!.fullName,

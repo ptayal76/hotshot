@@ -68,11 +68,11 @@ class _PendHistoryState extends State<PendHistory> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Pending Orders'),
-        backgroundColor: const Color(0xff307A59),
+        backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.teal[100],
+        //color: Colors.teal[100],
         child: ListView(
           physics: BouncingScrollPhysics(),
 

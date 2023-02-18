@@ -49,12 +49,12 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                     useMaterial3: true,
                     brightness: Brightness.light,
-                    colorSchemeSeed: const Color(0xff307A59)),
+                    colorSchemeSeed: const Color.fromARGB(255, 239, 102, 105)),
                     // colorSchemeSeed: const Color(0xffC1C8E4)),
                 darkTheme: ThemeData(
                     useMaterial3: true,
                     brightness: Brightness.dark,
-                    colorSchemeSeed: const Color(0xff307A59)),
+                    colorSchemeSeed: const Color.fromARGB(255, 239, 102, 105)),
                     // colorSchemeSeed: const Color(0xff5AB9EA)),
                 themeMode: themeProvider.themeMode,
                 // home: CustomerSignIn(),

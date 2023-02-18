@@ -84,7 +84,7 @@ class _cartState extends State<cart> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
-        backgroundColor: const Color(0xff307A59),
+        backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
     //   floatingActionButton: FloatingActionButton(
@@ -105,7 +105,7 @@ class _cartState extends State<cart> {
                 'Your Orders',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ))),
-          // Lottie.asset('assets/lottie/cart.json', height: 200, width: 50),
+          Lottie.asset('assets/lottie/cart.json', height: 200, width: 200),
          (Orders==null)?Loader():ListView.separated(
                   padding: EdgeInsets.symmetric(horizontal: 2),
                   itemBuilder: (context, index) {

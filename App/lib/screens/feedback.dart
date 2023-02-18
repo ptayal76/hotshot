@@ -17,7 +17,7 @@ class _feedbackState extends State<feedback> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Send Feedback'),
-        backgroundColor: const Color(0xff307A59),
+        backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
       body: Padding(
@@ -55,7 +55,7 @@ class _feedbackState extends State<feedback> {
             child: Container(
               height: 50,
               decoration: BoxDecoration(
-                color: const Color(0xff307A59),
+                color: const Color.fromARGB(255, 239, 102, 105),
                 borderRadius: BorderRadius.circular(15.0)
               ),
              
