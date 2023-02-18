@@ -75,8 +75,197 @@ router.get('/food/rest/:restid', async (req, res) => {
     return res.status(400).send(err.message);
   }
 });
-
+/*router.post("/food/rest",upload.single('pic'),async(req,res)=>{
+  var existingRest = await Restaurant.findOne({ email: req.body.email })
+  if(existingRest)
+  {
+    console.log("You are already registered");
+    await existingRest.save();
+    jwt.sign(
+      { isowner: true, id: existingRest._id },
+      process.env.JWT_SEC,
+      (err, token) => {
+        res.header('token', `${token}`);
+        return res.json(existingRest);
+      }
+    );
+  }
+  else
+  {
+    console.log("Registeresss");
+    const restaurant=new Restaurant(req.body);
+    await restaurant.save();
+    jwt.sign(
+      { isowner: true, id: existingRest._id },
+      process.env.JWT_SEC,
+      (err, token) => {
+        res.header('token', `${token}`);
+        return res.json(restaurant);
+      }
+    );
+  }
+  
+})*/
 //CREATE A RESTAURANT
+
+// const bufferUpload = async (buffer) => {
+//   return new Promise((resolve, reject) => {
+//     const writeStream = cloudinary.uploader.upload_stream((err, result) => {
+//       if (err) {
+//         reject(err);
+//         return;
+//       }
+//       resolve(result);
+//     });
+//     const readStream = new Readable({
+//       read() {
+//         this.push(buffer);
+//         this.push(null);
+//       },
+//     });
+//     readStream.pipe(writeStream);
+//   });
+// };
+// router.post('/food/rest', upload.single('pic'), async (req, res) => {
+//   try {
+    
+//     console.log("registerrrr111");
+//     if(req.file)
+//     {
+//     const { buffer } = req.file;
+//     const { secure_url } = await bufferUpload(buffer);
+//     var existingRest = await Restaurant.findOne({ email: req.body.email });
+//     if(existingRest)
+//     {
+//       jwt.sign(
+//             { isowner: true, id: existingRest._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(existingRest);
+//             }
+//           );
+//       res.status(200).json(existingRest);
+//     }
+//     else
+//     {
+//       const restaurant=new Restaurant(req.body);
+//       restaurant.pic=secure_url;
+//       await restaurant.save();
+//       jwt.sign(
+//             { isowner: true, id: restaurant._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(restaurant);
+//             }
+//           );
+//     }
+//   }
+//   else
+//   {
+//     var existingRest = await Restaurant.findOne({ email: req.body.email });
+//     if(existingRest)
+//     {
+//       jwt.sign(
+//             { isowner: true, id: existingRest._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(existingRest);
+//             }
+//           );
+//       res.status(200).json(existingRest);
+//     }
+//     else
+//     {
+//       const restaurant=new Restaurant(req.body);
+      
+//       await restaurant.save();
+//       jwt.sign(
+//             { isowner: true, id: restaurant._id },
+//             process.env.JWT_SEC,
+//             (err, token) => {
+//               res.header('token', `${token}`);
+//               return res.json(restaurant);
+//             }
+//           );
+//     }
+//   }
+//     // console.log(existingRest);
+//     // if (!existingRest) {
+//     //   const restaurant = new Restaurant(req.body);
+//     //   // if(req.file)
+//     //   // {
+//     //     let cld_upload_stream = cloudinary.uploader.upload_stream(
+          
+//     //       async ( error,result) =>{
+//     //          if(error)
+//     //           return error.secure_url;
+//     //           else
+//     //           {
+//     //             return result.secure_url;
+//     //           }
+//     //       }
+//     //       );
+      
+//     //     console.log(req.file);
+//     //     if(req.file.buffer)
+//     //     {
+//     //     restaurant.pic=await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+//     //     }
+//     //   await restaurant.save();
+//     //   jwt.sign(
+//     //         { isowner: true, id: restaurant._id },
+//     //         process.env.JWT_SEC,
+//     //         (err, token) => {
+//     //           res.header('token', `${token}`);
+//     //           return res.json(restaurant);
+//     //         }
+//     //       );
+//       //  return "done";
+//       //  }
+//       //  else
+//       //  {
+//       //   console.log("No imageee")
+//       //   await restaurant.save();
+//       //   jwt.sign(
+//       //     { isowner: true, id: restaurant._id },
+//       //     process.env.JWT_SEC,
+//       //     (err, token) => {
+//       //       res.header('token', `${token}`);
+//       //       return res.json(restaurant);
+//       //     }
+//       //   );
+//       //   return "done"
+//       //  }
+
+      
+
+//       // else
+//       // {
+//       //   existingRest = restaurant;
+//       //         console.log(restaurant);
+//       //         console.log()
+//       //         restaurant.save();
+//       //         jwt.sign(
+//       //           { isowner: true, id: existingRest._id },
+//       //           process.env.JWT_SEC,
+//       //           (err, token) => {
+//       //             res.header('token', `${token}`);
+//       //             return res.json(existingRest);
+//       //           }
+//       //         );
+//       // }
+      
+//     // }
+    
+//   } catch (err) {
+//     console.log(err.message);
+//     return res.status(400).send(err.message);
+//   }
+// });
+
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
     var existingRest = await Restaurant.findOne({ email: req.body.email });
@@ -84,33 +273,25 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
       const restaurant = new Restaurant(req.body);
       if (req.file) {
         let cld_upload_stream = cloudinary.uploader.upload_stream(
-          function (result, error) {
-            restaurant.pic = result.secure_url
-            existingRest = restaurant;
-            restaurant.save();
-            jwt.sign(
-              { isowner: true, id: existingRest._id },
-              process.env.JWT_SEC,
-              (err, token) => {
-                res.header('token', `${token}`);
-                return res.json(existingRest);
-              }
-            );
+
+          
+          async function( result,error) {
+              restaurant.pic = result.secure_url
+              existingRest = restaurant;
+              await restaurant.save();
+              jwt.sign(
+                { isowner: true, id: existingRest._id },
+                process.env.JWT_SEC,
+                (err, token) => {
+                  console.log("here222")
+                  console.log(token);
+                  res.header('token', `${token}`);
+                  return res.json(existingRest);
+                }
+              );
           }
         );
-        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
-      }
-      else {
-        existingRest = restaurant;
-        restaurant.save();
-        jwt.sign(
-          { isowner: true, id: existingRest._id },
-          process.env.JWT_SEC,
-          (err, token) => {
-            res.header('token', `${token}`);
-            return res.json(existingRest);
-          }
-        );
+        await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
       }
     }
   } catch (err) {

@@ -13,7 +13,8 @@ const router = require('express').Router();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
+const cloudinary = require("cloudinary");
+const streamifier = require('streamifier');
 //GET ALL DISHES
 router.get('/food/dish', async (req, res) => {
     try {
@@ -45,33 +46,66 @@ router.get('/food/dish/:dishId', async (req, res) => {
 //CREATE A DISH
 router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, async (req, res) => {
     try {
+        // if (req.file) {
+        //     console.log("here11111");
+        //     let cld_upload_stream = cloudinary.uploader.upload_stream(
+              
+        //       function( result,error) {
+        //           restaurant.pic = result.secure_url
+        //           existingRest = restaurant;
+        //           restaurant.save();
+        //           jwt.sign(
+        //             { isowner: true, id: existingRest._id },
+        //             process.env.JWT_SEC,
+        //             (err, token) => {
+        //               console.log("here222")
+        //               console.log(token);
+        //               res.header('token', `${token}`);
+        //               return res.json(existingRest);
+        //             }
+        //           );
+        //       }
+        //       );
+          
+        //    streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+    
+        //   }
+          
+        
         const newDish = new Dish(req.body);
-        if (req.file) {
             let cld_upload_stream = cloudinary.uploader.upload_stream(
-                async (result, error) => {
+          
+                 async function (result,error){
                     newDish.pic = result.secure_url
                     newDish.Rest_Id = req.restaurant;
-                    await newDish.save();
+                    
+                     await newDish.save();
                     const restaurant = await Owner.findById(req.restaurant);
                     restaurant.menu.push(newDish);
                     await restaurant.save();
                     return res.status(200).json(newDish);
                 }
             );
-            streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
-        }
-        else {
-            newDish.Rest_Id = req.restaurant;
-            const savedDish = await newDish.save();
-            const restaurant = await Owner.findById(req.restaurant);
-            restaurant.menu.push(savedDish);
-            await restaurant.save();
-        }
+            await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+        
+        
+        
+        
+            // newDish.Rest_Id = req.restaurant;
+            //         const savedDish = await newDish.save();
+            //         const restaurant = await Owner.findById(req.restaurant);
+            //         restaurant.menu.push(savedDish);
+                    
+            //         await restaurant.save();
+             
+        
+        
+
     } catch (err) {
-        return res.status(500).json(err);
+        
+        return res.status(500).json(err.message);
     }
 })
-
 
 //UPDATE A DISH
 router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res) => {
