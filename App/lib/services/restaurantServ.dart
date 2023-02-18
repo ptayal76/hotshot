@@ -24,8 +24,6 @@ import 'package:hotshot/constants/constants.dart';
 // String tokenFinal =
 //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VlNmQwZWYzZDUwYmI3Y2E0OTcyYjUiLCJpYXQiOjE2NzY1Njk4NzB9.A8X6k6Dx4HFaPdxE5zIRq3IpFD4Z9lrv27s4ILa2jCc';
 
-
-
 class RestaurantServ {
   //String MONGO_URL = 'http://192.168.50.88:8080';
   void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
@@ -52,7 +50,6 @@ class RestaurantServ {
       // )
       'razorpayCredKey_id': info.keyId,
       'razorpayCredKeySecret': info.secretKey
-      
     };
     Map<String, String> customHeaders = {"content-type": "application/json"};
     var pobj = jsonEncode(body);
@@ -155,7 +152,8 @@ class RestaurantServ {
     // final userProvider = Provider.of(context)
     List<RestInfo> RestList = [];
     try {
-      http.Response res = await http.get(Uri.parse('${MONGO_URL}/food/rest?status=on'));
+      http.Response res =
+          await http.get(Uri.parse('${MONGO_URL}/food/rest?status=on'));
       var obj = jsonDecode(res.body);
       // print(obj[0].runtimeType);
       // print(obj.length);
@@ -188,7 +186,8 @@ class RestaurantServ {
     // final userProvider = Provider.of(context)
     List<RestInfo> RestList = [];
     try {
-      http.Response res = await http.get(Uri.parse('${MONGO_URL}/food/rest/top'));
+      http.Response res =
+          await http.get(Uri.parse('${MONGO_URL}/food/rest/top'));
       var obj = jsonDecode(res.body);
       // print(obj[0].runtimeType);
       // print(obj.length);
@@ -217,11 +216,13 @@ class RestaurantServ {
     return RestList;
   }
 
-  Future<List<RestInfo>> fetchSearchRestaurants(BuildContext context,String s) async {
+  Future<List<RestInfo>> fetchSearchRestaurants(
+      BuildContext context, String s) async {
     // final userProvider = Provider.of(context)
     List<RestInfo> RestList = [];
     try {
-      http.Response res = await http.get(Uri.parse('${MONGO_URL}/food/rest?name=${s}'));
+      http.Response res =
+          await http.get(Uri.parse('${MONGO_URL}/food/rest?name=${s}'));
       var obj = jsonDecode(res.body);
       // print(obj[0].runtimeType);
       // print(obj.length);
@@ -291,10 +292,9 @@ class RestaurantServ {
     // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
     List<DishInfo> dishes = [];
     try {
-      if(menu == []){
+      if (menu == []) {
         return [];
-      }
-      else{
+      } else {
         for (int i = 0; i < menu!.length; i++) {
           http.Response res = await http
               .get(Uri.parse('${MONGO_URL}/food/dish/${menu[i].toString()}'));
@@ -339,7 +339,7 @@ class RestaurantServ {
     List<DishInfo> dishes = [];
     String token = 'Bearer $tkn'; // +
 
-   // print('TOKEN = $tkn');
+    // print('TOKEN = $tkn');
     //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
     try {
       // for(int i=0;i<menu!.length;i++){
@@ -401,7 +401,6 @@ class RestaurantServ {
   }
 
   Future<void> removeCartOrder(BuildContext context, String dishid) async {
-
     final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
 
     // final userProvider = Provider.of(context)
@@ -416,6 +415,155 @@ class RestaurantServ {
             '${MONGO_URL}/food/order/remove/${dishid}',
           ),
           headers: {'Authorization': token});
+      // var obj=jsonDecode(res.body);
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
+      // print(res.body.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
+      switch (res.statusCode) {
+        case 200:
+          // onSuccess();
+          // print("alpha0");
+          break;
+        case 400:
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body)['msg'])));
+          //print("alpha1");
+          // showSnackBar(context, );
+          break;
+        case 500:
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body)['error'])));
+          //print("alpha2");
+          // showSnackBar(context, jsonDecode(response.body)['error']);
+          break;
+        default:
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body))));
+        //print("alpha3");
+      }
+      // httpErrorHandle(
+      //   response: res,
+      //   context: context,
+      //   onSuccess: () {
+      //     dishes.add(DishInfo.fromJson(obj));
+      //     // for (int i = 0; i < obj.length; i++) {
+      //     //   // var obj=;
+      //     //   RestList.add(
+      //     //       RestInfo.fromJson(obj[i])
+      //     //   );
+      //     // }
+      //
+      //     print(dishes);
+      //     print("hi");
+      //
+      //   },
+      // );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    // return dishes;
+  }
+
+  Future<void> RateRestaurant(
+      BuildContext context, String restid, double x) async {
+    final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
+
+    // final userProvider = Provider.of(context)
+    // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
+    List<DishInfo> dishes = [];
+    String token = 'Bearer $tokenFinal'; // +
+    final bodyy = jsonEncode({'rating': x});
+    print(x);
+    //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    try {
+      // for(int i=0;i<menu!.length;i++){
+      http.Response res = await http.put(
+          Uri.parse(
+            '${MONGO_URL}/food/rest/rate/${restid}',
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': token
+          },
+          body: bodyy);
+      // var obj=jsonDecode(res.body);
+      // print(obj[0].runtimeType);
+      // print(obj);
+      // print(res.body);
+      // print(res.body.runtimeType);
+      // print(res.body.length);
+      // print("hi1");
+      switch (res.statusCode) {
+        case 200:
+          // onSuccess();
+          // print("alpha0");
+          break;
+        case 400:
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body)['msg'])));
+          //print("alpha1");
+          // showSnackBar(context, );
+          break;
+        case 500:
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body)['error'])));
+          //print("alpha2");
+          // showSnackBar(context, jsonDecode(response.body)['error']);
+          break;
+        default:
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(jsonDecode(response.body))));
+        //print("alpha3");
+      }
+      // httpErrorHandle(
+      //   response: res,
+      //   context: context,
+      //   onSuccess: () {
+      //     dishes.add(DishInfo.fromJson(obj));
+      //     // for (int i = 0; i < obj.length; i++) {
+      //     //   // var obj=;
+      //     //   RestList.add(
+      //     //       RestInfo.fromJson(obj[i])
+      //     //   );
+      //     // }
+      //
+      //     print(dishes);
+      //     print("hi");
+      //
+      //   },
+      // );
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      print(e);
+      print("alpha");
+      // showSnackBar(BuildContext, e.toString());
+    }
+    // return dishes;
+  }
+
+  Future<void> FavoriteRestaurant(BuildContext context, String restid) async {
+    final String tokenFinal = (await SharedPrefs().getToken()) ?? '';
+
+    // final userProvider = Provider.of(context)
+    // DishInfo dish=new DishInfo(Rest_Id: 'jjbcnjk', name: 'kuchbhi', price: 99999, InStock: true);
+    List<DishInfo> dishes = [];
+    String token = 'Bearer $tokenFinal'; // +
+    // final bodyy = jsonEncode({'rating': x});
+    //print(x);
+    //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
+    try {
+      // for(int i=0;i<menu!.length;i++){
+      http.Response res = await http.put(
+        Uri.parse(
+          '${MONGO_URL}/food/user/rest/${restid}',
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': token
+        },
+      );
       // var obj=jsonDecode(res.body);
       // print(obj[0].runtimeType);
       // print(obj);
