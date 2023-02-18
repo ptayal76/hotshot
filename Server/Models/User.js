@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
-const Restaurant=require('./Restaurant');
-const Order=require('./RestOrder');
+const Restaurant = require('./Restaurant');
+const Order = require('./RestOrder');
+
 const userSchema = new schema({
     name: {
         required: true,

@@ -61,14 +61,24 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
     }
 })
 
+
 //UPDATE A DISH
 router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res) => {
     try {
-        const dish = await Dish.findByIdAndUpdate(req.params.dishId, req.body);
+        const dish = await Dish.findById(req.params.dishId)
         if(!dish){
             return res.status(400).json('Wrong DishId');
         }
         if (dish.Rest_Id == req.restaurant) {
+            if(dish.InStock)
+            {
+                dish.InStock=false;
+            }
+            else
+            {
+                dish.InStock=true;
+            }
+            dish.save();
             return res.status(200).json(dish);
         }
         else {

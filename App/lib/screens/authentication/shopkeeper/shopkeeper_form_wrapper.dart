@@ -6,6 +6,7 @@ import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_sign_in.dart';
+import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
 import 'package:hotshot/screens/shopkeeperhome.dart';
 import 'package:hotshot/services/shared_prefs.dart';
@@ -88,7 +89,7 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
         return const Loading();
       }
       else{
-        return const ShopkeeperHomePage();
+        return const MainPage();
       }
     }
     else{
