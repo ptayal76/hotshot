@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../model/orders.dart';
 import '../model/restInfo.dart';
 
-String uri = 'http://192.168.50.146:8080';
+String uri = 'http://192.168.181.88:8080';
 // Map<String,Orders>? cart;
 Map<String,RestInfo> allRest={};
 

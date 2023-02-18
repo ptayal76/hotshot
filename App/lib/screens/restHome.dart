@@ -395,7 +395,7 @@ class _RestHomeState extends State<RestHome>
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             width: MediaQuery.of(context).size.width,
                             child: const Text(
-                              'Restaurantcontexts',
+                              'All Restaurants',
                               style: TextStyle(
                                 // color: Colors.black,
                                 fontSize: 18,

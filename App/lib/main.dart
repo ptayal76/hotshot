@@ -7,6 +7,7 @@ import 'package:hotshot/screens/authentication/shopkeeper/phone_verification.dar
 import 'package:hotshot/screens/dummy_checkout.dart';
 import 'package:hotshot/screens/home.dart';
 import 'package:hotshot/screens/insidestat.dart';
+import 'package:hotshot/screens/printorder.dart';
 import 'package:hotshot/screens/restHome.dart';
 import 'package:hotshot/screens/restaurantPage.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
                     // colorSchemeSeed: const Color(0xff5AB9EA)),
                 themeMode: themeProvider.themeMode,
                 // home: CustomerSignIn(),
-                home: Wrapper()),
+                home: ShopkeeperHomePage()),
           );
         });
   }

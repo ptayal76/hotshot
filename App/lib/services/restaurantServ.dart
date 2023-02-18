@@ -17,6 +17,7 @@ import '../model/dishInfo.dart';
 import 'package:hotshot/constants/constants.dart';
 import '../model/orderInfo.dart';
 import 'package:hotshot/constants/constants.dart';
+import 'package:http_parser/http_parser.dart';
 
 //String tokenFinal =
 //  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc293bmVyIjpmYWxzZSwiaWQiOiI2M2VkMTU2ODBjNTdkZmQ0NGU5MWI0ZjciLCJpYXQiOjE2NzY0ODE4OTZ9.U7DldEuyTdCyX99xbQgpW8YWaCpibKsdfkVCT_7Ppdw';
@@ -26,45 +27,105 @@ import 'package:hotshot/constants/constants.dart';
 
 class RestaurantServ {
   //String MONGO_URL = 'http://192.168.50.88:8080';
-  void postRestaurant(ShopVerificationInfo info, MyUser? user) async {
-    Map<String, dynamic> body = {
-      'ownerName': user!.fullName,
-      'restaurantName': info.shopName,
-      'phoneNumber': 'info.phoneNumber',
-      'email': user.email,
-      'location': info.location,
-      // 'timing': [
-      //   {
-      //     'start_time': info.startTime
-      //   },
-      //   {
-      //     'end_time': info.closeTime
-      //   }
-      // ],
-      'status': 'on',
-      // 'razorpayCred': jsonEncode(
-      //   {
-      //     'Key_id': info.keyId,
-      //     'KeySecret': info.secretKey
-      //   }
-      // )
-      'razorpayCredKey_id': info.keyId,
-      'razorpayCredKeySecret': info.secretKey
-    };
-    Map<String, String> customHeaders = {"content-type": "application/json"};
-    var pobj = jsonEncode(body);
+  void postRestaurant(ShopVerificationInfo info, MyUser? user,File? _image) async {
     String url = MONGO_URL + '/food/rest';
-    var res =
-        await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
+    var req=await http.MultipartRequest('post',Uri.parse(url));
+    req.headers.addAll({'Content-Type': 'application/json','Accept': 'application/json'});
+    req.files.add(await http.MultipartFile.fromPath('pic', _image!.path,contentType: MediaType.parse("image/png")));
+    req.fields['ownerName']=user!.fullName!;
+    req.fields['restaurantName']=info.shopName;
+    req.fields['phoneNumber']='info.phoneNumber';
+    req.fields['email']=user.email!;
+    req.fields['location']=info.location;
+    req.fields['status']='on';
+    req.fields['razorpayCredKey_id']=info.keyId;
+    req.fields['razorpayCredKeySecret']=info.secretKey;
+    print('***************');
+    var res=await req.send();
+    print(res.toString());
+    var responsed=await http.Response.fromStream(res);
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    var obj=jsonDecode(responsed.body);
+    print(responsed.body);
+    print(responsed.headers);
+    print(obj);
+    // Map<String, dynamic> body = {
+    //   'ownerName': user!.fullName,
+    //   'restaurantName': info.shopName,
+    //   'phoneNumber': 'info.phoneNumber',
+    //   'email': user.email,
+    //   'location': info.location,
+    //   'pic':
+    //   // 'timing': [
+    //   //   {
+    //   //     'start_time': info.startTime
+    //   //   },
+    //   //   {
+    //   //     'end_time': info.closeTime
+    //   //   }
+    //   // ],
+    //   'status': 'on',
+    //   'razorpayCred': jsonEncode(
+    //     {
+    //       'Key_id': info.keyId,
+    //       'KeySecret': info.secretKey
+    //     }
+    //   )
+    // // };
+    // Map<String, String> customHeaders = {"content-type": "application/json"};
+    // var pobj = jsonEncode(body);
+    // String url = MONGO_URL + '/food/rest';
+    // var res =
+    //     await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
 
-    SharedPrefs().setToken(res.headers['token']!);
-    final restID = jsonDecode(res.body)['_id'];
+    SharedPrefs().setToken(responsed.headers['token']!);
+    final restID = obj['_id'];
     print(restID);
 
     await SharedPrefs().setRestId(restID);
     await SharedPrefs().setRestCreated(true);
-    print('SUCCESS');
+    print('SUCCESSsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
   }
+  // Future<void> postRestaurant(ShopVerificationInfo info, MyUser? user) async {
+  //   Map<String, dynamic> body = {
+  //     'ownerName': user!.fullName,
+  //     'restaurantName': info.shopName,
+  //     'phoneNumber': 'info.phoneNumber',
+  //     'email': user.email,
+  //     'location': info.location,
+  //     // 'timing': [
+  //     //   {
+  //     //     'start_time': info.startTime
+  //     //   },
+  //     //   {
+  //     //     'end_time': info.closeTime
+  //     //   }
+  //     // ],
+  //     'status': 'on',
+  //     // 'razorpayCred': jsonEncode(
+  //     //   {
+  //     //     'Key_id': info.keyId,
+  //     //     'KeySecret': info.secretKey
+  //     //   }
+  //     // )
+  //     'razorpayCredKey_id': info.keyId,
+  //     'razorpayCredKeySecret': info.secretKey
+  //
+  //   };
+  //   Map<String, String> customHeaders = {"content-type": "application/json"};
+  //   var pobj = jsonEncode(body);
+  //   String url = MONGO_URL + '/food/rest';
+  //   var res =
+  //       await http.post(Uri.parse(url), headers: customHeaders, body: pobj);
+  //
+  //   SharedPrefs().setToken(res.headers['token']!);
+  //   final restID = jsonDecode(res.body)['_id'];
+  //   print(restID);
+  //
+  //   await SharedPrefs().setRestId(restID);
+  //   await SharedPrefs().setRestCreated(true);
+  //   print('************************************SUCCESS*******************************************');
+  // }
 
   Future<List<DishInfo>?> fetchMenu(BuildContext context, String restID) async {
     List<DishInfo> menu = [];
@@ -259,6 +320,8 @@ class RestaurantServ {
       http.Response res =
           await http.get(Uri.parse('${MONGO_URL}/food/rest/$restid'));
       var obj = jsonDecode(res.body);
+
+      print(res.body);
       // print(obj.runtimeType);
       // print(obj.length);
       // print(res.body);

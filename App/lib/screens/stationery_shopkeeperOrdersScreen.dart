@@ -23,12 +23,12 @@ class _StationeryShopkeeperOrdersScreenState
     return Scaffold(
         appBar: AppBar(
           // backgroundColor: greenColor,
-          actions: const [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/droppedImage.jpg'),
-              // backgroundColor: greenColor,
-            ),
-          ],
+          // actions: const [
+          //   CircleAvatar(
+          //     backgroundImage: AssetImage('assets/droppedImage.jpg'),
+          //     // backgroundColor: greenColor,
+          //   ),
+          // ],
           title: const Text(
             'Current Orders',
             style: TextStyle(

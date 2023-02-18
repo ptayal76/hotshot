@@ -27,7 +27,7 @@ class _MenuCardState extends State<MenuCard> {
     return Card(
       //color: Colors.blueGrey.shade200,
       elevation: 0.0,
-      // shadowColor: Colors.grey,
+     // shadowColor: Colors.grey,
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -61,7 +61,7 @@ class _MenuCardState extends State<MenuCard> {
                         TextSpan(
                             text: widget.dish.name,
                             style:  TextStyle(
-                              fontWeight: FontWeight.bold,fontSize: 18,color: (themeProvider.isDarkMode)?Colors.white:Colors.black,)),
+                                fontWeight: FontWeight.bold,fontSize: 18,color: (themeProvider.isDarkMode)?Colors.white:Colors.black,)),
 
                       ),
                       RichText(
@@ -71,8 +71,8 @@ class _MenuCardState extends State<MenuCard> {
                             text:
                             'Rate: ₹${widget.dish.price}\n',
                             style:  TextStyle(
-                              fontWeight:
-                              FontWeight.w200,fontSize: 15,color: (themeProvider.isDarkMode)?Colors.white:Colors.black,)),
+                                fontWeight:
+                                FontWeight.w200,fontSize: 15,color: (themeProvider.isDarkMode)?Colors.white:Colors.black,)),
 
                       ),
                       Row(
@@ -142,11 +142,11 @@ class _MenuCardState extends State<MenuCard> {
             //     ],
             //   ),
             // )
-          ],
+                ],
 
-        ),
+              ),
 
-      ),
+            ),
 
 
     );

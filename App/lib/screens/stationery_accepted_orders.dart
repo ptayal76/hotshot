@@ -23,12 +23,12 @@ class _StationeryAcceptedOrdersScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: const [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/droppedImage.jpg'),
-              // backgroundColor: greenColor,
-            ),
-          ],
+          // actions: const [
+          //   CircleAvatar(
+          //     backgroundImage: AssetImage('assets/droppedImage.jpg'),
+          //     // backgroundColor: greenColor,
+          //   ),
+          // ],
           title: const Text(
             'Accepted Orders',
             style: TextStyle(

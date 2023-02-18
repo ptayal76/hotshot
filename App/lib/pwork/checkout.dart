@@ -115,19 +115,19 @@ class _checkoutState extends State<checkout> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
 
-    try {
-      Map<String,dynamic> json = {'razorpay_payment_id': '${response.paymentId}'};
-      print(response.toString());
-      print(response.runtimeType);
-      print(response.signature.toString());
-      print(response.orderId.toString());
-      await OrderServ().acknowledge(context, refOrder!.id, json);
-      Fluttertoast.showToast(
-        msg: "SUCCESS: ${response.paymentId}",
-        timeInSecForIosWeb: 4,
-      );
-    }
-    catch(e)
+  try {
+    Map<String,dynamic> json = {'razorpay_payment_id': '${response.paymentId}'};
+    print(response.toString());
+    print(response.runtimeType);
+    print(response.signature.toString());
+    print(response.orderId.toString());
+    await OrderServ().acknowledge(context, refOrder!.id, json);
+    Fluttertoast.showToast(
+      msg: "SUCCESS: ${response.paymentId}",
+      timeInSecForIosWeb: 4,
+    );
+  }
+  catch(e)
     {
       print(e);
     }
@@ -212,8 +212,8 @@ class _checkoutState extends State<checkout> {
 
 
                                       Text(value.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
-                                      // Container(width: 2,color: Colors.black,),
-                                      // SizedBox(width: 2,child: Container(color: Colors.red,),),
+                                     // Container(width: 2,color: Colors.black,),
+                                     // SizedBox(width: 2,child: Container(color: Colors.red,),),
                                       IconButton(onPressed: (){
                                         postcartdish(fetchedDishes.keys.elementAt(index).id);
                                         fetchorder();
@@ -223,19 +223,19 @@ class _checkoutState extends State<checkout> {
                                           size: 15,
                                         ),
                                         style: ButtonStyle( backgroundColor: MaterialStatePropertyAll<Color>(themeProvider.isDarkMode?Colors.white12:Colors.black12),),
-
+                                      
                                       ),
 
                                     ],
                                   ),
                                   decoration: BoxDecoration(
-                                    //border: Border.all(width: 0.2,color: Colors.red),
-                                    borderRadius: BorderRadius.circular(28.0),
-                                    // color: Colors.red[50]
+                                      //border: Border.all(width: 0.2,color: Colors.red),
+                                      borderRadius: BorderRadius.circular(28.0),
+                                   // color: Colors.red[50]
 
                                   ),
                                 ),
-                                // SizedBox(height: 5,),
+                               // SizedBox(height: 5,),
                                 Text('₹'+(value*(fetchedDishes.keys.elementAt(index).price!)).toString() , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),)
                                 //
                               ],
@@ -295,16 +295,20 @@ class _checkoutState extends State<checkout> {
                 child:Container(
 
                   height: 50,
-                  decoration: BoxDecoration(color: Color.fromARGB(255, 239, 102, 105)),
-                  child: Center(
-                      child: Text(
-                    'BUY NOW : ₹${refOrder!.total.toString()}',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-                )),
-          )]));
+                  decoration: BoxDecoration(color: const Color(0xff307A59),borderRadius: BorderRadius.circular(60)),
+                  child: Center(child: Text('BUY NOW : ₹${refOrder!.total.toString()}',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),)),
+                )
+
+            ),
+          ),
+        ],
+        //physics: BouncingScrollPhysics(),
+      ),
+
+     // bottomNavigationBar:
+
+
+    );
   }
 }

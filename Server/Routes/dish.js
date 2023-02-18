@@ -86,7 +86,7 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
                     return res.status(200).json(newDish);
                 }
             );
-            await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+             streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
         
         
         
@@ -110,6 +110,7 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
 //UPDATE A DISH
 router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res) => {
     try {
+        console.log(req.body);
         const dish = await Dish.findById(req.params.dishId)
         if (!dish) {
             return res.status(400).json('Wrong DishId');
@@ -121,7 +122,7 @@ router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res
             else {
                 dish.InStock = true;
             }
-            dish.save();
+            await dish.save();
             return res.status(200).json(dish);
         }
         else {
