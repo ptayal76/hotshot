@@ -53,15 +53,27 @@ router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, 
                  async (result,error) =>{
                     newDish.pic = result.secure_url
                     newDish.Rest_Id = req.restaurant;
-                    const savedDish = await newDish.save();
+                    console.log("hereeeeeee");
+                     await newDish.save();
                     const restaurant = await Owner.findById(req.restaurant);
-                    restaurant.menu.push(savedDish);
+                    restaurant.menu.push(newDish);
                     await restaurant.save();
-                    return res.status(200).json(savedDish);
+                    
+                    return res.status(200).json(newDish);
                 }
                 );
             
              streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+        }
+        else
+        {
+            newDish.Rest_Id = req.restaurant;
+                    const savedDish = await newDish.save();
+                    const restaurant = await Owner.findById(req.restaurant);
+                    restaurant.menu.push(savedDish);
+                    
+                    await restaurant.save();
+                    
         }
         
     } catch (err) {

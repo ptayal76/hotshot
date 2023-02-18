@@ -81,15 +81,20 @@ router.get('/food/rest/:restid', async (req, res) => {
 //CREATE A RESTAURANT
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
+    console.log(req.body);
+    console.log("registerrrr111");
     var existingRest = await Restaurant.findOne({ email: req.body.email });
+    console.log(existingRest);
     if (!existingRest) {
       const restaurant = new Restaurant(req.body);
       if (req.file) {
         let cld_upload_stream = cloudinary.uploader.upload_stream(
           
           function( result,error) {
+             
               restaurant.pic = result.secure_url
               existingRest = restaurant;
+              
               restaurant.save();
               jwt.sign(
                 { isowner: true, id: existingRest._id },
@@ -105,6 +110,22 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
 
       }
+
+      else
+      {
+        existingRest = restaurant;
+              console.log(restaurant);
+              console.log("regesiterr2222")
+              restaurant.save();
+              jwt.sign(
+                { isowner: true, id: existingRest._id },
+                process.env.JWT_SEC,
+                (err, token) => {
+                  res.header('token', `${token}`);
+                  return res.json(existingRest);
+                }
+              );
+      }
       
     }
     
@@ -116,6 +137,8 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
 //LOGIN FOR RESTAURANT
 router.post('/food/rest/login', async (req, res) => {
   try {
+    console.log(req.body)
+    console.log("loginnnnnn")
     const restaurant = await Restaurant.findOne({ email: req.body.email });
     if (!restaurant) {
       return res.status(403).json({ message: "You are not registered" });
