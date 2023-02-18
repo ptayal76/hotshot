@@ -46,36 +46,27 @@ router.get('/food/dish/:dishId', async (req, res) => {
 router.post('/food/dish', upload.single('pic'), verifyToken, authenticateOwner, async (req, res) => {
     try {
         const newDish = new Dish(req.body);
-        if(req.file)
-        {
+        if (req.file) {
             let cld_upload_stream = cloudinary.uploader.upload_stream(
-          
-                 async (result,error) =>{
+                async (result, error) => {
                     newDish.pic = result.secure_url
                     newDish.Rest_Id = req.restaurant;
-                    console.log("hereeeeeee");
-                     await newDish.save();
+                    await newDish.save();
                     const restaurant = await Owner.findById(req.restaurant);
                     restaurant.menu.push(newDish);
                     await restaurant.save();
-                    
                     return res.status(200).json(newDish);
                 }
-                );
-            
-             streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+            );
+            streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
         }
-        else
-        {
+        else {
             newDish.Rest_Id = req.restaurant;
-                    const savedDish = await newDish.save();
-                    const restaurant = await Owner.findById(req.restaurant);
-                    restaurant.menu.push(savedDish);
-                    
-                    await restaurant.save();
-                    
+            const savedDish = await newDish.save();
+            const restaurant = await Owner.findById(req.restaurant);
+            restaurant.menu.push(savedDish);
+            await restaurant.save();
         }
-        
     } catch (err) {
         return res.status(500).json(err);
     }

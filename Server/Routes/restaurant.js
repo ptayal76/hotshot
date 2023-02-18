@@ -23,9 +23,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDNAME||'dmuviaz8x',
-  api_key: process.env.APIKEY||232983377535948,
-  api_secret: process.env.APISECRET||'eGv35fpj-wodC6lw15MhBHvDb3M',
+  cloud_name: process.env.CLOUDNAME || 'dmuviaz8x',
+  api_key: process.env.APIKEY || 232983377535948,
+  api_secret: process.env.APISECRET || 'eGv35fpj-wodC6lw15MhBHvDb3M',
 });
 
 //GET ALL RESTAURANTS BY QUERY
@@ -67,7 +67,6 @@ router.get('/food/rest/:restid', async (req, res) => {
   try {
     const id = req.params.restid;
     const restaurant = await Restaurant.findById(id);
-    console.log(restaurant);
     if (!restaurant) {
       return res.status(400).json('Wrong RestId');
     }
@@ -80,51 +79,40 @@ router.get('/food/rest/:restid', async (req, res) => {
 //CREATE A RESTAURANT
 router.post('/food/rest', upload.single('pic'), async (req, res) => {
   try {
-    console.log(req.body);
-    console.log("registerrrr111");
     var existingRest = await Restaurant.findOne({ email: req.body.email });
-    console.log(existingRest);
     if (!existingRest) {
       const restaurant = new Restaurant(req.body);
       if (req.file) {
         let cld_upload_stream = cloudinary.uploader.upload_stream(
-          function( result,error) {
-             
-              restaurant.pic = result.secure_url
-              existingRest = restaurant;
-              
-              restaurant.save();
-              jwt.sign(
-                { isowner: true, id: existingRest._id },
-                process.env.JWT_SEC,
-                (err, token) => {
-                  res.header('token', `${token}`);
-                  return res.json(existingRest);
-                }
-              );
+          function (result, error) {
+            restaurant.pic = result.secure_url
+            existingRest = restaurant;
+            restaurant.save();
+            jwt.sign(
+              { isowner: true, id: existingRest._id },
+              process.env.JWT_SEC,
+              (err, token) => {
+                res.header('token', `${token}`);
+                return res.json(existingRest);
+              }
+            );
           }
-          );
-       streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+        );
+        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
       }
-
-      else
-      {
+      else {
         existingRest = restaurant;
-              console.log(restaurant);
-              console.log("regesiterr2222")
-              restaurant.save();
-              jwt.sign(
-                { isowner: true, id: existingRest._id },
-                process.env.JWT_SEC,
-                (err, token) => {
-                  res.header('token', `${token}`);
-                  return res.json(existingRest);
-                }
-              );
+        restaurant.save();
+        jwt.sign(
+          { isowner: true, id: existingRest._id },
+          process.env.JWT_SEC,
+          (err, token) => {
+            res.header('token', `${token}`);
+            return res.json(existingRest);
+          }
+        );
       }
-      
     }
-    
   } catch (err) {
     return res.status(400).send(err.message);
   }
@@ -133,8 +121,6 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
 //LOGIN FOR RESTAURANT
 router.post('/food/rest/login', async (req, res) => {
   try {
-    console.log(req.body)
-    console.log("loginnnnnn")
     const restaurant = await Restaurant.findOne({ email: req.body.email });
     if (!restaurant) {
       return res.status(403).json({ message: "You are not registered" });
@@ -170,7 +156,7 @@ router.put('/food/rest/:restid', verifyToken, authenticateOwner, authorizeOwner,
 });
 
 //RATE A RESTAURANT
-router.put('/food/rest/rate/:restid', verifyToken, authenticateUser, authorizeUser, async (req, res) => {
+router.put('/food/rest/rate/:restid', verifyToken, authenticateUser, async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.restid);
     const user = await User.findById(req.user);
