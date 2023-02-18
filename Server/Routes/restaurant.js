@@ -144,12 +144,19 @@ router.post('/food/rest/login', async (req, res) => {
 //UPDATE A RESTAURANT BY ID
 router.put('/food/rest/:restid', verifyToken, authenticateOwner, authorizeOwner, async (req, res) => {
   try {
-    const restaurant = await Restaurant.findByIdAndUpdate(
-      req.params.restid,
-      req.body,
-      { runValidators: true, new: true }
-    );
-    return res.json(restaurant);
+    const restaurant = await Restaurant.findById(req.params.restid);
+    if(!restaurant){
+      return res.status(400).json('Wrong RestId');
+    }
+    if(restaurant._id == req.restaurant){
+      if(restaurant.status == 'on') {
+        restaurant.status = 'off';
+      } else {
+        restaurant.status = 'on';
+      }
+      restaurant.save();
+      return res.status(200).json(restaurant);
+    }
   } catch (err) {
     return res.status(400).send(err.message);
   }
@@ -158,6 +165,7 @@ router.put('/food/rest/:restid', verifyToken, authenticateOwner, authorizeOwner,
 //RATE A RESTAURANT
 router.put('/food/rest/rate/:restid', verifyToken, authenticateUser, async (req, res) => {
   try {
+    console.log(req.body, req.body.rating);
     const restaurant = await Restaurant.findById(req.params.restid);
     const user = await User.findById(req.user);
     var found = 0;

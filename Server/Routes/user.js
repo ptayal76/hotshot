@@ -22,13 +22,25 @@ const upload = multer({ storage: storage });
 router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req, res) => {
     try {
         const id = req.params.restId;
+        var found=0;
         const restaurant = await Restaurant.findById(id);
         if(!restaurant){
             return res.status(400).json('Wrong RestaurantId');
         }
         const user = await User.findById(req.user);
-        user.favRest.push(restaurant);
+        console.log(user.favRest.length);
+        for (let i=0;i<user.favRest.length;i++){
+            if(user.favRest[i]._id == id){
+                found=1;
+            }
+        }
+        if(!found){
+            user.favRest.push(restaurant);
+        } else {
+            user.favRest.pull(restaurant);
+        }
         await user.save();
+        console.log(user.favRest);
         return res.status(200).json('Added to favorites!');
     } catch (err) {
         return res.status(400).send(err.message);
