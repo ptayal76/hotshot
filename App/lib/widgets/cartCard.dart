@@ -23,7 +23,7 @@ class _CartCardState extends State<CartCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: const Color.fromARGB(255, 255, 140, 140),
+        color: Colors.teal,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 10.0,
@@ -81,7 +81,7 @@ class _CartCardState extends State<CartCard> {
                         )
                       ],
                     ),
-                    // color: const Color.fromARGB(255, 239, 102, 105),
+                    // color: Colors.teal[800],
                   ),  //rest.name
 
 

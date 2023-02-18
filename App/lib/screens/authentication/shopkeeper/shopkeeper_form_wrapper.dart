@@ -85,8 +85,7 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
       } else {
         return const MainPage();
       }
-    }
-    else{
+    } else {
       return ShopkeeperVerificationForm();
     }
   }

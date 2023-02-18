@@ -9,22 +9,20 @@ RestInfo restInfoFromJson(String str) => RestInfo.fromJson(json.decode(str));
 String restInfoToJson(RestInfo data) => json.encode(data.toJson());
 
 class RestInfo {
-  RestInfo({
-    required this.id,
-    required this.ownerName,
-    required this.restaurantName,
-    required this.phoneNumber,
-    required this.email,
-    this.menu,
-    required this.location,
-    required this.status,
-    // required this.orderTypes,
-    this.pic,
-    required this.rating,
-    this.usersRated,
-    this.start_time,
-    this.close_time
-  });
+  RestInfo(
+      {required this.id,
+      required this.ownerName,
+      required this.restaurantName,
+      required this.phoneNumber,
+      required this.email,
+      this.menu,
+      required this.location,
+      required this.status,
+      // required this.orderTypes,
+      this.pic,
+      // this.start_time,
+      // this.close_time
+      });
 
   String id;
   String ownerName;
@@ -35,10 +33,8 @@ class RestInfo {
   String location;
   String status;
   String? pic;
-  double rating = 0.0;
-  List? usersRated;
-  String? start_time;
-  String? close_time;
+  // String start_time = '9:00';
+  // String close_time = '21:00';
   // orderTypes;
   // List<dynamic>? timing;
 
@@ -55,15 +51,11 @@ class RestInfo {
                 ),
               )
             : [],
-        // start_time: json[],
-        usersRated: json["usersRated"],
         // List<String>.from(json["menu"].map((x) => x)),
         location: json["location"],
         status: json["status"],
         // orderTypes: OrderTypes.fromJson(json["order_types"]),
         pic: json['pic'] != null ? json["pic"] : null,
-        rating: json['rating'],
-        
         // timing: json['timing'] != null ? List<String>.from(json['timing']!.map((x) => x,),) : [],
         // List<dynamic>.from(json["timing"].map((x) => x)),
       );
@@ -79,8 +71,6 @@ class RestInfo {
         // List<dynamic>.from(menu.map((x) => x)),
         "location": location,
         "status": status,
-        "rating": rating,
-
         // "order_types": orderTypes.toJson(),
         // "timing":timing == null ? [] : List<dynamic>.from(timing!.map((x) => x)),
         // List<dynamic>.from(timing.map((x) => x)),

@@ -165,7 +165,7 @@ class _StatHomeState extends State<StatHome>
                               child: const Text(
                                 'Stationeries ',
                                 style: TextStyle(
-                                  //color: Colors.black,
+                                  color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),

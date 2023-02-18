@@ -45,9 +45,8 @@ const StatOrder = new schema({
             type: String
         }
     },
-    data: {
-        data: Buffer,
-        contentType: String
+    pdf: {
+        type: String
     }
 })
 

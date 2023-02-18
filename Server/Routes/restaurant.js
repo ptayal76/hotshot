@@ -41,9 +41,7 @@ router.get('/food/rest', async (req, res) => {
       }
     }
     const restaurants = await Restaurant.find(obj);
-    console.log(restaurants);
     return res.json(restaurants);
-    
   } catch (err) {
     return res.status(400).send(err.message);
   }
@@ -293,7 +291,7 @@ router.post('/food/rest', upload.single('pic'), async (req, res) => {
               );
           }
         );
-         streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+        await streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
       }
     }
   } catch (err) {
