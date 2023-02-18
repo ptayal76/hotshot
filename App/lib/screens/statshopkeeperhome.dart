@@ -105,12 +105,10 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
 
     return //isLoading ? const Loading() : 
     Scaffold(
+      drawer: MyShopkeeperDrawer(),
       appBar: AppBar(
-        actions: const [
-          CircleAvatar(
-            backgroundImage: AssetImage('assets/droppedImage.jpg'),
-          ),
-        ],
+        
+        
         title: Text(restName,),
         centerTitle: true,
         bottom: PreferredSize(
@@ -173,7 +171,7 @@ class _StatShopkeeperHomePageState extends State<StatShopkeeperHomePage> {
           )
         ),
       ),
-      drawer: MyNavigationDrawer(),
+      //drawer: MyNavigationDrawer(),
       body: ListView.builder(
             itemCount: 8,
             itemBuilder:  (context, index){

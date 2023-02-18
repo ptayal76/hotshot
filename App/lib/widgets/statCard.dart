@@ -47,7 +47,7 @@ class _StatCardState extends State<StatCard> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
             child: Container(
-              height: 60,
+              height: 65,
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),

@@ -74,7 +74,17 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
     print('BUILD METHOD RAN');
     // getData(context);
 
-    return Scaffold(
+    return 
+        Scaffold(
+          floatingActionButton: FloatingActionButton(onPressed: () {
+            Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => add_item(),
+                                  ));
+          },
+          child: Icon(Icons.add),
+          ),
             appBar: AppBar(
               actions: const [
                 CircleAvatar(
