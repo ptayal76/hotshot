@@ -30,7 +30,7 @@ class _RateMeState extends State<RateMe> {
                 "Rate Your Experience",
                 style: GoogleFonts.balooThambi2(
                   // color: color,
-                  fontSize: 40,
+                  fontSize: 30,
                 ),
               )),
             ),

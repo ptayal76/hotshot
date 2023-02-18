@@ -365,10 +365,10 @@ class InsideStatState extends State<InsideStat> with SingleTickerProviderStateMi
                     : SizedBox(
                         height: 0,
                       ),
-                      Lottie.asset('assets/lottie/print.json'), 
+                      Lottie.asset('assets/lottie/print.json',height: 300), 
                       Padding(
                             padding: const EdgeInsets.only(left: 56,right: 56,
-                            top: 24),
+                            top: 4),
                             child: ElevatedButton(
                               onPressed: () {
                                  Navigator.push(

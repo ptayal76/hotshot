@@ -66,24 +66,24 @@ class _PrintOrderState extends State<PrintOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 230, 213, 247),
+      //backgroundColor: Color.fromARGB(255, 230, 213, 247),
       appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Center(
-              child: Text(
+        centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 239, 102, 105),
+          title: Text(
             "Print details",
-            style: TextStyle(fontSize: 30),
-          ))),
+            style: TextStyle(fontSize: 25),
+          )),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: Text("Make a print order",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500)),
-            ),
-          ),
+          // Center(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(top: 20, bottom: 20),
+          //     child: Text("Make a print order",
+          //         style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500)),
+          //   ),
+          // ),
           Column(
             children: [
               Padding(
@@ -177,7 +177,7 @@ class _PrintOrderState extends State<PrintOrder> {
                                     child: Text("Choose an image"),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
+                                      //backgroundColor: Colors.green,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10))),
                                 ),
@@ -186,7 +186,7 @@ class _PrintOrderState extends State<PrintOrder> {
                                   icon: Icon(Icons.file_copy),
                                   label: Text("Choose a document"),
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
+                                      //backgroundColor: Colors.green,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10))),
                                 ),
@@ -234,31 +234,142 @@ class _PrintOrderState extends State<PrintOrder> {
                   top: 8,
                 ),
                 child: Card(
-                  child: Container(
-                    height: 340,
-                    width: 364,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 15),
-                          child: Text(
-                            "Choose Print option:",
-                            style: TextStyle(fontSize: 24),
+                  child: Flexible(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 15),
+                            child: Text(
+                              "Choose Print option:",
+                              style: TextStyle(fontSize: 24),
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 40,
-                              child: ListTile(
+                          Column(
+                            children: [
+                              Container(
+                                height: 40,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Colored A4",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options2>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options2.CA4,
+                                    groupValue: option2,
+                                    onChanged: (Options2? value) {
+                                      setState(() {
+                                        option2 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Colored A3",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options2>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options2.CA3,
+                                    groupValue: option2,
+                                    onChanged: (Options2? value) {
+                                      setState(() {
+                                        option2 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Black and White A4",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options2>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options2.BWA4,
+                                    groupValue: option2,
+                                    onChanged: (Options2? value) {
+                                      setState(() {
+                                        option2 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Black and White A3",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options2>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options2.BWA3,
+                                    groupValue: option2,
+                                    onChanged: (Options2? value) {
+                                      setState(() {
+                                        option2 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Poster",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options2>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options2.Poster,
+                                    groupValue: option2,
+                                    onChanged: (Options2? value) {
+                                      setState(() {
+                                        option2 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Certificate",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options2>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options2.Certificate,
+                                    groupValue: option2,
+                                    onChanged: (Options2? value) {
+                                      setState(() {
+                                        option2 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              ListTile(
                                 title: const Text(
-                                  "Colored A4",
+                                  "PVC print",
                                   style: TextStyle(fontSize: 22),
                                 ),
                                 leading: Radio<Options2>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options2.CA4,
+                                  //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                  value: Options2.PVC,
                                   groupValue: option2,
                                   onChanged: (Options2? value) {
                                     setState(() {
@@ -267,121 +378,10 @@ class _PrintOrderState extends State<PrintOrder> {
                                   },
                                 ),
                               ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: ListTile(
-                                title: const Text(
-                                  "Colored A3",
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                leading: Radio<Options2>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options2.CA3,
-                                  groupValue: option2,
-                                  onChanged: (Options2? value) {
-                                    setState(() {
-                                      option2 = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: ListTile(
-                                title: const Text(
-                                  "Black and White A4",
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                leading: Radio<Options2>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options2.BWA4,
-                                  groupValue: option2,
-                                  onChanged: (Options2? value) {
-                                    setState(() {
-                                      option2 = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: ListTile(
-                                title: const Text(
-                                  "Black and White A3",
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                leading: Radio<Options2>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options2.BWA3,
-                                  groupValue: option2,
-                                  onChanged: (Options2? value) {
-                                    setState(() {
-                                      option2 = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: ListTile(
-                                title: const Text(
-                                  "Poster",
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                leading: Radio<Options2>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options2.Poster,
-                                  groupValue: option2,
-                                  onChanged: (Options2? value) {
-                                    setState(() {
-                                      option2 = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: ListTile(
-                                title: const Text(
-                                  "Certificate",
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                leading: Radio<Options2>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options2.Certificate,
-                                  groupValue: option2,
-                                  onChanged: (Options2? value) {
-                                    setState(() {
-                                      option2 = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: const Text(
-                                "PVC print",
-                                style: TextStyle(fontSize: 22),
-                              ),
-                              leading: Radio<Options2>(
-                                activeColor: Color.fromARGB(255, 29, 146, 33),
-                                value: Options2.PVC,
-                                groupValue: option2,
-                                onChanged: (Options2? value) {
-                                  setState(() {
-                                    option2 = value;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -394,31 +394,47 @@ class _PrintOrderState extends State<PrintOrder> {
                   top: 8,
                 ),
                 child: Card(
-                  child: Container(
-                    height: 125,
-                    width: 364,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 15),
-                          child: Text(
-                            "Choose orientation:",
-                            style: TextStyle(fontSize: 22),
+                  child: Flexible(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 15),
+                            child: Text(
+                              "Choose orientation:",
+                              style: TextStyle(fontSize: 22),
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 30,
-                              child: ListTile(
+                          Column(
+                            children: [
+                              Container(
+                                height: 30,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Portrait",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options.Portrait,
+                                    groupValue: option,
+                                    onChanged: (Options? value) {
+                                      setState(() {
+                                        option = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              ListTile(
                                 title: const Text(
-                                  "Portrait",
+                                  "Landscape",
                                   style: TextStyle(fontSize: 22),
                                 ),
                                 leading: Radio<Options>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options.Portrait,
+                                  //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                  value: Options.Landscape,
                                   groupValue: option,
                                   onChanged: (Options? value) {
                                     setState(() {
@@ -427,26 +443,10 @@ class _PrintOrderState extends State<PrintOrder> {
                                   },
                                 ),
                               ),
-                            ),
-                            ListTile(
-                              title: const Text(
-                                "Landscape",
-                                style: TextStyle(fontSize: 22),
-                              ),
-                              leading: Radio<Options>(
-                                activeColor: Color.fromARGB(255, 29, 146, 33),
-                                value: Options.Landscape,
-                                groupValue: option,
-                                onChanged: (Options? value) {
-                                  setState(() {
-                                    option = value;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -459,31 +459,47 @@ class _PrintOrderState extends State<PrintOrder> {
                   top: 8,
                 ),
                 child: Card(
-                  child: Container(
-                    height: 125,
-                    width: 364,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 15),
-                          child: Text(
-                            "Do you want it printed both sides?",
-                            style: TextStyle(fontSize: 22),
+                  child: Flexible(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 15),
+                            child: Text(
+                              "Do you want it printed both sides?",
+                              style: TextStyle(fontSize: 22),
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 30,
-                              child: ListTile(
+                          Column(
+                            children: [
+                              Container(
+                                height: 30,
+                                child: ListTile(
+                                  title: const Text(
+                                    "Yes",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                  leading: Radio<Options3>(
+                                    //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                    value: Options3.Yes,
+                                    groupValue: option3,
+                                    onChanged: (Options3? value) {
+                                      setState(() {
+                                        option3 = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              ListTile(
                                 title: const Text(
-                                  "Yes",
+                                  "No",
                                   style: TextStyle(fontSize: 22),
                                 ),
                                 leading: Radio<Options3>(
-                                  activeColor: Color.fromARGB(255, 29, 146, 33),
-                                  value: Options3.Yes,
+                                  //activeColor: Color.fromARGB(255, 29, 146, 33),
+                                  value: Options3.No,
                                   groupValue: option3,
                                   onChanged: (Options3? value) {
                                     setState(() {
@@ -492,26 +508,10 @@ class _PrintOrderState extends State<PrintOrder> {
                                   },
                                 ),
                               ),
-                            ),
-                            ListTile(
-                              title: const Text(
-                                "No",
-                                style: TextStyle(fontSize: 22),
-                              ),
-                              leading: Radio<Options3>(
-                                activeColor: Color.fromARGB(255, 29, 146, 33),
-                                value: Options3.No,
-                                groupValue: option3,
-                                onChanged: (Options3? value) {
-                                  setState(() {
-                                    option3 = value;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -554,7 +554,7 @@ class _PrintOrderState extends State<PrintOrder> {
                 padding: const EdgeInsets.only(top: 16, bottom: 100),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_copiesTextController.text == null) {
+                    if ((_copiesTextController.text == null) || (_copiesTextController.text == "")) {
                       Widget okbutton = TextButton(
                           onPressed: () {
                             Navigator.of(context, rootNavigator: true).pop();
