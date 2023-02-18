@@ -25,7 +25,7 @@ const restaurant = new schema({
         }
     ],
     pic: {
-        type:String
+        type: String
     },
     razorpayCredKey_id: {
         type: String,
@@ -56,7 +56,7 @@ const restaurant = new schema({
     status: {
         type: String,
         enum: ['on', 'off'],
-        required: true
+        required: true,
     },
     order_types: {
         notCollected: [

@@ -32,7 +32,8 @@ const StatOrder = new schema({
     },
     total: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     timeOfOrder: {
         type: Date
