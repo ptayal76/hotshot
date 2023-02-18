@@ -41,7 +41,9 @@ router.get('/food/rest', async (req, res) => {
       }
     }
     const restaurants = await Restaurant.find(obj);
+    console.log(restaurants);
     return res.json(restaurants);
+    
   } catch (err) {
     return res.status(400).send(err.message);
   }
