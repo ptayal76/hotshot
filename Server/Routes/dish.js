@@ -93,11 +93,15 @@ router.put('/food/dish/:dishId', verifyToken, authenticateOwner, async (req, res
 router.delete('/food/dish/:dish_id', verifyToken, authenticateOwner, async (req, res) => {
     try {
         const dish = await Dish.findById(req.params.dish_id);
+        const restaurant=await Restaurant.findById(dish.Rest_Id);
         if (!dish) {
             return res.status(400).json('Wrong DishId');
         }
         if (dish && dish.Rest_Id == req.restaurant) {
             await Dish.findByIdAndDelete(req.params.dish_id);
+            const idx=restaurant.menu.indexOf(`${req.params.dish_id}`);
+            restaurant.menu.splice(idx,1);
+            await restaurant.save();
             return res.status(200).json(dish);
         }
         else {
