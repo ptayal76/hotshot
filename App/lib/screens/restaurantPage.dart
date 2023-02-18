@@ -510,230 +510,235 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                     height: (9+161.8*5+150),
                     child: ListView.builder(
                       itemCount: dishes?.length,
-                      itemBuilder: (context, index) => Column(
-                        children: [
-                          // Text(
-                          //   "  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ",
-                          //   style: TextStyle(
-                          //       color: Color.fromARGB(255, 199, 198, 198)),
-                          // ),
-                          Divider(
-                            thickness: 2,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      itemBuilder: (context, index) => AbsorbPointer(
+                        absorbing: (dishes![index].InStock)?false:true,
+                        child: ColorFiltered(
+                          colorFilter: (dishes![index].InStock) ? ColorFilter.mode(Colors.white, BlendMode.modulate):ColorFilter.mode(Color(0xFFE0E0E0), BlendMode.saturation),
+                          child: Column(
                             children: [
-                              Column(
+                              // Text(
+                              //   "  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ",
+                              //   style: TextStyle(
+                              //       color: Color.fromARGB(255, 199, 198, 198)),
+                              // ),
+                              Divider(
+                                thickness: 2,
+                              ),
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 12),
-                                          child: Wrap(
-                                              crossAxisAlignment: WrapCrossAlignment.center,
-                                              children: [
-                                                // Icon(Icons.location_pin, size: 12, color: Colors.white),
-                                                Stack(
-                                                  alignment: Alignment.center,
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 4),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 12),
+                                              child: Wrap(
+                                                  crossAxisAlignment: WrapCrossAlignment.center,
                                                   children: [
-                                                    Icon(
-                                                      Icons.crop_square_sharp,
-                                                      color: (dishes![index].category == 'veg')
-                                                          ? Colors.green
-                                                          : Colors.red,
-                                                      size: 18,
+                                                    // Icon(Icons.location_pin, size: 12, color: Colors.white),
+                                                    Stack(
+                                                      alignment: Alignment.center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.crop_square_sharp,
+                                                          color: (dishes![index].category == 'veg')
+                                                              ? Colors.green
+                                                              : Colors.red,
+                                                          size: 18,
+                                                        ),
+                                                        Icon(Icons.circle,
+                                                            color: (dishes![index].category == 'veg')
+                                                                ? Colors.green
+                                                                : Colors.red,
+                                                            size: 7),
+                                                      ],
                                                     ),
-                                                    Icon(Icons.circle,
-                                                        color: (dishes![index].category == 'veg')
-                                                            ? Colors.green
-                                                            : Colors.red,
-                                                        size: 7),
-                                                  ],
-                                                ),
 
-                                              ]),
-                                          // child: Image.asset(
-                                          //   "assets/Veg.png",
-                                          //   height: 20,
-                                          // ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromARGB(
-                                                  255, 244, 100, 56),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(6)),
+                                                  ]),
+                                              // child: Image.asset(
+                                              //   "assets/Veg.png",
+                                              //   height: 20,
+                                              // ),
                                             ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: 2.0, horizontal: 6.0),
-                                              child: Text(
-                                                dishes![index].suggestedTime.toString(),
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w500),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(left: 10),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 244, 100, 56),
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(6)),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                      vertical: 2.0, horizontal: 6.0),
+                                                  child: Text(
+                                                    dishes![index].suggestedTime.toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                ),
                                               ),
                                             ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5, left: 12, bottom: 8),
+                                        child: Text(
+                                          dishes![index].name!,
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 12, right: 12),
+                                        child: Text(
+                                          "₹${dishes![index].price}",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only( top: 8,right: 16),
+                                    child: Stack(children: [
+                                      Container(
+                                        height: 140,
+                                      ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Container(
+                                          height: 120,
+                                          width: 120,
+                                          child: Image(
+                                            image: NetworkImage(dishes![index].pic!),
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, left: 12, bottom: 8),
-                                    child: Text(
-                                      dishes![index].name!,
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 12, right: 12),
-                                    child: Text(
-                                      "₹${dishes![index].price}",
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only( top: 8,right: 16),
-                                child: Stack(children: [
-                                  Container(
-                                    height: 140,
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Container(
-                                      height: 120,
-                                      width: 120,
-                                      child: Image(
-                                        image: NetworkImage(
-                                            "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20200603193204/Chow-Mein.jpg"),
-                                        fit: BoxFit.cover,
                                       ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                      bottom: 0,
-                                      left: (isadd[index] ? 16.5 : 12),
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                isadd[index] ? 10 : 20),
-                                            side: BorderSide(color: Colors.red)),
-                                        color: Color.fromARGB(255, 250, 235, 233),
-                                        child: (isadd[index]
-                                            ? InkWell(
-                                                onTap: () {
-                                                  isadd[index] = false;
-                                                  itemc++;
-                                                  sum+=price[index];
-                                                  if(itemc==1){
-                                                    controller!.forward();
-                                                  }
-                                                  postcartdish(dishes![index].id.toString());
-                                                  setState(() {});
-                                                },
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 20,
-                                                              right: 6,
-                                                              top: 7,
-                                                              bottom: 7),
-                                                      child: Text(
-                                                        "ADD",
-                                                        style: TextStyle(
+                                      Positioned(
+                                          bottom: 0,
+                                          left: (isadd[index] ? 16.5 : 12),
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    isadd[index] ? 10 : 20),
+                                                side: BorderSide(color: Colors.red)),
+                                            color: Color.fromARGB(255, 250, 235, 233),
+                                            child: (isadd[index]
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      isadd[index] = false;
+                                                      itemc++;
+                                                      sum+=price[index];
+                                                      if(itemc==1){
+                                                        controller!.forward();
+                                                      }
+                                                      postcartdish(dishes![index].id.toString());
+                                                      setState(() {});
+                                                    },
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.only(
+                                                                  left: 20,
+                                                                  right: 6,
+                                                                  top: 7,
+                                                                  bottom: 7),
+                                                          child: Text(
+                                                            "ADD",
+                                                            style: TextStyle(
+                                                                color: Colors.red,
+                                                                fontWeight:
+                                                                    FontWeight.w600,
+                                                                fontSize: 20),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.only(
+                                                                  top: 3, right: 6),
+                                                          child: Icon(
+                                                            Icons.add,
                                                             color: Colors.red,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 20),
-                                                      ),
+                                                            size: 15,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 3, right: 6),
-                                                      child: Icon(
-                                                        Icons.add,
-                                                        color: Colors.red,
-                                                        size: 15,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Row(
-                                                children: [
-                                                  IconButton(
-                                                      constraints:
-                                                          BoxConstraints(),
-                                                      onPressed: () {
-                                                        if(count[index]>0){
-                                                        count[index]--;
-                                                        itemc--;
-                                                        sum-=price[index];
-                                                        if(itemc==0){
-                                                          controller!.reverse();
-                                                        }
-                                                        if(count[index]==0){
-                                                          count[index]=1;
-                                                          isadd[index]= true;
-                                                        }
-                                                        removecartdish(dishes![index].id.toString());
-                                                        setState(
-                                                          () {},
-                                                        );
-                                                        }
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.remove,
-                                                      )),
-                                                  Text("${count[index]}",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        count[index]++;
-                                                        itemc++;
-                                                        sum+=price[index];
-                                                        postcartdish(dishes![index].id.toString());
-                                                        setState(() {
+                                                  )
+                                                : Row(
+                                                    children: [
+                                                      IconButton(
+                                                          constraints:
+                                                              BoxConstraints(),
+                                                          onPressed: () {
+                                                            if(count[index]>0){
+                                                            count[index]--;
+                                                            itemc--;
+                                                            sum-=price[index];
+                                                            if(itemc==0){
+                                                              controller!.reverse();
+                                                            }
+                                                            if(count[index]==0){
+                                                              count[index]=1;
+                                                              isadd[index]= true;
+                                                            }
+                                                            removecartdish(dishes![index].id.toString());
+                                                            setState(
+                                                              () {},
+                                                            );
+                                                            }
+                                                          },
+                                                          icon: Icon(
+                                                            Icons.remove,
+                                                          )),
+                                                      Text("${count[index]}",
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight.w700)),
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            count[index]++;
+                                                            itemc++;
+                                                            sum+=price[index];
+                                                            postcartdish(dishes![index].id.toString());
+                                                            setState(() {
 
-                                                        });
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.add,
-                                                      ),
-                                                      constraints:
-                                                          BoxConstraints()),
-                                                ],
-                                              )),
-                                      ))
-                                ]),
+                                                            });
+                                                          },
+                                                          icon: Icon(
+                                                            Icons.add,
+                                                          ),
+                                                          constraints:
+                                                              BoxConstraints()),
+                                                    ],
+                                                  )),
+                                          ))
+                                    ]),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                       physics: NeverScrollableScrollPhysics(),
                     ),

@@ -201,14 +201,14 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                       itemBuilder: (context, index) {
                         bool imgavail = false;
                         menu[index].pic == null
-                            ? imgavail = false
+                            ? menu[index].pic='https://assets.bonappetit.com/photos/6216890f38d007bf4cbb587c/master/w_1600,c_limit/20220215%20Big%20Falafel%20LEDE.jpg'
                             : imgavail = true;
-                        List<int> bufferInt = (imgavail)
-                            ? menu[index].pic!.map((e) => e as int).toList()
-                            : [];
-                        Image img = (imgavail)
-                            ? Image.memory(Uint8List.fromList(bufferInt))
-                            : Image.asset('assets/images/restdefault.webp');
+                        // List<int> bufferInt = (imgavail)
+                        //     ? menu[index].pic!.map((e) => e as int).toList()
+                        //     : [];
+                        // Image img = (imgavail)
+                        //     ? Image.memory(Uint8List.fromList(bufferInt))
+                        //     : Image.asset('assets/images/restdefault.webp');
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -225,7 +225,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
                                         border: Border.all(
                                             color: Colors.transparent),
                                         image: DecorationImage(
-                                          image: img.image,
+                                          image: NetworkImage(menu[index].pic!),
                                           // colorFilter: (menu[index].status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation),
                                           fit: BoxFit.cover,
                                         ),
