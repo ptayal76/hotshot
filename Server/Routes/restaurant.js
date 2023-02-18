@@ -48,6 +48,21 @@ router.get('/food/rest', async (req, res) => {
   }
 });
 
+//TOP PICKS
+router.get('/food/rest/top', async (req, res) => {
+  try {
+    var mySort = { rating: -1 };
+    const restaurants = await Restaurant.find().sort(mySort);
+    const toprest = []
+    for (let i = 0; i < 5; i++) {
+      toprest.push(restaurants[i]);
+    }
+    return res.status(200).json(toprest);
+  } catch (err) {
+    return res.status(200).json(err);
+  }
+});
+
 //GET A RESTAURANT BY ID
 router.get('/food/rest/:restid', async (req, res) => {
   try {
