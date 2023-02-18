@@ -4,7 +4,7 @@ const Stationary = require('./Stationary');
 const User = require('./User');
 
 const StatOrder = new schema({
-    stationaryId : {
+    stationaryId: {
         type: mongoose.Schema.Types.ObjectId, ref: `Stationary`
     },
     user_id: {
@@ -37,18 +37,18 @@ const StatOrder = new schema({
     timeOfOrder: {
         type: Date
     },
-    razorpayCred:{
-        Key_id:{
-            type:String
+    razorpayCred: {
+        Key_id: {
+            type: String
         },
-        KeySecret:{
-            type:String
+        KeySecret: {
+            type: String
         }
     },
     data: {
-        data:Buffer,
-        contentType:String
-    } 
+        data: Buffer,
+        contentType: String
+    }
 })
 
 module.exports = mongoose.model('StatOrder', StatOrder);

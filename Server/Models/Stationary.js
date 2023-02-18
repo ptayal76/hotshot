@@ -13,7 +13,7 @@ const stationary = new schema({
     PhoneNumber: {
         required: true,
         type: String
-    }, 
+    },
     Email: {
         required: true,
         type: String
@@ -21,121 +21,117 @@ const stationary = new schema({
     password: {
         type: String
     },
-    CA4:{
-        
-            availability:{
-                type:Boolean,
-                required:true
-            },
-            price:{
-                type:Number,
-                required:true
-            }
-        
-        
-        
-    },
-    CA3:{
-        availability:{
-            type:Boolean,
-            required:true
+    CA4: {
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
-    Poster:{
-        availability:{
-            type:Boolean,
-            required:true
+    CA3: {
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
-    Certificate:{
-        availability:{
-            type:Boolean,
-            required:true
+    Poster: {
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
-    PVCPrint:{
-        availability:{
-            type:Boolean,
-            required:true
+    Certificate: {
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
-    BWA4:{
-        availability:{
-            type:Boolean,
-            required:true
+    PVCPrint: {
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
-    BWA3:{
-        availability:{
-            type:Boolean,
-            required:true
+    BWA4: {
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
+        }
+    },
+    BWA3: {
+        availability: {
+            type: Boolean,
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true
         }
     },
     pic: {
-        availability:{
-            type:Boolean,
-            required:true
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
     location: {
-        availability:{
-            type:Boolean,
-            required:true
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
     rating: {
-        availability:{
-            type:Boolean,
-            required:true
+        availability: {
+            type: Boolean,
+            required: true
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true
         }
     },
     timing: {
-        
-            start_time: {
-               type: Date,
-               required:true
-            },
-            end_time: {
-                type: Date,
-                required:true
-             },
-        
+
+        start_time: {
+            type: Date,
+            required: true
+        },
+        end_time: {
+            type: Date,
+            required: true
+        },
+
     },
     status: {
         type: String,

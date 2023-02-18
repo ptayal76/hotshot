@@ -23,7 +23,7 @@ const qr = require('qrcode');
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
-    try{
+    try {
         if (req.isowner) {
             const obj = { restaurant_id: req.restaurant };
             if (req.query.status) {
@@ -39,18 +39,18 @@ router.get("/food/order", verifyToken, authenticate, async (req, res) => {
             const orders = await Order.find(obj);
             return res.status(200).json(orders);
         }
-    } catch (err){
+    } catch (err) {
         return res.status(400).json(err);
     }
 })
 
 //GET ORDERS BY RESTID
 router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) => {
-    try{
+    try {
         const order = await Order.findById(req.params.orderId);
         if (req.isowner) {
             if (req.restaurant == order.restaurant_id) {
-                if(!order){
+                if (!order) {
                     return res.status(400).json('No order by this ID!');
                 }
                 return res.status(200).json(order);
@@ -61,7 +61,7 @@ router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) =
         }
         else {
             if (req.user == order.user_id) {
-                if(!order){
+                if (!order) {
                     return res.status(400).json('No order by this ID!');
                 }
                 return res.status(200).json(order);
@@ -70,7 +70,7 @@ router.get("/food/order/:orderId", verifyToken, authenticate, async (req, res) =
                 return res.status(403).json({ message: "Not Authenticated" });
             }
         }
-    } catch(err) {
+    } catch (err) {
         res.status(400).json(err);
     }
 })
@@ -86,17 +86,14 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
             if (err) {
                 console.log(err);
             } else {
-                
-                
-            const promise = fs.promises.readFile('./qr1.png');
-            promise.then(function (buffer) {
-            const stringdata = JSON.stringify(buffer);
-            
-            res.status(200).json(buffer);
-        })
+                const promise = fs.promises.readFile('./qr1.png');
+                promise.then(function (buffer) {
+                    const stringdata = JSON.stringify(buffer);
+
+                    res.status(200).json(buffer);
+                })
             }
         })
-        
     }
     catch (err) {
         res.status(400).json(err);
@@ -151,7 +148,7 @@ router.post('/food/order/remove/:dishId', verifyToken, authenticateUser, async (
 router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if(!order){
+        if (!order) {
             return res.status(400).json('Wrong orderId!');
         }
         if (req.restaurant == order.restaurant_id) {
@@ -172,7 +169,7 @@ router.put('/food/rest/accept/:orderid', verifyToken, authenticateOwner, async (
 router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if(!order){
+        if (!order) {
             return res.status.json('Wrong OrderId');
         }
         if (req.restaurant == order.restaurant_id) {
@@ -200,7 +197,7 @@ router.put('/food/rest/reject/:orderid', verifyToken, authenticateOwner, async (
 router.put('/food/rest/complete/:orderid', async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if(!order){
+        if (!order) {
             return res.status(400).json('Wrong OrderId');
         }
         order.Order_status = 'completed';
@@ -215,7 +212,7 @@ router.put('/food/rest/complete/:orderid', async (req, res) => {
 //DELETING AN ORDER
 router.delete("/food/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
-    if(!order){
+    if (!order) {
         return res.status(400).json('Wrong OrderId');
     }
     if (order.user_id == req.user) {
@@ -243,7 +240,6 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         if (err) {
             return res.status(400).send(err.message);
         }
-
         else {
             console.log(result);
             return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCredKey_id });
@@ -253,20 +249,19 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
 
 //ACKNOWLEDGE A PAYMENT
 router.put("/food/order/acknowledge/:orderId", async (req, res) => {
-    try{
-    const order = await Order.findById(req.params.orderId);
-    if(!order){
-        return res.status(400).json('Wrong OrderId');
+    try {
+        const order = await Order.findById(req.params.orderId);
+        if (!order) {
+            return res.status(400).json('Wrong OrderId');
+        }
+        order.paymentId = req.body.razorpay_payment_id;
+        order.Order_status = 'responsePending';
+        order.save();
+        res.status(200).send({ message: "Success" });
     }
-    order.paymentId = req.body.razorpay_payment_id;
-    order.Order_status = 'responsePending';
-    order.save();
-    res.status(200).send({message: "Success"});
-    }
-    catch(e)
-    {
+    catch (e) {
         console.log(e.message)
-        return res.status(400).json({message:"error"});
+        return res.status(400).json({ message: "error" });
     }
 })
 

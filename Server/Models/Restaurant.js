@@ -1,4 +1,4 @@
-const Dish=require('./Dish')
+const Dish = require('./Dish')
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
@@ -28,38 +28,35 @@ const restaurant = new schema({
         data: Buffer,
         contentType: String
     },
-    razorpayCredKey_id:{
-          type:String,
-          required:true
+    razorpayCredKey_id: {
+        type: String,
+        required: true
     },
-    razorpayCredKeySecret:{
-        type:String,
-        required:true
-  },
-    
+    razorpayCredKeySecret: {
+        type: String,
+        required: true
+    },
     location: {
         required: true,
         type: String
     },
-    usersRated:[
+    usersRated: [
         {
-            id:{type:mongoose.Schema.Types.ObjectId, ref: `User`},
-            rate:{type:Number},
+            id: { type: mongoose.Schema.Types.ObjectId, ref: `User` },
+            rate: { type: Number },
         }
     ],
     rating: {
         type: Number
     },
     timing: {
-        
         start_time: String,
         end_time: String
-
     },
     status: {
         type: String,
         enum: ['on', 'off'],
-        required:true 
+        required: true
     },
     order_types: {
         notCollected: [
@@ -68,20 +65,17 @@ const restaurant = new schema({
             }
         ]
         ,
-
         collected: [
             {
                 type: String
             }
         ]
-
         ,
         rejected: [
             {
                 type: String
             }
         ]
-
         ,
         pending: [
             {
