@@ -4,6 +4,8 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/orders.dart';
 import 'package:hotshot/model/restInfo.dart';
+import 'package:hotshot/screens/printorder.dart';
+import 'package:hotshot/screens/statshopkeeperhome.dart';
 import 'package:hotshot/services/listdishesTomap.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/loader.dart';
@@ -368,16 +370,12 @@ class InsideStatState extends State<InsideStat> with SingleTickerProviderStateMi
                             padding: const EdgeInsets.only(left: 56,right: 56,
                             top: 24),
                             child: ElevatedButton(
-                              onPressed: () async {
-                                israted = (await Navigator.push(
+                              onPressed: () {
+                                 Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => RateMe(),
-                                            )) ==
-                                        null
-                                    ? false
-                                    : true);
-                                setState(() {});
+                                              builder: (context) => PrintOrder(),
+                                            ));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(

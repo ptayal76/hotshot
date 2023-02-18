@@ -11,6 +11,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 
 class ShopkeeperVerificationForm extends StatefulWidget {
   const ShopkeeperVerificationForm({super.key});
@@ -48,7 +51,18 @@ class _ShopkeeperVerificationFormState
   final _formKey = GlobalKey<FormState>();
   final startTimeController = TextEditingController();
   final closeTimeController = TextEditingController();
-
+  File? _image;
+  Future getImage(ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) {
+      return;
+    }
+    final imageTemp = File(image.path);
+    Navigator.of(context, rootNavigator: true).pop();
+    setState(() {
+      this._image = imageTemp;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     void showToast(String message) {
@@ -158,6 +172,15 @@ class _ShopkeeperVerificationFormState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      //height: 250,
+                        child: (_image != null
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Center(child: Image.file(_image!)),
+                              )
+                            : null),
+                      ),
                     const Padding(
                       padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
                       child: Text(
@@ -209,6 +232,69 @@ class _ShopkeeperVerificationFormState
                           ),
                         ),
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: Center(
+                        child: ElevatedButton.icon(onPressed: () {
+                          SimpleDialog alert = SimpleDialog(
+                                        title: Text("Choose an action"),
+                                        children: [
+                                          SimpleDialogOption(
+                                              onPressed: () {
+                                                getImage(ImageSource.gallery);
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Icon(CupertinoIcons.photo,
+                                                        color: Colors.blue),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(left: 2),
+                                                    child: Text("Pick from gallery",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w500)),
+                                                  )
+                                                ],
+                                              )),
+                                          SimpleDialogOption(
+                                              onPressed: () {
+                                                getImage(ImageSource.camera);
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 8),
+                                                    child: Icon(
+                                                      Icons.camera_alt,
+                                                      color: Colors.green,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(left: 10),
+                                                    child: Text("Capture from camera",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w500)),
+                                                  )
+                                                ],
+                                              ))
+                                        ],
+                                      );
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => alert,
+                                        barrierDismissible: true,
+                                      );
+                        }, icon: Icon(Icons.image), label: Text("Choose shop image",style: TextStyle(fontSize: 20),)),
+                      )
                     ),
                     const Padding(
                       padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
