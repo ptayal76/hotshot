@@ -33,8 +33,8 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<MyUser?>(context);
 
     if (user == null) {
-      return const Home(
-        title: 'Hotshot',
+      return const StartingScreen(
+        // title: 'Hotshot',
       );
     } else {
       return isCustomer! ? CustomerWrapper() : ShopkeeperWrapper();

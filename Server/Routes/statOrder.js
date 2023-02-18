@@ -46,7 +46,7 @@ router.get("/stationary/order", verifyToken, authenticate, async (req, res) => {
 //GET ORDERS BY SHOP ID
 router.get("/stationary/order/:orderId", verifyToken, authenticate, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
-    if(!order){
+    if (!order) {
         return res.status(400).json('Wrong orderId');
     }
     if (req.isowner) {
@@ -77,13 +77,12 @@ router.get("/stationary/order/qr/:orderId", async (req, res, next) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log('QR code generated!');
+                const promise = fs.promises.readFile('./qr1.png');
+                Promise.resolve(promise).then(function (buffer) {
+                    const stringdata = JSON.stringify(buffer);
+                    return res.status(200).json(buffer);
+                })
             }
-        })
-        const promise = fs.promises.readFile('./qr1.png');
-        Promise.resolve(promise).then(function (buffer) {
-            const stringdata = JSON.stringify(buffer);
-            return res.status(200).json(buffer);
         })
     }
     catch (err) {
@@ -111,7 +110,7 @@ router.post('/stationary/order/:statId', upload.single('pic'), verifyToken, auth
 router.put('/stationary/order/accept/:orderid', verifyToken, authenticateStationaryOwner, async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if(!order){
+        if (!order) {
             return res.status(400).json('Wrong OrderId');
         }
         if (req.restaurant == order.stationaryId) {
@@ -132,7 +131,7 @@ router.put('/stationary/order/accept/:orderid', verifyToken, authenticateStation
 router.put('/stationary/order/reject/:orderid', verifyToken, authenticateStationaryOwner, async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if(!order){
+        if (!order) {
             return res.status(400).json('Wrong OrderId');
         }
         if (req.restaurant == order.stationaryId) {
@@ -160,7 +159,7 @@ router.put('/stationary/order/reject/:orderid', verifyToken, authenticateStation
 router.put('/stationary/order/complete/:orderid', async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderid);
-        if(!order){
+        if (!order) {
             return res.status(400).json('Wrong OrderId');
         }
         order.Order_status = 'completed';
@@ -175,7 +174,7 @@ router.put('/stationary/order/complete/:orderid', async (req, res) => {
 //DELETING AN ORDER
 router.delete("/stationary/order/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
-    if(!order){
+    if (!order) {
         return res.status(400).json('Wrong OrderId');
     }
     if (order.user_id == req.user) {
@@ -190,36 +189,43 @@ router.delete("/stationary/order/:orderId", verifyToken, authenticateUser, async
 //PAYMENT 
 router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async (req, res) => {
     const order = await Order.findById(req.params.orderId);
-    if(!order){
+    if (!order) {
         return res.status(400).json('Wrong OrderId');
     }
-    const restaurant = await Stationary.findById(order.stationaryId);
+    const stationary = await Stationary.findById(order.stationaryId);
     if (order.user_id != req.user) {
         return res.status(403).json({ message: "you are not authenticated" });
     }
     const razorpayInstance = new Razorpay({
-        key_id: restaurant.razorpayCred.Key_id || process.env.RZP_KEY_ID,
-        key_secret: restaurant.razorpayCred.KeySecret || process.env.RZP_SEC_KEY
+        key_id: stationary.razorpayCredKey_id || process.env.RZP_KEY_ID,
+        key_secret: stationary.razorpayCredKeySecret || process.env.RZP_SEC_KEY
     })
     razorpayInstance.orders.create({ amount: order.total * 100, currency: "INR" }, (err, result) => {
         if (err) {
             return res.status(400).send(err.message);
         }
         else {
-            return res.status(200).json({ orderid: result.id, keyid: restaurant.razorpayCred.Key_id });
+            return res.status(200).json({ orderid: result.id, keyid: stationary.razorpayCred.Key_id });
         }
     })
 })
 
 //AFTER PAYMENT IS DONE
 router.put("/stationary/order/acknowledge/:orderId", async (req, res) => {
-    const order = await Order.findById(req.params.orderId);
-    if(!order){
-        return res.status(400).json('Wrong OrderId');
+    try {
+        const order = await Order.findById(req.params.orderId);
+        if (!order) {
+            return res.status(400).json('Wrong OrderId');
+        }
+        order.paymentId = req.body.razorpay_payment_id;
+        order.Order_status = 'responsePending';
+        order.save();
+        res.status(200).send({ message: "Success" });
     }
-    order.paymentId = req.body.razorpay_payment_id;
-    order.Order_status = 'responsePending';
-    order.save();
+    catch (e) {
+        console.log(e.message)
+        return res.status(400).json({ message: "error" });
+    }
 })
 
 module.exports = router;

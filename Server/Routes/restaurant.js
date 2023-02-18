@@ -48,9 +48,6 @@ router.get('/food/rest', async (req, res) => {
   }
 });
 
-
-
-
 //GET A RESTAURANT BY ID
 router.get('/food/rest/:restid', async (req, res) => {
   try {
