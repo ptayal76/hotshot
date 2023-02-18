@@ -337,7 +337,7 @@ router.put('/food/rest/:restid', verifyToken, authenticateOwner, authorizeOwner,
       } else {
         restaurant.status = 'on';
       }
-      restaurant.save();
+      await restaurant.save();
       return res.status(200).json(restaurant);
     }
   } catch (err) {

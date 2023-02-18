@@ -96,7 +96,7 @@ const authenticateStationaryOwner = async (req, res, next) => {
 }
 
 const authorizeOwner = (req, res, next) => {
-    if (req.restaurant === req.params.restid) {
+    if (req.restaurant == req.params.restid) {
         next();
     }
     else {
