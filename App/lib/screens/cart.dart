@@ -84,7 +84,7 @@ class _cartState extends State<cart> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
-        backgroundColor: const Color(0xff307A59),
+        backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
     //   floatingActionButton: FloatingActionButton(
@@ -108,7 +108,7 @@ class _cartState extends State<cart> {
               ))),
               (fetchedDishes==null)?Lottie.asset('assets/lottie/empty.json', height: 200, width: 200):Lottie.asset('assets/lottie/cart.json', height: 200, width: 200),
          (Orders==null)?Loader():Container(
-           height: MediaQuery.of(context).size.height,
+           height: MediaQuery.of(context).size.height*(0.52),
            child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: 2),
                     itemBuilder: (context, index) {

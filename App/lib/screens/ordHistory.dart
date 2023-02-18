@@ -69,11 +69,11 @@ class _OrdHistoryState extends State<OrdHistory> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Order History'),
-        backgroundColor: const Color(0xff307A59),
+        backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.teal[100],
+        //color: Color.fromARGB(255, 239, 102, 105),
         child: ListView(
             physics: BouncingScrollPhysics(),
 
