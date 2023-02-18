@@ -50,13 +50,13 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.white,
+          // backgroundColor: Color.fromARGB(255, 239, 102, 105),
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 239, 102, 105),
             centerTitle: true,
             title: Text(
               "SIGN IN",
-              style: TextStyle(color: Colors.white),
+              // style: TextStyle(color: Colors.white),
             ),
           ),
           body: Container(

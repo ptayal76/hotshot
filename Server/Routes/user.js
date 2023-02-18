@@ -22,19 +22,19 @@ const upload = multer({ storage: storage });
 router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req, res) => {
     try {
         const id = req.params.restId;
-        var found=0;
+        var found = 0;
         const restaurant = await Restaurant.findById(id);
-        if(!restaurant){
+        if (!restaurant) {
             return res.status(400).json('Wrong RestaurantId');
         }
         const user = await User.findById(req.user);
         console.log(user.favRest.length);
-        for (let i=0;i<user.favRest.length;i++){
-            if(user.favRest[i]._id == id){
-                found=1;
+        for (let i = 0; i < user.favRest.length; i++) {
+            if (user.favRest[i]._id == id) {
+                found = 1;
             }
         }
-        if(!found){
+        if (!found) {
             user.favRest.push(restaurant);
         } else {
             user.favRest.pull(restaurant);
@@ -50,7 +50,7 @@ router.put('/food/user/rest/:restId', verifyToken, authenticateUser, async (req,
 //LOGIN OR SIGNUP
 router.post('/login', async (req, res) => {
     try {
-    
+
         var existingUser = await User.findOne({ email: req.body.email });
         console.log(existingUser);
         if (!existingUser) {
