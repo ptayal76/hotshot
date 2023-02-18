@@ -320,6 +320,8 @@ class RestaurantServ {
       http.Response res =
           await http.get(Uri.parse('${MONGO_URL}/food/rest/$restid'));
       var obj = jsonDecode(res.body);
+
+      print(res.body);
       // print(obj.runtimeType);
       // print(obj.length);
       // print(res.body);
