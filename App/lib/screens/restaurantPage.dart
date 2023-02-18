@@ -5,7 +5,7 @@ import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/model/orders.dart';
 import 'package:hotshot/model/restInfo.dart';
 import 'package:hotshot/services/listdishesTomap.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/loader.dart';
 import '../model/orderInfo.dart';
 import '../rateme.dart';
@@ -23,6 +23,7 @@ class RestaurantPage extends StatefulWidget {
 class RestaurantPageState extends State<RestaurantPage> with SingleTickerProviderStateMixin {
   bool isfav = false;
   bool israted = false;
+  final String phone='9876543210';
   List<DishInfo>? dishes;
   late Orders cartforres;
   late RestInfo restaurant;
@@ -219,10 +220,16 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         ),
                         Container(
                           child: new_button1(
-                              text: "LOCATION", ic: Icons.location_on),
+                              text: "LOCATION", ic: Icons.location_on,),
                         ),
                         Container(
-                          child: new_button1(text: "CONTACT", ic: Icons.phone),
+                          child: new_button1(text: "CONTACT", ic: Icons.phone,onTap: () async{
+                          Uri phoneno = Uri.parse('tel:'+ phone);
+                      if (await launchUrl(phoneno)) {
+                      }else{
+                          print("error");
+                      }
+                        },),
                         ),
                         Container(
                           child: Column(
