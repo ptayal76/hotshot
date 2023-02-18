@@ -23,9 +23,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 cloudinary.config({
-  cloud_name: 'dmuviaz8x',
-  api_key: 232983377535948,
-  api_secret: 'eGv35fpj-wodC6lw15MhBHvDb3M',
+  cloud_name: process.env.CLOUDNAME||'dmuviaz8x',
+  api_key: process.env.APIKEY||232983377535948,
+  api_secret: process.env.APISECRET||'eGv35fpj-wodC6lw15MhBHvDb3M',
 });
 
 //GET ALL RESTAURANTS BY QUERY
