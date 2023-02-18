@@ -285,7 +285,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                               ClipOval(
                                 child: Container(
                                   padding: EdgeInsets.all(1.5),
-                                  color: Colors.blue,
+                                  color: Color.fromARGB(255, 239, 102, 105),
                                   child: ClipOval(
                                     child: Container(
                                       color: Colors.white,
@@ -300,7 +300,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                           isfav
                                               ? CupertinoIcons.heart_fill
                                               : CupertinoIcons.heart,
-                                          color: isfav ? Colors.red : Colors.blue,
+                                          color: isfav ? Colors.red : Color.fromARGB(255, 239, 102, 105),
                                           size: 28,
                                         ),
                                       ),
@@ -313,7 +313,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                 child: Text(
                                   "FAVOURITE",
                                   style: TextStyle(
-                                      color: Colors.blue,
+                                      color: Color.fromARGB(255, 239, 102, 105),
                                       fontWeight: FontWeight.w700,
                                       fontSize: 17),
                                 ),
@@ -349,7 +349,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                     style: TextStyle(fontSize: 20)),
                               ),
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
+                                  backgroundColor: Color.fromARGB(255, 239, 102, 105),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16.0))),
                             ),
@@ -396,150 +396,150 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                         //     },
                         //   ),
                         // ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              isel[0] = !isel[0];
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Veg",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0)),
-                              backgroundColor: (isel[0]
-                                  ? Colors.amber[400]
-                                  : Colors.grey[350]),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              isel[1] = !isel[1];
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Non-Veg",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0)),
-                              backgroundColor: (isel[1]
-                                  ? Colors.amber[400]
-                                  : Colors.grey[350]),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              isel[2] = !isel[2];
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Breakfast",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0)),
-                              backgroundColor: (isel[2]
-                                  ? Colors.amber[400]
-                                  : Colors.grey[350]),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              isel[3] = !isel[3];
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Lunch",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0)),
-                              backgroundColor: (isel[3]
-                                  ? Colors.amber[400]
-                                  : Colors.grey[350]),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              isel[4] = !isel[4];
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Snacks",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0)),
-                              backgroundColor: (isel[4]
-                                  ? Colors.amber[400]
-                                  : Colors.grey[350]),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 20),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              isel[5] = !isel[5];
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Dinner",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0)),
-                              backgroundColor: (isel[5]
-                                  ? Colors.amber[400]
-                                  : Colors.grey[350]),
-                            ),
-                          ),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 10, right: 10),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       isel[0] = !isel[0];
+                        //       setState(() {});
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 8.0),
+                        //       child: Text(
+                        //         "Veg",
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(40.0)),
+                        //       backgroundColor: (isel[0]
+                        //           ? Colors.amber[400]
+                        //           : Colors.grey[350]),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       isel[1] = !isel[1];
+                        //       setState(() {});
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 8.0),
+                        //       child: Text(
+                        //         "Non-Veg",
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(40.0)),
+                        //       backgroundColor: (isel[1]
+                        //           ? Colors.amber[400]
+                        //           : Colors.grey[350]),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       isel[2] = !isel[2];
+                        //       setState(() {});
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 8.0),
+                        //       child: Text(
+                        //         "Breakfast",
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(40.0)),
+                        //       backgroundColor: (isel[2]
+                        //           ? Colors.amber[400]
+                        //           : Colors.grey[350]),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       isel[3] = !isel[3];
+                        //       setState(() {});
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 8.0),
+                        //       child: Text(
+                        //         "Lunch",
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(40.0)),
+                        //       backgroundColor: (isel[3]
+                        //           ? Colors.amber[400]
+                        //           : Colors.grey[350]),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       isel[4] = !isel[4];
+                        //       setState(() {});
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 8.0),
+                        //       child: Text(
+                        //         "Snacks",
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(40.0)),
+                        //       backgroundColor: (isel[4]
+                        //           ? Colors.amber[400]
+                        //           : Colors.grey[350]),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 10, right: 20),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       isel[5] = !isel[5];
+                        //       setState(() {});
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 8.0),
+                        //       child: Text(
+                        //         "Dinner",
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(40.0)),
+                        //       backgroundColor: (isel[5]
+                        //           ? Colors.amber[400]
+                        //           : Colors.grey[350]),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

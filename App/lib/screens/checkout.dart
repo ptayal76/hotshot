@@ -258,7 +258,7 @@ class _checkoutState extends State<checkout> {
                 },
                 child: Container(
                   height: 50,
-                  decoration: BoxDecoration(color: const Color(0xff307A59)),
+                  decoration: BoxDecoration(color: Color.fromARGB(255, 239, 102, 105)),
                   child: Center(
                       child: Text(
                     'BUY NOW : ₹${refOrder!.total.toString()}',

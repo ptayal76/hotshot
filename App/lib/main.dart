@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
                     // colorSchemeSeed: const Color(0xff5AB9EA)),
                 themeMode: themeProvider.themeMode,
                 // home: CustomerSignIn(),
-                home: RestHome()),
+                home: MainPage()),
           );
         });
   }
