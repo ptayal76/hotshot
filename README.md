@@ -5,17 +5,17 @@
 # Lohit - Hostel
 # Hotshot
 
-Hotshot is an app where you can search and discover local restaurants' status, prebook and prepay orders and collect it by just scanning a QR.
+Hotshot is your goto app for all day needs at IITG. Be it ordering food, sending images to stationary or just checking out shops it does it all. With support for refund along with pre-payment, Hotshot boosts hassle free payments with QR authentications. User Friendly UI, easy to order and secure checkouts are the corner stones of this Project.
 # Ideation
 
 
 # Features
 
 - Light/dark mode toggle
-- Pre-Payment
-- Filters (Rating, currently-open, top picks)
+- Pre-Payment along with refund
+- Filters (currently-open, top picks)
 - Order history
-- QR scanner
+- QR Authentication and Authorisation
 # Tech Stack
 
 **Client:** Flutter
@@ -24,7 +24,7 @@ Hotshot is an app where you can search and discover local restaurants' status, p
 
 **Database:** MongoDB
 
-**External API Used:** Google Auth, Razorpay, Multer, jsonwebtoken, qrcode-reader, qrcode, jimp
+**Major External API Used:** Google Auth, Razorpay, Multer, jsonwebtoken, qrcode-reader, qrcode, jimp, cloudinary, streamifier
 
 # Hosted server
 
