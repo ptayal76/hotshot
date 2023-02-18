@@ -5,6 +5,8 @@ const Razorpay = require('razorpay');
 const mongoose = require('mongoose');
 const Order = RestOrder;
 const Restaurant = require("../Models/Restaurant");
+const cloudinary = require("cloudinary");
+const streamifier = require('streamifier');
 const {
     verifyToken,
     authenticateOwner,
@@ -20,6 +22,11 @@ const jimp = require('jimp');
 const fs = require('fs');
 const qrCodeReader = require('qrcode-reader');
 const qr = require('qrcode');
+cloudinary.config({
+    cloud_name: 'dmuviaz8x',
+    api_key: 232983377535948,
+    api_secret: 'eGv35fpj-wodC6lw15MhBHvDb3M',
+  });
 
 //GET ALL ORDERS
 router.get("/food/order", verifyToken, authenticate, async (req, res) => {
@@ -89,8 +96,7 @@ router.get("/food/order/qr/:orderId", async (req, res, next) => {
                 const promise = fs.promises.readFile('./qr1.png');
                 promise.then(function (buffer) {
                     const stringdata = JSON.stringify(buffer);
-
-                    res.status(200).json(buffer);
+                    return res.status(200).json(buffer);
                 })
             }
         })

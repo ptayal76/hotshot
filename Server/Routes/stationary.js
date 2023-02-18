@@ -20,6 +20,11 @@ router.get('/stationary/stationaryShop', async (req, res) => {
   try {
     var obj = {};
     if (req.query.status) obj.status = req.query.status;
+    if (req.query.name) {
+      obj.StationaryName = {
+        "$regex": `${req.query.name}`, "$options": 'i'
+      }
+    }
     const stationaries = await Stationary.find(obj);
     return res.json(stationaries);
   } catch (err) {
@@ -44,24 +49,51 @@ router.get('/stationary/stationaryShop/:id', async (req, res) => {
 //CREATE A SHOP
 router.post('/stationary/stationaryShop', upload.single('pic'), async (req, res) => {
   try {
-    const stationary = new Stationary(req.body);
-    if (req.file) {
-      stationary.pic.data = req.file.buffer;
-      stationary.pic.contentType = req.file.mimetype;
+    var existingStat = await Stationary.findOne({ email: req.body.email });
+    if (!existingStat) {
+      const stationary = new Stationary(req.body);
+      if (req.file) {
+        stationary.pic.data = req.file.buffer;
+        stationary.pic.contentType = req.file.mimetype;
+      }
+      existingStat = stationary;
+      stationary.save();
     }
-    await stationary.save();
     jwt.sign(
-      { isowner: true, id: stationary._id },
+      { isowner: true, id: existingStat._id },
       process.env.JWT_SEC,
       (err, token) => {
         res.header('token', `${token}`);
-        return res.json(stationary);
+        return res.json(existingStat);
       }
     );
   } catch (err) {
     res.status(400).send(err.message);
   }
 });
+
+//LOGIN FOR STATIONARY
+router.post('/stationary/stationaryShop/login', async (req, res) => {
+  try {
+    const stationary = await Stationary.findOne({ email: req.body.email });
+    if (!stationary) {
+      return res.status(403).json({ message: "You are not registered" });
+    }
+    else {
+      jwt.sign(
+        { isowner: true, id: stationary._id },
+        process.env.JWT_SEC,
+        (err, token) => {
+          res.header('token', `${token}`);
+          return res.json(stationary);
+        }
+      );
+    }
+  }
+  catch (err) {
+    res.status(403).send(err.message);
+  }
+})
 
 //UPDATE A SHOP BY ID
 router.put('/stationary/stationaryShop/:statid',verifyToken,authenticateStationaryOwner,async (req, res) => {

@@ -25,8 +25,7 @@ const restaurant = new schema({
         }
     ],
     pic: {
-        data: Buffer,
-        contentType: String
+        type:String
     },
     razorpayCredKey_id: {
         type: String,
@@ -47,7 +46,8 @@ const restaurant = new schema({
         }
     ],
     rating: {
-        type: Number
+        type: Number,
+        default: 0,
     },
     timing: {
         start_time: String,
