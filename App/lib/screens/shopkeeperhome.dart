@@ -159,36 +159,36 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
         onRefresh: getData,
         child: Column(children: <Widget>[
           const SizedBox(height: 10),
-          Container(
-            height: 60,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AnimSearchBar(
-                    width: 250,
-                    textController: textEditingController,
-                    onSuffixTap: () {},
-                    onSubmitted: (p0) => "",
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => add_item(),
-                              ));
-                        },
-                        icon: const Icon(Icons.add),
-                        label: const Text('Add Items')),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Container(
+          //   height: 60,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(10),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         AnimSearchBar(
+          //           width: 250,
+          //           textController: textEditingController,
+          //           onSuffixTap: () {},
+          //           onSubmitted: (p0) => "",
+          //         ),
+          //         Align(
+          //           alignment: Alignment.topRight,
+          //           child: ElevatedButton.icon(
+          //               onPressed: () {
+          //                 Navigator.push(
+          //                     context,
+          //                     MaterialPageRoute(
+          //                       builder: (context) => add_item(),
+          //                     ));
+          //               },
+          //               icon: const Icon(Icons.add),
+          //               label: const Text('Add Items')),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
           // ElevatedButton.icon(
           //   style: ElevatedButton.styleFrom(
