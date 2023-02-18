@@ -32,7 +32,7 @@ class RestInfo {
   List<String>? menu;
   String location;
   String status;
-  List<dynamic>? pic;
+  String? pic;
    // orderTypes;
   // List<dynamic>? timing;
 
@@ -47,7 +47,7 @@ class RestInfo {
         location: json["location"],
         status: json["status"],
         // orderTypes: OrderTypes.fromJson(json["order_types"]),
-        pic: json['pic'] != null ?json["pic"]["data"]["data"]:null,
+        pic: json['pic'] != null ?json["pic"]:null,
         // timing: json['timing'] != null ? List<String>.from(json['timing']!.map((x) => x,),) : [],
         // List<dynamic>.from(json["timing"].map((x) => x)),
 

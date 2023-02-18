@@ -14,7 +14,7 @@ import '../widgets/buttons1.dart';
 
 class RestaurantPage extends StatefulWidget {
   final String data;
-  final Image image;
+  final String image;
   const RestaurantPage({Key? key, required this.data, required this.image}) : super(key: key);
   @override
   State<StatefulWidget> createState() => RestaurantPageState();
@@ -113,7 +113,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                   children: [
                     Container(
                       child: Image(
-                          image: widget.image.image,
+                          image: NetworkImage(widget.image),
         // colorFilter: (restaurant.status=='on') ? null:new ColorFilter.mode(Colors.grey, BlendMode.saturation)
                       ),
                     ),
