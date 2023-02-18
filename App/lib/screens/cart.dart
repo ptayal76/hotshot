@@ -114,7 +114,7 @@ class _cartState extends State<cart> {
                     // print(Orders![2]);
                     return CartCard(
                       orders: Orders![index],
-                      mp: fetchedDishes![index],
+                      mp: fetchedDishes[index],
                     ); //(data: widget.stat[index]
                   },
                   shrinkWrap: true,
@@ -125,7 +125,7 @@ class _cartState extends State<cart> {
                       height: 1,
                     );
                   },
-                  itemCount: (fetchedDishes==null)?0:fetchedDishes!.length,
+                  itemCount: (fetchedDishes==null)?0:fetchedDishes.length,
                 )
                 // FutureBuilder(
                 //   future: fetchusercart(),
