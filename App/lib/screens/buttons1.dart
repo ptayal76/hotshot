@@ -18,14 +18,14 @@ class new_button1 extends StatelessWidget {
         ClipOval(
           child: Container(
             padding: EdgeInsets.all(1.5),
-            color: Colors.pink,
+            color: Colors.blue,
             child: ClipOval(
               child: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(0.1),
                 child: IconButton(
                   onPressed: onTap,
-                  icon: Icon(ic, size: 32,color: Colors.pink),
+                  icon: Icon(ic, size: 32,color: Colors.blue),
                 ),
               ),
             ),
@@ -36,7 +36,7 @@ class new_button1 extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-                color: Colors.pink, fontWeight: FontWeight.w700, fontSize: 17),
+                color: Colors.blue, fontWeight: FontWeight.w700, fontSize: 17),
           ),
         ),
       ],

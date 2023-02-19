@@ -6,6 +6,7 @@ import 'package:hotshot/Signin.dart';
 import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_form_wrapper.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_sign_in.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
@@ -22,71 +23,90 @@ class ShopkeeperFormWrapper extends StatefulWidget {
 }
 
 class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
-  bool postSent = false;
+  bool postSent= false;
 
   bool? isRestCreated;
   String? tkn;
 
-  void setIsRestCreated() async {
+  void setIsRestCreated()async{
     bool? b = await SharedPrefs().isRestCreated();
 
-    setState(() {
+    if(mounted){setState(() {
       isRestCreated = b;
-    });
+    });}
   }
 
-  void fetchToken() async {
+  void fetchToken()async{
     String? t = await SharedPrefs().getToken();
 
     print('fetching token');
     print(t);
 
-    setState(() {
+    if(mounted){setState(() {
       tkn = t;
-    });
+    });}
 
     print('KSJFGSKLJGSLKJGSL');
   }
 
-  void postEmail(String email) async {
-    try {
-      String uri = '$MONGO_URL/food/rest/login';
+  void postEmail(String email)async{
+    try{
+    String uri = '$MONGO_URL/food/rest/login';
 
-      final body = jsonEncode({'email': email});
+
+
+    final body = jsonEncode({
+        'email': email
+      });
 
       //Map<String, String> customHeaders = {'Accept':'application/json'};
-      final res = await http.post(Uri.parse(uri), body: body, headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      });
+      final res = await http.post(
+        Uri.parse(uri),
+        body: body, 
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
 
       String? t = res.headers['token'];
       SharedPrefs().setToken(t!);
-    } catch (e) {
+    }
+    catch(e)
+    {
       print(e);
     }
-  }
+  }  
 
   @override
   Widget build(BuildContext context) {
+
     setIsRestCreated();
     fetchToken();
 
     print(isRestCreated);
 
-    if (isRestCreated == true) {
-      if (tkn == null) {
-        if (postSent == false) {
+    if(isRestCreated == true){
+      if(tkn == null){
+        if(postSent != true){
           String? email = Provider.of<MyUser?>(context)!.email;
           postEmail(email!);
+          postSent = true;
         }
-        postSent = true;
         return const Loading();
-      } else {
+      }
+      else{
         return const MainPage();
       }
-    } else {
-      return ShopkeeperVerificationForm();
+    }
+    else{
+      return const ShopkeeperVerificationForm();
     }
   }
+
+
+
+
+
+
+    
 }

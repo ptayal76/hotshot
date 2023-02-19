@@ -230,15 +230,15 @@ class RestaurantHomeState extends State<RestaurantHome>
                           padding: const EdgeInsets.symmetric(horizontal: 56.0),
                           child: ElevatedButton(
                             onPressed: () async {
-                              // israted = (await Navigator.push(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //               builder: (context) => RateMe(),
-                              //             )) ==
-                              //         null
-                              //     ? false
-                              //     : true);
-                              // setState(() {});
+                              israted = (await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => RateMe(),
+                                          )) ==
+                                      null
+                                  ? false
+                                  : true);
+                              setState(() {});
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(

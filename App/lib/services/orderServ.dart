@@ -74,16 +74,15 @@ class OrderServ {
     String Bearer = 'Bearer $tokenFinal';
     try {
       String url = MONGO_URL + '/food/order/checkout/$orderId';
-      // print('hi1');
+      print('hi1');
       http.Response res = await http.put(Uri.parse(url), headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': Bearer
       });
-      //print('hi');
-      //print(res.body);
+      print('hi');
+      print(res.body);
       Map<String, dynamic> obj = jsonDecode(res.body);
-      //print(res.body);
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -98,6 +97,7 @@ class OrderServ {
       );
       return (obj == null) ? {} : obj;
     } catch (e) {
+      print('QWERTYUI');
       print(e);
     }
   }
@@ -543,8 +543,7 @@ class OrderServ {
       var res = await req.send();
       var responsed = await http.Response.fromStream(res);
       var obj = jsonDecode(responsed.body);
-      print(obj);
-      print(responsed); // http.Response res = await http.post(
+      //print(obj); // http.Response res = await http.post(
       //     Uri.parse('$uri/food/dish'),
       //     headers: {
       //       'Content-Type': 'application/json',
@@ -629,7 +628,6 @@ class OrderServ {
     // print('xxx');
     return OrderList;
   }
-
   Future<List<Order>> fetchRejectedOrders(BuildContext context) async {
     // final userProvider = Provider.of(context)
     List<Order> OrderList = [];
@@ -677,8 +675,7 @@ class OrderServ {
     // print('xxx');
     return OrderList;
   }
-
-  Future<List<dynamic>?> fetchQR(BuildContext context, String orderId) async {
+  Future<List<dynamic>?> fetchQR(BuildContext context,String orderId) async {
     // final userProvider = Provider.of(context)
     // List<Order> OrderList = [];
     List<dynamic>? pic;
@@ -691,8 +688,8 @@ class OrderServ {
     //print(Bearer);
     try {
       print('hello');
-      http.Response res =
-          await http.get(Uri.parse('$uri/food/order/qr/$orderId'), headers: {
+      http.Response res = await http
+          .get(Uri.parse('$uri/food/order/qr/$orderId'), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       });
@@ -701,7 +698,7 @@ class OrderServ {
       print('x');
       print(obj.runtimeType);
       print(obj['data'][0].runtimeType);
-      pic = obj['data'];
+      pic=obj['data'];
       // print(obj[0].runtimeType);
       print(obj);
       // print(res.body);

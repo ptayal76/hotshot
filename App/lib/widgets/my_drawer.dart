@@ -127,6 +127,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     TextButton.icon(
                         onPressed: () {
+                          Navigator.pop(context);
                           GoogleAuthentication().googleLogout();
                         },
                         style: drawerButtonStyle,

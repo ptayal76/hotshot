@@ -3,8 +3,12 @@ import 'package:hotshot/model/dishInfo.dart';
 import 'package:hotshot/services/listdishesTomap.dart';
 import 'package:hotshot/services/orderServ.dart';
 import 'package:hotshot/widgets/menuCard.dart';
+import 'package:hotshot/theme_provider.dart';
 import 'package:hotshot/constants/globvar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:hotshot/theme_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import '../constants/loading.dart';
 import '../model/orderInfo.dart';
@@ -16,13 +20,15 @@ import '../services/restaurantServ.dart';
 class checkout extends StatefulWidget {
   // final String orderID;
   final Order order;
-  const checkout({Key? key, required this.order}) : super(key: key);
+  final String name;
+  const checkout({Key? key, required this.order,required this.name}) : super(key: key);
 
   @override
   State<checkout> createState() => _checkoutState();
 }
 
 class _checkoutState extends State<checkout> {
+
   Order? refOrder;
   Map<String, int> dishes = {};
   Map<DishInfo, int> fetchedDishes = {};
@@ -33,12 +39,11 @@ class _checkoutState extends State<checkout> {
     //
     // });
   }
-
-  fetchmenu() async {
-    dishes = convert().listToMap(refOrder!.items);
-    List<String> dishIdsOrder = [];
+  fetchmenu() async{
+    dishes=convert().listToMap(refOrder!.items);
+    List<String> dishIdsOrder=[];
     // print("keeyyyy11111111");
-    for (String key in dishes.keys.toList()) {
+    for(String key in dishes!.keys.toList()){
       // print(key);
       // print("keyyyyysssss");
       dishIdsOrder.add(key);
@@ -51,17 +56,18 @@ class _checkoutState extends State<checkout> {
     fetchedDishes = (mp);
     setState(() {});
   }
-
   postcartdish(String dishid) async {
     await RestaurantServ().postCartOrder(context, dishid);
-    setState(() {});
-  }
+    setState(() {
 
+    });
+  }
   removecartdish(String dishid) async {
     await RestaurantServ().removeCartOrder(context, dishid);
-    setState(() {});
-  }
+    setState(() {
 
+    });
+  }
   // fetchListMenu() async{
   //   List<DishInfo>x=await RestaurantServ().fetchDish(context, );
   // }
@@ -82,10 +88,12 @@ class _checkoutState extends State<checkout> {
     _razorpay.clear();
   }
 
-  void openCheckout() async {
-    var options = await OrderServ().checkout(context, refOrder!.id);
+  Future<void> openCheckout() async {
+    var options=await OrderServ().checkout(context, refOrder!.id);
+    
     // Map<String,String> mp= (options==null)? {}: mp;
     print(options);
+    print('skfhskjhs');
     // var options = {
     //   'key': 'rzp_test_gFnmcZ4eyzXm04',
     //   // 'amount': 28200,
@@ -99,18 +107,19 @@ class _checkoutState extends State<checkout> {
     // };
 
     try {
-      _razorpay.open(
-          {'order_id': '${options!['orderid']}'});
+      _razorpay.open({
+        'order_id':'${options!['orderid']}',
+        'key': 'rzp_test_L8gaxFiUYFLz6D'
+      });
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+
     try {
-      Map<String, dynamic> json = {
-        'razorpay_payment_id': '${response.paymentId}'
-      };
+      Map<String,dynamic> json = {'razorpay_payment_id': '${response.paymentId}'};
       print(response.toString());
       print(response.runtimeType);
       print(response.signature.toString());
@@ -120,11 +129,13 @@ class _checkoutState extends State<checkout> {
         msg: "SUCCESS: ${response.paymentId}",
         timeInSecForIosWeb: 4,
       );
-      Navigator.pop(context);
-      Navigator.pop(context);
-    } catch (e) {
+    }
+    catch(e)
+    {
       print(e);
     }
+
+
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -147,127 +158,160 @@ class _checkoutState extends State<checkout> {
   var sum = 0;
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    //final themeProvider = Provider.of<ThemeProvider>(context);
+
     fetchorder();
-    return (refOrder == null)
-        ? Loading()
-        : Scaffold(
-            appBar: AppBar(
-              title: Text('CheckOut'),
-              backgroundColor: const Color.fromARGB(255, 239, 102, 105),
-              centerTitle: true,
+    return (refOrder==null)?Loading():Scaffold(
+      appBar: AppBar(
+        title: Text('CheckOut'),
+        // backgroundColor: const Color(0xff307A59),
+        centerTitle: true,
+        elevation: 4,
+      ),
+      body: ListView(
+        children: [
+          Container(
+            height: 50,
+            // decoration: BoxDecoration(color: Colors.white),
+            child: Center(
+              child: Text((widget.name),
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
-            body: ListView(
-              children: [
-                Container(
-                  height: 50,
-                  // decoration: BoxDecoration(color: Colors.white),
-                  child: Center(
-                    child: Text(
-                        (allRest[widget.order.restaurantId]!.restaurantName),
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                ),
-                ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 2),
-                    itemBuilder: (context, index) {
-                      DishInfo key = fetchedDishes.keys.elementAt(index);
-                      int value = fetchedDishes.values.elementAt(index);
-                      return Row(
+          ),
+          ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 2),
+              itemBuilder: (context, index) {
+                DishInfo key=fetchedDishes.keys.elementAt(index);
+                int value=fetchedDishes.values.elementAt(index);
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Column(
+                    children: [
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          MenuCard(dish: key, freq: value),
+                          MenuCard(dish: key,freq: value),
                           Container(
-                            // width: 50,
+
                             child: Column(
+                              // crossAxisAlignment: CrossAxisAlignment.,
+                              // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                IconButton(
-                                  onPressed: () {
-                                    postcartdish(
-                                        fetchedDishes.keys.elementAt(index).id);
-                                    fetchorder();
-                                  },
-                                  icon: Icon(
-                                    Icons.add,
-                                    size: 20,
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      IconButton(onPressed: (){
+                                        removecartdish(fetchedDishes.keys.elementAt(index).id);
+                                      },
+                                        icon: Icon(
+                                          Icons.remove,
+                                          size: 15,
+                                        ),
+                                        style: ButtonStyle( backgroundColor: MaterialStatePropertyAll<Color>(themeProvider.isDarkMode?Colors.white12:Colors.black12),),),
+
+
+                                      Text(value.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
+                                      // Container(width: 2,color: Colors.black,),
+                                      // SizedBox(width: 2,child: Container(color: Colors.red,),),
+                                      IconButton(onPressed: (){
+                                        postcartdish(fetchedDishes.keys.elementAt(index).id);
+                                        fetchorder();
+                                      },
+                                        icon: Icon(
+                                          Icons.add,
+                                          size: 15,
+                                        ),
+                                        style: ButtonStyle( backgroundColor: MaterialStatePropertyAll<Color>(themeProvider.isDarkMode?Colors.white12:Colors.black12),),
+
+                                      ),
+
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    //border: Border.all(width: 0.2,color: Colors.red),
+                                    borderRadius: BorderRadius.circular(28.0),
+                                    // color: Colors.red[50]
+
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    removecartdish(
-                                        fetchedDishes.keys.elementAt(index).id);
-                                  },
-                                  icon: Icon(
-                                    Icons.remove,
-                                    size: 20,
-                                  ),
-                                ),
+                                // SizedBox(height: 5,),
+                                Text('₹'+(value*(fetchedDishes.keys.elementAt(index).price!)).toString() , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),)
+                                //
                               ],
                             ),
-                          )
+
+                          ),
+
+
                         ],
-                      ); //(data: widget.stat[index]
-                    },
-                    shrinkWrap: true,
-                    //scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        height: 1,
-                      );
-                    },
-                    itemCount: fetchedDishes.length),
-                SizedBox(
-                  height: 2,
-                  child: Container(color: Colors.black),
-                ),
-                SizedBox(
-                  height: 60,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Total Amount : ',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '₹${refOrder!.total.toString()}',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
+                      ),
+
+                    ],
                   ),
-                ),
-                SizedBox(
-                  height: 2,
-                  child: Container(color: Colors.black),
-                ),
-              ],
+                ); //(data: widget.stat[index]
+              },
+              shrinkWrap: true,
+              //scrollDirection: Axis.vertical,
+              physics: BouncingScrollPhysics(),
+              separatorBuilder: (context, index) {
+                return SizedBox(
+                  height: 1,
+                );
+              },
+              itemCount: fetchedDishes.length),
+          Divider(),
+          SizedBox(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total Amount : ',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '₹${refOrder!.total.toString()}',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
-            bottomNavigationBar: new GestureDetector(
-                onTap: () {
+          ),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0,right: 12.0,top: 20),
+            child: new GestureDetector(
+                onTap: ()
+                async {
                   print("Container clicked");
-                  openCheckout();
+                 await openCheckout();
                   // Navigator.pushReplacement(context,
                   //     new MaterialPageRoute(builder: (BuildContext context) => MenuCard()));
                 },
-                child: Container(
+                child:Container(
+
                   height: 50,
-                  decoration: BoxDecoration(color: Color.fromARGB(255, 239, 102, 105)),
-                  child: Center(
-                      child: Text(
-                    'BUY NOW : ₹${refOrder!.total.toString()}',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-                )),
-          );
+                  decoration: BoxDecoration(color:  Colors.pink,borderRadius: BorderRadius.circular(60)),
+                  child: Center(child: Text('BUY NOW : ₹${refOrder!.total.toString()}',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),)),
+                )
+
+            ),
+          ),
+        ],
+        //physics: BouncingScrollPhysics(),
+      ),
+
+      // bottomNavigationBar:
+
+
+    );
   }
 }

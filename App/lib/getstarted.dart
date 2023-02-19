@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hotshot/screens/home.dart';
+import 'package:hotshot/wrapper.dart';
 import 'package:lottie/lottie.dart';
 // import 'package:scheduler_flutter/Signin.dart';
 
@@ -308,10 +309,10 @@ class _StartingScreenState extends State<StartingScreen> {
                           duration: Duration(milliseconds: 300),
                           curve: Curves.linear);
                     } else {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Home(title: "Hotshot")));
+                              builder: (context) => Wrapper()));
                     }
                   },
                   child: Container(

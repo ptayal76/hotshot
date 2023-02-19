@@ -32,23 +32,15 @@ class RestHome extends StatefulWidget {
 
 class _RestHomeState extends State<RestHome>
     with SingleTickerProviderStateMixin {
-  List filtername = ['Open Now', 'Rating 4+'];
-  List filterselected = [false, false, false, false];
+  List filtername = ['Open Now'];
+  List filterselected = [false];
   List<RestInfo>? restaur;
-  List<RestInfo>? toprestaur;
   final RestaurantServ restServ = RestaurantServ();
-  final RestaurantServ toprestServ = RestaurantServ();
-
   fetchallrest() async {
     restaur = await restServ.fetchAllRestaurants(context);
     for (int i = 0; i < restaur!.length; i++) {
       allRest[restaur![i].id] = restaur![i];
     }
-    setState(() {});
-  }
-
-  fetchtoprest() async {
-    toprestaur = await toprestServ.fetchTopRestaurants(context);
     setState(() {});
   }
 
@@ -102,7 +94,6 @@ class _RestHomeState extends State<RestHome>
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchtoprest();
     fetchallrest();
     s = '';
     fetchsearchedrest(s);
@@ -177,11 +168,11 @@ class _RestHomeState extends State<RestHome>
           //pinned: false,
           //floating: false,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  await GoogleAuthentication().googleLogout();
-                },
-                icon: const Icon(Icons.logout)),
+            // IconButton(
+            //     onPressed: () async {
+            //       await GoogleAuthentication().googleLogout();
+            //     },
+            //     icon: const Icon(Icons.logout)),
             badges.Badge(
               position: badges.BadgePosition.topEnd(top: 3, end: 3),
               badgeContent: const Text(''),
@@ -241,10 +232,10 @@ class _RestHomeState extends State<RestHome>
                             setState(() {});
                           },
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.filter_alt_outlined, size: 30),
-                          onPressed: () {},
-                        ),
+                        // IconButton(
+                        //   icon: const Icon(Icons.filter_alt_outlined, size: 30),
+                        //   onPressed: () {},
+                        // ),
                       ],
                     ),
                   ),
@@ -328,7 +319,7 @@ class _RestHomeState extends State<RestHome>
                     child: ListView.separated(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemBuilder: (context, index) {
-                          return RestCard(data: toprestaur![index]);
+                          return RestCard(data: restaur![index]);
                         },
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -338,7 +329,7 @@ class _RestHomeState extends State<RestHome>
                             width: 16,
                           );
                         },
-                        itemCount: toprestaur!.length),
+                        itemCount: restaur!.length),
                   ),
                   // Container(
                   //   child: Column(

@@ -71,11 +71,11 @@ class _MyShopkeeperDrawerState extends State<MyShopkeeperDrawer> {
                       label: const Text('Order History'),
                       icon: const Icon(Icons.history_rounded),
                     ),
-                    // TextButton.icon(
-                    //   icon: const Icon(Icons.pending_actions_rounded),
-                    //   label: const Text('Pending Orders'),
-                    //   onPressed: () {},
-                    // ),
+                    TextButton.icon(
+                      icon: const Icon(Icons.pending_actions_rounded),
+                      label: const Text('Pending Orders'),
+                      onPressed: () {},
+                    ),
                     TextButton.icon(
                       onPressed: () {},
                       style: drawerButtonStyle,
