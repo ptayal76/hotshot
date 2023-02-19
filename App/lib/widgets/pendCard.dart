@@ -8,8 +8,11 @@ import 'package:expandable/expandable.dart';
 import 'package:hotshot/screens/qr_screen.dart';
 
 import '../constants/globvar.dart';
+import '../constants/loader.dart';
 import '../model/dishInfo.dart';
 import '../model/orderInfo.dart';
+import '../model/restInfo.dart';
+import '../services/DishfromDish_id.dart';
 import '../services/orderServ.dart';
 
 class PendCard extends StatefulWidget {
@@ -21,18 +24,26 @@ class PendCard extends StatefulWidget {
 }
 
 class _PendCardState extends State<PendCard> {
+  RestInfo? rest;
+  fetchrest() async{
+    RestInfo restlocal=await restServ.fetchRestaurantsbyID(context, widget.orders.restaurantId);
+    setState(() {
+      rest=restlocal;
+    });
+  }
   // List<dynamic>? pic;
   // fetchqr()async{
   //   pic=await OrderServ().fetchQR(context, widget.orders.id);
   // }
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Colors.teal,
+    fetchrest();
+    return (rest==null)?Loader():Card(
+        // color: Colors.teal,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 10.0,
-        shadowColor: Colors.grey,
+        // shadowColor: Colors.grey,
         //shape: ShapeBorder(BorderRadius),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -62,8 +73,8 @@ class _PendCardState extends State<PendCard> {
                               //  mainAxisAlignment: MainAxisAlignment.,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(allRest[widget.orders.restaurantId]!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
-                                Text(allRest[widget.orders.restaurantId]!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
+                                Text(rest!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
+                                Text(rest!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
                               ],
                             ),
 

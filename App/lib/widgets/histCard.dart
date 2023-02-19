@@ -6,8 +6,11 @@ import 'package:hotshot/screens/describe.dart';
 import 'package:expandable/expandable.dart';
 
 import '../constants/globvar.dart';
+import '../constants/loader.dart';
 import '../model/dishInfo.dart';
 import '../model/orderInfo.dart';
+import '../model/restInfo.dart';
+import '../services/DishfromDish_id.dart';
 
 class HistCard extends StatefulWidget {
   final Order orders;
@@ -18,14 +21,22 @@ class HistCard extends StatefulWidget {
 }
 
 class _HistCardState extends State<HistCard> {
+  RestInfo? rest;
+  fetchrest() async{
+    RestInfo restlocal=await restServ.fetchRestaurantsbyID(context, widget.orders.restaurantId);
+    setState(() {
+      rest=restlocal;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Colors.teal,
+    fetchrest();
+    return (rest==null)?Loader():Card(
+        // color: Colors.teal,
         shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 10.0,
-        shadowColor: Colors.grey,
+        // shadowColor: Colors.grey,
         //shape: ShapeBorder(BorderRadius),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -55,8 +66,8 @@ class _HistCardState extends State<HistCard> {
                             //  mainAxisAlignment: MainAxisAlignment.,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(allRest[widget.orders.restaurantId]!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
-                                Text(allRest[widget.orders.restaurantId]!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
+                                Text(rest!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
+                                Text(rest!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
                               ],
                             ),
 

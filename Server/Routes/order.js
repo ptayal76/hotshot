@@ -242,6 +242,7 @@ router.put("/food/order/checkout/:orderId", verifyToken, authenticateUser, async
         key_id: restaurant.razorpayCredKey_id || process.env.RZP_KEY_ID,
         key_secret: restaurant.razorpayCredKeySecret || process.env.RZP_SEC_KEY
     })
+    console.log("here");
     razorpayInstance.orders.create({ amount: order.total * 100, currency: "INR" }, (err, result) => {
         if (err) {
             return res.status(400).send(err.message);

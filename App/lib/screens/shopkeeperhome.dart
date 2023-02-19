@@ -56,8 +56,8 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
     if (mounted) {
       setState(() {
         menu = menulocal;
-        //restName = restaurant.restaurantName;
-        // isLoading = false;
+        restName = restaurant.restaurantName;
+        isLoading = false;
       });
     }
     return menu;
@@ -67,6 +67,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getData();
   }
 
   @override
@@ -74,12 +75,12 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
     print('BUILD METHOD RAN');
     // getData(context);
 
-    return Scaffold(
+    return isLoading ? Loading() : Scaffold(
             appBar: AppBar(
               actions: const [
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/droppedImage.jpg'),
-                ),
+                // CircleAvatar(
+                //   backgroundImage: AssetImage('assets/droppedImage.jpg'),
+                // ),
               ],
               title: Text(
                 restName,

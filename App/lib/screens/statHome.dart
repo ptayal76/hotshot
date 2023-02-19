@@ -41,7 +41,7 @@ class _StatHomeState extends State<StatHome>
             ? null
             : BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: const Color(0xff307A59),
+          color: const Color.fromARGB(255, 239, 102, 105),
         ),
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -78,7 +78,7 @@ class _StatHomeState extends State<StatHome>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50.0),
           child: Container(
-            color: Colors.green.withOpacity(0.2),
+            color: Color.fromARGB(255, 239, 102, 105).withOpacity(0.2),
             child: TabBar(
                 onTap: (x) {
                   setState(() {
@@ -127,7 +127,7 @@ class _StatHomeState extends State<StatHome>
                 title: Text('HotShot'),
                 centerTitle: true,
               ),
-              backgroundColor: Color(0xff307A59),
+              backgroundColor: Color.fromARGB(255, 239, 102, 105),
               //pinned: false,
               //floating: false,
               actions: [

@@ -23,6 +23,13 @@ const jimp = require('jimp');
 const fs = require('fs');
 const qrCodeReader = require('qrcode-reader');
 const qr = require('qrcode');
+const cloudinary = require("cloudinary");
+const streamifier = require('streamifier');
+cloudinary.config({
+    cloud_name: process.env.CLOUDNAME || 'dmuviaz8x',
+    api_key: process.env.APIKEY || 232983377535948,
+    api_secret: process.env.APISECRET || 'eGv35fpj-wodC6lw15MhBHvDb3M',
+});
 
 //GET ALL ORDERS
 router.get("/stationary/order", verifyToken, authenticate, async (req, res) => {
@@ -91,16 +98,21 @@ router.get("/stationary/order/qr/:orderId", async (req, res, next) => {
 })
 
 //CREATING ORDER
-router.post('/stationary/order/:statId', upload.single('pic'), verifyToken, authenticateUser, async (req, res) => {
+router.post('/stationary/order/:statId', upload.single('pdf'), verifyToken, authenticateUser, async (req, res) => {
     try {
         var today = new Date();
-        const newOrder = new Order({ stationaryId: mongoose.Types.ObjectId(req.params.statId), user_id: mongoose.Types.ObjectId(req.user), timeOfOrder: `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`, Order_status: 'paymentPending', category: req.body.category, numberOfCopies: req.body.numberOfCopies, BothSides: req.body.BothSides, Orientation: req.body.Orientation, total: req.body.total })
-        if (req.file) {
-            newOrder.img.data = req.file.buffer;
-            newOrder.img.contentType = req.file.mimetype;
-        }
-        await newOrder.save();
-        return res.status(200).json(newOrder);
+        const newOrder = new Order(req.body);
+        let cld_upload_stream = cloudinary.uploader.upload_stream(
+            async function (result, error) {
+                newOrder.pdf = result.secure_url
+                newOrder.user_id = req.user
+                newOrder.stationaryId = req.params.statId
+                await newOrder.save();
+                return res.json(newOrder);
+            }
+        );
+        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+        return
     } catch (err) {
         return res.status(500).json(err);
     }

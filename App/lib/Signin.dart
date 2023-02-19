@@ -47,16 +47,23 @@ class _SignInState extends State<SignIn> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+            
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.white,
+          // backgroundColor: Color.fromARGB(255, 239, 102, 105),
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 239, 102, 105),
             centerTitle: true,
             title: Text(
               "SIGN IN",
-              style: TextStyle(color: Colors.white),
+              // style: TextStyle(color: Colors.white),
             ),
           ),
           body: Container(
@@ -67,7 +74,7 @@ class _SignInState extends State<SignIn> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 2.8,
-                    child: LottieBuilder.asset("assets/lotties/auth.json"),
+                    child: LottieBuilder.asset("assets/lottie/auth.json"),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -92,7 +99,7 @@ class _SignInState extends State<SignIn> {
                             ),
                             onPressed: wait
                                 ? null
-                                : () {
+                                : ()async{
                                     if (!mounted) {
                                       return;
                                     }
@@ -102,8 +109,8 @@ class _SignInState extends State<SignIn> {
                                       wait = true;
                                       buttoname = "Resend";
                                     });
-                                    verification(
-                                        "+91${phone.text}", context, setData);
+                                    await verification(
+                                        "+91${phone.text.trim()}", context, setData);
                                   },
                           ),
                           suffixIconConstraints: BoxConstraints(maxHeight: 40),
@@ -210,7 +217,7 @@ class _SignInState extends State<SignIn> {
 
                         print("***********************");
                         signInwithPhoneNumber(
-                            verificationIdFinal, smsCode, context);
+                            verificationIdFinal, smsCode, context, phone.text.trim());
                         // FirebaseAuth _auth = FirebaseAuth.instance;
                         // signInWithPhoneNumber(
                         // verificationIdFinal, smsCode, context);

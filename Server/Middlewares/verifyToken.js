@@ -7,6 +7,7 @@ const Stationary = require('../Models/Stationary')
 const verifyToken = (req, res, next) => {
     const bearerHeader = req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
+        
         const bearerToken = bearerHeader.split(' ')[1];
         req.token = bearerToken;
         next();
@@ -56,9 +57,11 @@ const authenticateOwner = async (req, res, next) => {
             else {
                 const owner = await Owner.findById(authData.id);
                 if (!owner) {
+                    
                     res.status(403).json('Unauthenticated owner!');
                 }
                 else {
+                    
                     req.restaurant = authData.id;
                     req.isowner = authData.isowner;
                     next();
@@ -93,7 +96,7 @@ const authenticateStationaryOwner = async (req, res, next) => {
 }
 
 const authorizeOwner = (req, res, next) => {
-    if (req.restaurant === req.params.restid) {
+    if (req.restaurant == req.params.restid) {
         next();
     }
     else {

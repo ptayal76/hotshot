@@ -7,6 +7,7 @@ import 'package:hotshot/screens/cart.dart';
 import 'package:hotshot/widgets/restCard.dart';
 import 'package:hotshot/widgets/sideDrawer.dart';
 import 'package:hotshot/screens/restHome.dart';
+import 'package:lottie/lottie.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:hotshot/screens/statHome.dart';
 import '../widgets/otherCard.dart';
@@ -45,7 +46,7 @@ class _OtherHomeState extends State<OtherHome>
             ? null
             : BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xff307A59),
+                color: Color.fromARGB(255, 239, 102, 105),
               ),
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -82,7 +83,7 @@ class _OtherHomeState extends State<OtherHome>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50.0),
           child: Container(
-            color: Colors.green.withOpacity(0.2),
+            color: Color.fromARGB(255, 239, 102, 105).withOpacity(0.2),
             child: TabBar(
                 onTap: (x) {
                   setState(() {
@@ -129,7 +130,7 @@ class _OtherHomeState extends State<OtherHome>
             title: Text('HotShot'),
             centerTitle: true,
           ),
-          backgroundColor: Color(0xff307A59),
+          backgroundColor: Color.fromARGB(255, 239, 102, 105),
           //pinned: false,
           //floating: false,
           actions: [
@@ -153,232 +154,9 @@ class _OtherHomeState extends State<OtherHome>
         ),
         SliverList(
           delegate: SliverChildListDelegate([
-            Container(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      //if(widget.hospital.length == 0)
-
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      width: MediaQuery.of(context).size.width,
-                      child: const Text(
-                        'Hospital',
-                        style: TextStyle(
-                          // color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-
-                    // SliverList(
-                    //     delegate: SliverChildBuilderDelegate((context,index){
-                    //       return RestCard(data: widget.topPicks[index]);
-                    //     },
-                    //     childCount: widget.topPicks.length,
-                    //     )
-                    // ),
-                    ListView.separated(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        itemBuilder: (context, index) {
-                          return OtherCard(data: widget.hospital[index]);
-                        },
-                        shrinkWrap: true,
-                        //scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: 16,
-                          );
-                        },
-                        itemCount: widget.hospital.length),
-                  ]),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 12),
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                'Rentals',
-                style: TextStyle(
-                  // color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 12),
-              height: 150,
-              child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  itemBuilder: (context, index) {
-                    return OtherCard(data: widget.topPicks[index]);
-                  },
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(
-                      width: 16,
-                    );
-                  },
-                  itemCount: widget.topPicks.length),
-            ),
-            Container(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(
-                        'Cycle Repair',
-                        style: TextStyle(
-                          // color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 12),
-                      height: 150,
-                      child: ListView.separated(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          itemBuilder: (context, index) {
-                            return OtherCard(data: widget.suggested[index]);
-                          },
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              width: 16,
-                            );
-                          },
-                          itemCount: widget.topPicks.length),
-                    ),
-                  ]),
-            ),
-            Container(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(
-                        'Souvenir',
-                        style: TextStyle(
-                          // color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 12),
-                      height: 150,
-                      child: ListView.separated(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          itemBuilder: (context, index) {
-                            return OtherCard(data: widget.suggested[index]);
-                          },
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              width: 16,
-                            );
-                          },
-                          itemCount: widget.topPicks.length),
-                    ),
-                    Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 12),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              width: MediaQuery.of(context).size.width,
-                              child: Text(
-                                'Mobile Repair',
-                                style: TextStyle(
-                                  // color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 12),
-                              height: 150,
-                              child: ListView.separated(
-                                  padding: EdgeInsets.symmetric(horizontal: 16),
-                                  itemBuilder: (context, index) {
-                                    return OtherCard(
-                                        data: widget.suggested[index]);
-                                  },
-                                  physics: BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      width: 16,
-                                    );
-                                  },
-                                  itemCount: widget.topPicks.length),
-                            ),
-                          ]),
-                    ),
-                    Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 12),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              width: MediaQuery.of(context).size.width,
-                              child: Text(
-                                'Barber',
-                                style: TextStyle(
-                                  // color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 12),
-                              height: 150,
-                              child: ListView.separated(
-                                  padding: EdgeInsets.symmetric(horizontal: 16),
-                                  itemBuilder: (context, index) {
-                                    return OtherCard(
-                                        data: widget.suggested[index]);
-                                  },
-                                  physics: BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      width: 16,
-                                    );
-                                  },
-                                  itemCount: widget.topPicks.length),
-                            ),
-                          ]),
-                    ),
-                  ]),
+            Padding(
+              padding: const EdgeInsets.only(top: 150),
+              child: Center(child: Container(child: Lottie.asset('assets/lottie/soonlottie.json'))),
             ),
           ]),
           // physics: BouncingScrollPhysics(),

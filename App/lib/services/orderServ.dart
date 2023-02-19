@@ -74,16 +74,15 @@ class OrderServ {
     String Bearer = 'Bearer $tokenFinal';
     try {
       String url = MONGO_URL + '/food/order/checkout/$orderId';
-      // print('hi1');
+      print('hi1');
       http.Response res = await http.put(Uri.parse(url), headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': Bearer
       });
-      //print('hi');
-      //print(res.body);
+      print('hi');
+      print(res.body);
       Map<String, dynamic> obj = jsonDecode(res.body);
-      //print(res.body);
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -98,6 +97,7 @@ class OrderServ {
       );
       return (obj == null) ? {} : obj;
     } catch (e) {
+      print('QWERTYUI');
       print(e);
     }
   }

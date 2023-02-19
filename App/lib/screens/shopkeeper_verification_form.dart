@@ -438,6 +438,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:hotshot/constants/constants.dart';
+import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/model/shop_verification_info.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
@@ -463,6 +464,9 @@ class ShopkeeperVerificationForm extends StatefulWidget {
 
 class _ShopkeeperVerificationFormState
     extends State<ShopkeeperVerificationForm> {
+
+      bool isLoading = false;
+
   final List<String> locationCategoryList = [
     'Academic Complex',
     'Food Court',
@@ -521,7 +525,7 @@ class _ShopkeeperVerificationFormState
 
     final user = Provider.of<MyUser?>(context);
 
-    return Scaffold(
+    return isLoading ? Loading() : Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
@@ -558,6 +562,9 @@ class _ShopkeeperVerificationFormState
                     } else if (startingTime == '' || closingTime == '') {
                       showToast('Fields cannot be left empty');
                     } else {
+                      setState(() {
+                        isLoading = true;
+                      });
                       if (shopType == 'Eatery') {
                         try {
                           final data = ShopVerificationInfo(

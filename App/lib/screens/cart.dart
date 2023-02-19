@@ -106,7 +106,8 @@ class _cartState extends State<cart> {
                 'Your Orders',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ))),
-              (fetchedDishes==null)?Lottie.asset('assets/lottie/empty.json', height: 200, width: 200):Lottie.asset('assets/lottie/cart.json', height: 200, width: 200),
+              // (fetchedDishes==null)?Lottie.asset('assets/lottie/empty.json', height: 200, width: 200):
+              Lottie.asset('assets/lottie/cart.json', height: 200, width: 200),
          (Orders==null)?Loader():Container(
            height: MediaQuery.of(context).size.height*(0.52),
            child: ListView.separated(

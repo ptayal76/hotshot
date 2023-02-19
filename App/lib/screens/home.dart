@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.only(top: 60),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
                       // padding: const EdgeInsets.only(top:20.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>

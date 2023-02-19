@@ -33,4 +33,20 @@ class SharedPrefs{
   Future<void> setRestId(String restId)async{
     await (await SharedPreferences.getInstance()).setString('restID', restId);
   }
+
+  Future<void> setIsGoogleSignedIn(bool value)async{
+    await (await SharedPreferences.getInstance()).setBool('isGoogleSignedIn', value);
+  }
+
+  Future<bool?> isGoogleSignedIn()async{
+    return (await SharedPreferences.getInstance()).getBool('isGoogleSignedIn');
+  }
+
+  Future<void> savePhone(String phone)async{
+    await (await SharedPreferences.getInstance()).setString('phone', phone);
+  }
+
+  Future<String?> getPhone()async{
+    return (await SharedPreferences.getInstance()).getString('phone');
+  }
 }

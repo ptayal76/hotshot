@@ -22,21 +22,25 @@ class _PendHistoryState extends State<PendHistory> {
   // var itemc = 0;
   // final List<int> price = [100, 200, 300, 400, 500];
   // var sum = 0;
-  List<Order>? Orders;
-  List<Map<String, int>> dishes = [];
+  List<Order> Orders=[];
+  // List<Map<String, int>> dishes = [];
   List<Map<DishInfo, int>> fetchedDishes = [];
   final OrderServ orderServ = OrderServ();
   fetchAcceptedorder() async {
     // print(dishes.length);
+     List<Map<String, int>> dishes = [];
+     List<Map<DishInfo, int>> fetchedDisheslocal = [];
     Orders = await orderServ.fetchAcceptedOrders(context);
-    // print(Orders!.length);
+    print(Orders!.length);
+    print("order length");
     // print('0000');
-    for (int i = 0; i < Orders!.length; i++) {
+    for (int i = 0; i < Orders.length; i++) {
       // print("hereee");
 
-      dishes.add(convert().listToMap(Orders![i].items));
+      dishes.add(convert().listToMap(Orders[i].items));
       // print(dishes.length);
     }
+    print(dishes.length);
 
     for (int i = 0; i < dishes.length; i++) {
       List<String> dishIdsOrder = [];
@@ -46,16 +50,21 @@ class _PendHistoryState extends State<PendHistory> {
         // print("keyyyyysssss");
         dishIdsOrder.add(key);
       }
+      print('dish');
       List<DishInfo> x =
       await RestaurantServ().fetchDish(context, dishIdsOrder);
+      print(x.length);
       Map<DishInfo, int> mp = {};
       for (int j = 0; j < x.length; j++) {
         mp[x[j]] = dishes[i][x[j].id]!;
       }
-      fetchedDishes.add(mp);
+      fetchedDisheslocal.add(mp);
     }
     // fetchDishesCart();
-    setState(() {});
+    setState(() {
+      // Orders=Orderslocal;
+      fetchedDishes=fetchedDisheslocal;
+    });
   }
   void initState() {
     // TODO: implement initState
@@ -65,13 +74,15 @@ class _PendHistoryState extends State<PendHistory> {
   }
   @override
   Widget build(BuildContext context) {
+    fetchAcceptedorder();
     return Scaffold(
       appBar: AppBar(
         title: Text('Pending Orders'),
         backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
-      body: Container(
+      body: Padding(
+        padding: EdgeInsets.all(10),
         //color: Colors.teal[100],
         child: ListView(
           physics: BouncingScrollPhysics(),
@@ -94,7 +105,7 @@ class _PendHistoryState extends State<PendHistory> {
                     height: 10,
                   );
                 },
-                itemCount: (Orders==null)?0:Orders!.length
+                itemCount: (Orders==null)?0:fetchedDishes!.length
             ),
 
 

@@ -20,7 +20,8 @@ import '../services/restaurantServ.dart';
 class checkout extends StatefulWidget {
   // final String orderID;
   final Order order;
-  const checkout({Key? key, required this.order}) : super(key: key);
+  final String name;
+  const checkout({Key? key, required this.order,required this.name}) : super(key: key);
 
   @override
   State<checkout> createState() => _checkoutState();
@@ -87,10 +88,12 @@ class _checkoutState extends State<checkout> {
     _razorpay.clear();
   }
 
-  void openCheckout() async {
+  Future<void> openCheckout() async {
     var options=await OrderServ().checkout(context, refOrder!.id);
+    
     // Map<String,String> mp= (options==null)? {}: mp;
     print(options);
+    print('skfhskjhs');
     // var options = {
     //   'key': 'rzp_test_gFnmcZ4eyzXm04',
     //   // 'amount': 28200,
@@ -106,7 +109,7 @@ class _checkoutState extends State<checkout> {
     try {
       _razorpay.open({
         'order_id':'${options!['orderid']}',
-        'key': '${options!['keyid']}'
+        'key': 'rzp_test_L8gaxFiUYFLz6D'
       });
     } catch (e) {
       debugPrint(e.toString());
@@ -162,8 +165,9 @@ class _checkoutState extends State<checkout> {
     return (refOrder==null)?Loading():Scaffold(
       appBar: AppBar(
         title: Text('CheckOut'),
-        backgroundColor: const Color(0xff307A59),
+        // backgroundColor: const Color(0xff307A59),
         centerTitle: true,
+        elevation: 4,
       ),
       body: ListView(
         children: [
@@ -171,7 +175,7 @@ class _checkoutState extends State<checkout> {
             height: 50,
             // decoration: BoxDecoration(color: Colors.white),
             child: Center(
-              child: Text((allRest[widget.order.restaurantId]!.restaurantName),
+              child: Text((widget.name),
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -285,17 +289,16 @@ class _checkoutState extends State<checkout> {
             padding: const EdgeInsets.only(left: 12.0,right: 12.0,top: 20),
             child: new GestureDetector(
                 onTap: ()
-                {
+                async {
                   print("Container clicked");
-                  openCheckout();
+                 await openCheckout();
                   // Navigator.pushReplacement(context,
                   //     new MaterialPageRoute(builder: (BuildContext context) => MenuCard()));
-
                 },
                 child:Container(
 
                   height: 50,
-                  decoration: BoxDecoration(color: const Color(0xff307A59),borderRadius: BorderRadius.circular(60)),
+                  decoration: BoxDecoration(color:  Colors.pink,borderRadius: BorderRadius.circular(60)),
                   child: Center(child: Text('BUY NOW : ₹${refOrder!.total.toString()}',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),)),
                 )

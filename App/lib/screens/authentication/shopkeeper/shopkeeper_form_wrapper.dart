@@ -6,6 +6,7 @@ import 'package:hotshot/Signin.dart';
 import 'package:hotshot/constants/constants.dart';
 import 'package:hotshot/constants/loading.dart';
 import 'package:hotshot/model/my_user.dart';
+import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_form_wrapper.dart';
 import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_sign_in.dart';
 import 'package:hotshot/screens/shopkeeper_main_page.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
@@ -22,6 +23,7 @@ class ShopkeeperFormWrapper extends StatefulWidget {
 }
 
 class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
+  bool postSent= false;
 
   bool? isRestCreated;
   String? tkn;
@@ -29,9 +31,9 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
   void setIsRestCreated()async{
     bool? b = await SharedPrefs().isRestCreated();
 
-    setState(() {
+    if(mounted){setState(() {
       isRestCreated = b;
-    });
+    });}
   }
 
   void fetchToken()async{
@@ -40,9 +42,9 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
     print('fetching token');
     print(t);
 
-    setState(() {
+    if(mounted){setState(() {
       tkn = t;
-    });
+    });}
 
     print('KSJFGSKLJGSLKJGSL');
   }
@@ -73,7 +75,7 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
     {
       print(e);
     }
-  }
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +87,11 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
 
     if(isRestCreated == true){
       if(tkn == null){
-        String? email = Provider.of<MyUser?>(context)!.email;
-        postEmail(email!);
+        if(postSent != true){
+          String? email = Provider.of<MyUser?>(context)!.email;
+          postEmail(email!);
+          postSent = true;
+        }
         return const Loading();
       }
       else{
@@ -94,7 +99,14 @@ class _ShopkeeperFormWrapperState extends State<ShopkeeperFormWrapper> {
       }
     }
     else{
-      return ShopkeeperVerificationForm();
+      return const ShopkeeperVerificationForm();
     }
   }
+
+
+
+
+
+
+    
 }

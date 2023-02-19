@@ -24,22 +24,27 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
   bool isfav = false;
   bool israted = false;
   final String phone='9876543210';
-  List<DishInfo>? dishes;
+  List<DishInfo> dishes = [];
   late Orders cartforres;
   late RestInfo restaurant;
   late Map<String,int> dishesadded;
 
+  bool isLoading = true;
+
   final RestaurantServ restServ = RestaurantServ();
-  fetchrestaurantbyID() async{
+  Future<void> fetchrestaurantbyID() async{
      RestInfo restlocal=await restServ.fetchRestaurantsbyID(context, widget.data);
-    fetchalldish();
+    
     setState(() {
         restaurant=restlocal;
+        isLoading = false;
     });
+
+    await fetchalldish();
   }
   fetchalldish() async {
     // for(int i=0;i<((widget.data.menu==[])? 0:widget.data.menu!.length);i++) {
-      dishes= await restServ.fetchDish(context, restaurant.menu);
+      final disheslocal = await restServ.fetchDish(context, restaurant.menu);
       // print(x);
       // dishes?.add(x);
       // print(i);
@@ -48,7 +53,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
     print('fetchedall');
     print(dishes);
     setState(() {
-
+      dishes = disheslocal;
     });
   }
   postcartdish(String dishid) async {
@@ -102,7 +107,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: dishes==null ? Loader():
+      home: isLoading ? Loader():
       ColorFiltered(
         colorFilter: (restaurant.status=='on') ? ColorFilter.mode(Colors.white, BlendMode.modulate):ColorFilter.mode(Colors.grey, BlendMode.saturation),
         child: Scaffold(
@@ -133,7 +138,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                       right: 10,
                       child: Container(
                         decoration: const BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.pink,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10),
@@ -285,7 +290,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                               ClipOval(
                                 child: Container(
                                   padding: EdgeInsets.all(1.5),
-                                  color: Colors.blue,
+                                  color: Colors.pink,
                                   child: ClipOval(
                                     child: Container(
                                       color: Colors.white,
@@ -300,7 +305,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                           isfav
                                               ? CupertinoIcons.heart_fill
                                               : CupertinoIcons.heart,
-                                          color: isfav ? Colors.red : Colors.blue,
+                                          color: isfav ? Colors.pink : Colors.pink,
                                           size: 28,
                                         ),
                                       ),
@@ -313,7 +318,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                 child: Text(
                                   "FAVOURITE",
                                   style: TextStyle(
-                                      color: Colors.blue,
+                                      color: Colors.pink,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 17),
                                 ),
@@ -349,7 +354,7 @@ class RestaurantPageState extends State<RestaurantPage> with SingleTickerProvide
                                     style: TextStyle(fontSize: 20)),
                               ),
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
+                                  backgroundColor: Colors.pink,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16.0))),
                             ),
