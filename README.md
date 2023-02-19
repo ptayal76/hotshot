@@ -1,21 +1,25 @@
-
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
-
-
+![Logo](https://user-images.githubusercontent.com/95185307/219902564-d182dc3c-5282-4caf-9364-ea8d13102aae.png)
 # Lohit - Hostel
 # Hotshot
 
-Hotshot is your goto app for all day needs at IITG. Be it ordering food, sending images to stationary or just checking out shops it does it all. With support for refund along with pre-payment, Hotshot boosts hassle free payments with QR authentications. User Friendly UI, easy to order and secure checkouts are the corner stones of this Project.
+Hotshot is your goto app for all day needs at IITG. Be it ordering food, sending images to stationary or just checking out shops it does it all. With support for refund along with pre-payment, Hotshot boosts hassle free payments with QR authentications. User Friendly UI, easy to order and secure checkouts are the corner stones of this Project.
 # Ideation
 
-
+Our team devoted a significant amount of time to discussing and refining various ideas before ultimately settling on our app's models, user interface (UI), and routes. Our primary emphasis throughout the process was on ensuring the app would effectively cater to the needs and preferences of both users and shopkeepers and facilitate seamless interactions between the two.
 # Features
 
 - Light/dark mode toggle
-- Pre-Payment along with refund
-- Filters (currently-open, top picks)
+- Pre-Payment
+- Filters (Rating, currently-open, top picks)
 - Order history
-- QR Authentication and Authorisation
+- QR scanner for authentication
+- Add to favourites
+- Real-time shop updates
+- Search functionality
+- Check weather the stock is in stock 
+- Food suggestions according to time
+- Supports pdf file / emails uploads for print
+- Mobile number verification
 # Tech Stack
 
 **Client:** Flutter
@@ -24,8 +28,14 @@ Hotshot is your goto app for all day needs at IITG. Be it ordering food, sending
 
 **Database:** MongoDB
 
-**Major External API Used:** Google Auth, Razorpay, Multer, jsonwebtoken, qrcode-reader, qrcode, jimp, cloudinary, streamifier
+**External API Used:** Google Auth, Razorpay, Multer, jsonwebtoken, qrcode-reader, qrcode, jimp, cloudinary, streamifier.
 
+
+# Screenshots
+
+![image](https://user-images.githubusercontent.com/95185307/219904770-656ed118-99b1-4d28-8d1c-cf5d31f8222b.png)
+
+![image](https://user-images.githubusercontent.com/95185307/219904758-c505e64b-4f8d-483e-b809-a04179b2895c.png)
 # Hosted server
 
 [https://hotshot-a109.onrender.com](https://hotshot-a109.onrender.com)
@@ -67,7 +77,7 @@ Start the server
 Link of apk file 
 # API Documentation
 
-[https://documenter.getpostman.com/view/25919046/2s93CHuEuU](https://documenter.getpostman.com/view/25919046/2s93CHuEuU)
+[https://documenter.getpostman.com/view/25646091/2s93CHtaUP](https://documenter.getpostman.com/view/25646091/2s93CHtaUP)
 
 # Environmental Variables
 
@@ -149,7 +159,7 @@ In the user cart, all orders of the user are displayed .here all orders are segr
 
 ### 5 possible status   
 
-Every order has five possible states: paymentpending, responsepending, accepted, rejected, completed.
+Every order has five possible status: paymentpending, responsepending, accepted, rejected, completed.
 
 paymentpending: if an order is in the user's cart, it's simply a paymentpending order.
 
@@ -167,6 +177,8 @@ On this interface page, the user fills it's bank details and gets the payment do
 
 ### Collection of order
 Once the order comes in pending orders of the user, there will be an option for QR generation, which contains order-id. When the user visits the shop to collect the order, the shopkeeper scans the QR, and if QR is valid, the status updates to completed.# Working of Owner-Side of the App
+
+# Working of Owner-Side of the App
 
 Once you click customer sign-in, it redirects to google auth if you are not registered. After you are signed in with Google OAuth, a registration form appears for the shopkeeper to fill in its details.
 Once the form is submitted home screen of the owner appears.
