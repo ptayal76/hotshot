@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:hotshot/screens/checkout.dart';
 import 'package:hotshot/screens/describe.dart';
 import 'package:expandable/expandable.dart';
+import 'package:hotshot/services/DishfromDish_id.dart';
 
 import '../constants/globvar.dart';
+import '../constants/loader.dart';
 import '../model/dishInfo.dart';
 import '../model/orderInfo.dart';
+import '../model/restInfo.dart';
 
 class CartCard extends StatefulWidget {
   final Order orders;
@@ -19,15 +22,22 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
-
+  RestInfo? rest;
+  fetchrest() async{
+    RestInfo restlocal=await restServ.fetchRestaurantsbyID(context, widget.orders.restaurantId);
+    setState(() {
+      rest=restlocal;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Colors.teal,
+    fetchrest();
+    return (rest==null)?Loader():Card(
+        color: const Color.fromARGB(255, 255, 140, 140),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 10.0,
-        shadowColor: Colors.grey,
+        // shadowColor: Colors.grey,
         //shape: ShapeBorder(BorderRadius),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -57,8 +67,8 @@ class _CartCardState extends State<CartCard> {
                               //  mainAxisAlignment: MainAxisAlignment.,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(allRest[widget.orders.restaurantId]!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
-                                Text(allRest[widget.orders.restaurantId]!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
+                                Text(rest!.restaurantName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),   //widget.data.restaurantName
+                                Text(rest!.location,style: TextStyle(fontWeight: FontWeight.w300,fontSize: 15),)     //widget.data.category
                               ],
                             ),
 
@@ -70,18 +80,18 @@ class _CartCardState extends State<CartCard> {
                           {
                             print("Container clicked");
                             Navigator.push(context,
-                                new MaterialPageRoute(builder: (BuildContext context) => checkout(order: widget.orders,)));
+                                new MaterialPageRoute(builder: (BuildContext context) => checkout(order: widget.orders,name: rest!.restaurantName)));
 
                           },
                           //behavior: ,
                           child: Container(child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('Checkout',style: TextStyle(fontWeight: FontWeight.w300 )),  //(( widget.data.status== 'accepted')?'Accepted':'Rejected')
-                          ),decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.green),),//(( widget.data.status== 'accepted')?Colors.greemAccent:Colors.orange)
+                          ),decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.pink),),//(( widget.data.status== 'accepted')?Colors.greemAccent:Colors.orange)
                         )
                       ],
                     ),
-                    // color: Colors.teal[800],
+                    // color: const Color.fromARGB(255, 239, 102, 105),
                   ),  //rest.name
 
 

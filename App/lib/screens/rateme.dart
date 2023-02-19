@@ -25,7 +25,7 @@ class _RateMeState extends State<RateMe> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 172),
+            padding: const EdgeInsets.symmetric(vertical: 17),
             child: Container(
               child: RatingBar(
    initialRating: 3,

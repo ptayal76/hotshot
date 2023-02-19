@@ -23,12 +23,12 @@ class DishInfo{
   String? suggestedTime;
   String? category;
   int? price;
-  List<dynamic>? pic;
+  String? pic;
 
   // SuggestedTime? suggestedTime;
-  bool? InStock;
+  bool InStock;
   // String? pic;
-  DishInfo({required this.category, required this.suggestedTime, required this.id,this.Rest_Id,this.name,this.price,this.InStock,this.pic});
+  DishInfo({required this.category, required this.suggestedTime, required this.id,this.Rest_Id,this.name,this.price,required this.InStock,this.pic});
   factory DishInfo.fromJson(Map<String,dynamic> json) {
     return DishInfo(
       category: json['category'],
@@ -39,7 +39,7 @@ class DishInfo{
       price: json['price'] as int,
       suggestedTime: json['suggestedTime'],
       InStock: json['InStock'],
-      pic: json['pic'] != null ?json["pic"]["data"]["data"]:null,
+      pic: json['pic'] != null ?json["pic"]:null,
       // pic: json['pic']['data']['data']
     );
   }

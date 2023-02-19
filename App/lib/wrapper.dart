@@ -17,13 +17,21 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   bool? isCustomer;
+  bool? isGoogleSignedIn;
+
+  void checkIsGoogleSignedIn()async{
+    bool? b = await SharedPrefs().isGoogleSignedIn();
+    if(mounted){setState(() {
+      isGoogleSignedIn = b;
+    });}
+  }
 
   void setIsCustomer() async {
     bool? b = await SharedPrefs().getIsCostumer();
 
-    setState(() {
+    if(mounted){setState(() {
       isCustomer = b;
-    });
+    });}
   }
 
   @override
@@ -32,9 +40,9 @@ class _WrapperState extends State<Wrapper> {
 
     final user = Provider.of<MyUser?>(context);
 
-    if (user == null) {
-      return const StartingScreen(
-        // title: 'Hotshot',
+    if (isGoogleSignedIn == null) {
+      return const Home(
+        title: 'Hotshot',
       );
     } else {
       return isCustomer! ? CustomerWrapper() : ShopkeeperWrapper();

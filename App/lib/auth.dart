@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:hotshot/screens/authentication/shopkeeper/shopkeeper_sign_in.dart';
 import 'package:hotshot/screens/shopkeeper_verification_form.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 // import 'package:scheduler_flutter/bottomnavigationbar.dart';
 // import 'shopk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +24,8 @@ Future verification(String str, BuildContext context, Function setdata) async {
   PhoneVerificationCompleted verificationCompleted =
       (PhoneAuthCredential phoneAuthCredential) async {
     showSnackBar(context, "Verification has been Completed");
+
+    
   };
   PhoneVerificationFailed verificationFailed =
       (FirebaseAuthException exception) {
@@ -44,7 +48,9 @@ Future verification(String str, BuildContext context, Function setdata) async {
         verificationFailed: verificationFailed,
         codeSent: codeSent,
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
-  } catch (e) {}
+  } catch (e) {
+    print(e);
+  }
 }
 
 void storeTokenAndData(UserCredential userCredential) async {
@@ -66,23 +72,29 @@ void storeTokenAndData(UserCredential userCredential) async {
     // });
   }
   sharedPreferences.setString(
-      "token", userCredential.credential?.token.toString() ?? " ");
+      "tkn", userCredential.credential?.token.toString() ?? " ");
   sharedPreferences.setString("usercredential", userCredential.toString());
 }
 
 Future<void> signInwithPhoneNumber(
-    String verificationId, String smsCode, BuildContext context) async {
+    String verificationId, String smsCode, BuildContext context, String phone) async {
   try {
     AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
 
     UserCredential userCredential =
         await firebaseAuth.signInWithCredential(credential);
+
+        await SharedPrefs().savePhone(phone);
+
+    print('SAVED NUMBER IN PREFS');
+
     storeTokenAndData(userCredential);
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => ShopkeeperVerificationForm()),
-        (route) => false);
+
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => ShopkeeperSignIn()),
+    //     );
     showSnackBar(context, "logged In");
   } catch (e) {
     showSnackBar(context, e.toString());

@@ -97,7 +97,8 @@ class _cartState extends State<cart> {
     //   ),
       body: RefreshIndicator(
         onRefresh: fetchusercart,
-        child: Column(children: [
+        child: Column(
+            children: [
           SizedBox(
               height: 40,
               child: Center(
@@ -105,28 +106,32 @@ class _cartState extends State<cart> {
                 'Your Orders',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ))),
-          Lottie.asset('assets/lottie/cart.json', height: 200, width: 200),
-         (Orders==null)?Loader():ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 2),
-                  itemBuilder: (context, index) {
+              // (fetchedDishes==null)?Lottie.asset('assets/lottie/empty.json', height: 200, width: 200):
+              Lottie.asset('assets/lottie/cart.json', height: 200, width: 200),
+         (Orders==null)?Loader():Container(
+           height: MediaQuery.of(context).size.height*(0.52),
+           child: ListView.separated(
+                    padding: EdgeInsets.symmetric(horizontal: 2),
+                    itemBuilder: (context, index) {
 
-                    print(Orders!.length);
-                    // print(Orders![2]);
-                    return CartCard(
-                      orders: Orders![index],
-                      mp: fetchedDishes[index],
-                    ); //(data: widget.stat[index]
-                  },
-                  shrinkWrap: true,
-                  //scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
-                  separatorBuilder: (context, index) {
-                    return SizedBox(
-                      height: 1,
-                    );
-                  },
-                  itemCount: (fetchedDishes==null)?0:fetchedDishes.length,
-                )
+                      print(Orders!.length);
+                      // print(Orders![2]);
+                      return CartCard(
+                        orders: Orders![index],
+                        mp: fetchedDishes![index],
+                      ); //(data: widget.stat[index]
+                    },
+                    shrinkWrap: true,
+                    //scrollDirection: Axis.vertical,
+                    physics: BouncingScrollPhysics(),
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 1,
+                      );
+                    },
+                    itemCount: (fetchedDishes==null)?0:fetchedDishes!.length,
+                  ),
+         )
                 // FutureBuilder(
                 //   future: fetchusercart(),
                 //   builder: (context,snapshot){

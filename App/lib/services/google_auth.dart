@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hotshot/model/my_user.dart';
 import 'package:hotshot/services/auth_service.dart';
+import 'package:hotshot/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleAuthentication {
@@ -29,6 +30,8 @@ class GoogleAuthentication {
 
           print('STEP 3');
 
+          await SharedPrefs().setIsGoogleSignedIn(true);
+
           return AuthService().userFromFirebaseUser(result.user);
         } on FirebaseException catch (error) {
           print(error.toString());
@@ -49,9 +52,25 @@ class GoogleAuthentication {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await GoogleSignIn().disconnect();
-    FirebaseAuth.instance.signOut();
+
+    print('DISCONNECTED FROM GOOGLE SIGN IN');
+
+    await FirebaseAuth.instance.signOut();
+
+    print('SIGNED OUT FROM FIREBASE AUTH');
+
+    //FirebaseAuth.instance.signOut();
+
+    await prefs.remove('isGoogleSignedIn');
+
+    print('REMOVED GOOGLESIGNEDIN FROM PREFS');
 
     await prefs.remove('token');
+
+    print('REMOVED TOKEN FROM PREFS');
+
     await prefs.remove('isCustomer');
+
+    print('REMOVED ISCUSTOMER FROM PREFS');
   }
 }

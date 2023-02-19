@@ -22,11 +22,12 @@ class _OrdHistoryState extends State<OrdHistory> {
   // var itemc = 0;
   // final List<int> price = [100, 200, 300, 400, 500];
   // var sum = 0;
-  List<Order>? Orders;
-  List<Map<String, int>> dishes = [];
+  List<Order> Orders=[];
   List<Map<DishInfo, int>> fetchedDishes = [];
   final OrderServ orderServ = OrderServ();
   fetchorderhistory() async {
+    List<Map<String, int>> dishes = [];
+    List<Map<DishInfo, int>> fetchedDisheslocal = [];
     // print(dishes.length);
     Orders = await orderServ.fetchCompletedOrders(context);
     Orders?.addAll(await orderServ.fetchRejectedOrders(context));
@@ -53,10 +54,12 @@ class _OrdHistoryState extends State<OrdHistory> {
       for (int j = 0; j < x.length; j++) {
         mp[x[j]] = dishes[i][x[j].id]!;
       }
-      fetchedDishes.add(mp);
+      fetchedDisheslocal.add(mp);
     }
     // fetchDishesCart();
-    setState(() {});
+    setState(() {
+      fetchedDishes=fetchedDisheslocal;
+    });
   }
   void initState() {
     // TODO: implement initState
@@ -66,13 +69,15 @@ class _OrdHistoryState extends State<OrdHistory> {
   }
   @override
   Widget build(BuildContext context) {
+    fetchorderhistory();
     return Scaffold(
       appBar: AppBar(
         title: Text('Order History'),
         backgroundColor: const Color.fromARGB(255, 239, 102, 105),
         centerTitle: true,
       ),
-      body: Container(
+      body: Padding(
+        padding: EdgeInsets.all(10),
         //color: Color.fromARGB(255, 239, 102, 105),
         child: ListView(
             physics: BouncingScrollPhysics(),
