@@ -10,15 +10,14 @@ Our team devoted a significant amount of time to discussing and refining various
 
 - Light/dark mode toggle
 - Pre-Payment
-- Filters (Rating, currently-open, top picks)
+- Filters (currently-open, top picks)
 - Order history
 - QR scanner for authentication
+- Unique QR generator
 - Add to favourites
 - Real-time shop updates
 - Search functionality
 - Check weather the stock is in stock 
-- Food suggestions according to time
-- Supports pdf file / emails uploads for print
 - Mobile number verification
 # Tech Stack
 
@@ -74,7 +73,7 @@ Start the server
 
 # Download Apk file
 
-Link of apk file 
+[https://drive.google.com/file/d/1FGVDnvV_6aKKeRuzYzPucPQ5ruBIlh4N/view?usp=share_link ](https://drive.google.com/file/d/1FGVDnvV_6aKKeRuzYzPucPQ5ruBIlh4N/view?usp=share_link )
 # API Documentation
 
 [https://documenter.getpostman.com/view/25646091/2s93CHtaUP](https://documenter.getpostman.com/view/25646091/2s93CHtaUP)
@@ -122,7 +121,11 @@ APISECRET
 ```
 # Demo
 
-Insert gif or link to demo
+[https://drive.google.com/file/d/1bhynKPLm0KE7RNo0_wtXCfXOwMYqvK2F/view?usp=share_link ](https://drive.google.com/file/d/1bhynKPLm0KE7RNo0_wtXCfXOwMYqvK2F/view?usp=share_link )
+
+[https://drive.google.com/file/d/13qHRBbO3oiyhE6q_nr27PHbNbQ6b-tex/view?usp=share_link ](https://drive.google.com/file/d/13qHRBbO3oiyhE6q_nr27PHbNbQ6b-tex/view?usp=share_link )
+
+[https://drive.google.com/file/d/1r7F55DGd65kcgt5FlxQb2V3dFXqgHFWT/view?usp=share_link ](https://drive.google.com/file/d/1r7F55DGd65kcgt5FlxQb2V3dFXqgHFWT/view?usp=share_link )
 
 # Working of User-Side of the App
 
@@ -133,7 +136,7 @@ Once you click on customer sign in if you are not a registered user app will red
 The top left corner has a sidebar containing user details, order history, pending orders, Light/Dark mode, feedback, and logout options.
 
 The top right corner consists of the logout button and user cart.
-// In the user cart, you'll see all the orders the user adds.
+In the user cart, you'll see all the orders the user adds.
 
 Also, there is a search bar and other filter options for restaurants.
 There you see a top picks section containing the top-rated restaurants and all other restaurants in restaurantcontexts.
@@ -149,13 +152,15 @@ The top of the page contains Restaurant details: Name, Opening-closing time, loc
 There is also an option for the user to rate the restaurant, and also user can add this restaurant to its favorite list.
 
 
-Filters are also provided to users For dishes based on- veg/nonveg, breakfast/lunch/dinner, and price.
-
 All dishes are displayed, which are available on the restaurant's menu. Users can add or subtract any dish any number of times to order, and these orders will be added to the user's cart. 
 
 ### Cart
 
 In the user cart, all orders of the user are displayed .here all orders are segregated based on the restaurant. For every order, a checkout page is available for the user through which it is directed to the payment page. In the cart also, there is a feature to increase or decrease the number of dishes.
+
+
+### Razorpay interface 
+Razorpay Payment Interface is integrated in the app when user proceeds on Buy Now at the CheckOut Screen. Shop Owner will have to fill RazorPay Merchant Credentials while registering on the app. On this interface page, the user fills it's bank details and gets the payment done. After payment is made, the order removes from the user's cart, and when the shopkeeper accepts the order, it comes to the user's pending orders and the shopkeeper's accepted order.
 
 ### 5 possible status   
 
@@ -171,17 +176,15 @@ rejected: if the shop owner rejects it, the order moves to reject orders of owne
 
 completed: If an order is accepted by the shop owner and collected by the user after scanning QR, the order moves from pending orders to the user's order history, and the status becomes completed. Also, on the shopkeeper's side, it moves to order history and gets completed.
 
-### Razorpay interface 
-
-On this interface page, the user fills it's bank details and gets the payment done. After payment is made, the order removes from the user's cart, and when the shopkeeper accepts the order, it comes to the user's pending orders and the shopkeeper's accepted order.
 
 ### Collection of order
-Once the order comes in pending orders of the user, there will be an option for QR generation, which contains order-id. When the user visits the shop to collect the order, the shopkeeper scans the QR, and if QR is valid, the status updates to completed.# Working of Owner-Side of the App
+Once the order comes in pending orders of the user, there will be an option for QR generation, which contains order-id. When the user visits the shop to collect the order, the shopkeeper scans the QR, and if QR is valid, the status updates to completed.
 
 # Working of Owner-Side of the App
 
-Once you click customer sign-in, it redirects to google auth if you are not registered. After you are signed in with Google OAuth, a registration form appears for the shopkeeper to fill in its details.
+Once you click customer sign-in, it redirects to google auth if you are not registered. After you are signed in with Google Auth, a registration form appears for the shopkeeper to fill in its details.
 Once the form is submitted home screen of the owner appears.
+Please wait for a while after Clicking Submit, as it takes a while to upload the picture.
 
 ### Home screen
 
@@ -220,3 +223,7 @@ If you have any feedback, please reach out to us at dawravaibhav@gmail.com
 | ----------------- | ------------------------------------------------------------------ |
 | Theme Color |  #EF6669 |
 
+
+# Important Note
+
+Please handle the app patiently, don't press any button twice and wait for further screen to load.
